@@ -1,7 +1,8 @@
 
 
 declare global {
-    //types here
+   
+    type HomeScreen = "for-you" | "following"
 }
 
 export {}

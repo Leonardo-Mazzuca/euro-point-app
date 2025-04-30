@@ -1,10 +1,9 @@
 
-
-import { View, Text } from 'react-native'
 import React from 'react'
 import UserButton from './user-button'
 import Logo from './logo'
 import Container from './container'
+import { View } from 'react-native'
 
 type HeaderProps = {
     leftChild?: React.ReactNode,
@@ -13,12 +12,23 @@ type HeaderProps = {
 }
 const Header = ({hideProfile = false,leftChild,rightChild}: HeaderProps) => {
   return (
-    <Container className='flex p-8 items-center justify-between flex-row'>
-      {leftChild}
-      {!hideProfile && <UserButton />}
-      <Logo />
-      {rightChild}
-    </Container>
+    <View>
+      <Container className='p-8 items-center flex-row'>
+        <View className='flex-1'>
+          {leftChild}
+          {!hideProfile && <UserButton />}
+        </View>
+
+         <Logo />
+
+        <View className='flex-1'>
+        {rightChild}
+        </View>
+      </Container>
+
+      <View className='bg-gray-200' style={{height:1}} />
+
+    </View>
   )
 }
 

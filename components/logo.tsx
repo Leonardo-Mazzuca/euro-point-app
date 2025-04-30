@@ -7,7 +7,7 @@ import React from 'react'
 const Logo = () => {
   return (
     <View>
-      <Text>Logo</Text>
+      <Text className='text-2xl font-bold'>Logo</Text>
     </View>
   )
 }
