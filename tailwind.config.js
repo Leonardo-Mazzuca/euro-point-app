@@ -43,6 +43,10 @@ module.exports = {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
         },
+        blue: {
+          primary: "#044B8B"
+        }
+
       },
       borderWidth: {
         hairline: hairlineWidth(),
