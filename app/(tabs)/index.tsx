@@ -12,6 +12,7 @@ import { Input } from "@/components/Input";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import PostCard from "@/components/post-card";
 import { cn } from "@/lib/utils";
+import TabsContainer from "@/components/tabs-container";
 
 const Home = () => {
   const [currentScreen, setCurrentScreen] = useState<HomeScreen>("for-you");
@@ -33,7 +34,7 @@ const Home = () => {
 
 
   return (
-    <SafeAreaView className="flex-1">
+    <TabsContainer>
       <View className="px-6 pt-4">
         <Header />
 
@@ -78,7 +79,7 @@ const Home = () => {
           />
         )}
       </View>
-    </SafeAreaView>
+    </TabsContainer>
   );
 };
 

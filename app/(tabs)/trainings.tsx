@@ -1,13 +1,14 @@
 
 
-import { View, Text } from 'react-native'
+import { Text } from 'react-native'
 import React from 'react'
+import TabsContainer from '@/components/tabs-container'
 
 const Trainings = () => {
   return (
-    <View>
+    <TabsContainer>
       <Text>Trainings</Text>
-    </View>
+    </TabsContainer>
   )
 }
 

@@ -2,14 +2,15 @@
 
 
 
-import { View, Text } from 'react-native'
+import { Text } from 'react-native'
 import React from 'react'
+import TabsContainer from '@/components/tabs-container'
 
 const Projects = () => {
   return (
-    <View>
+    <TabsContainer>
       <Text>Projects</Text>
-    </View>
+    </TabsContainer>
   )
 }
 
