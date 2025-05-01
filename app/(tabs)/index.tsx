@@ -18,6 +18,7 @@ const Home = () => {
   const uiOpacity = useRef(new Animated.Value(1)).current;
   const [hideUI, setHideUI] = useState(false);
 
+  //TODO implements fade UI
   const fadeUI = (toValue: number) => {
     if (toValue === 1) setHideUI(false);
 
