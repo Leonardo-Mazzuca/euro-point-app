@@ -12,6 +12,7 @@ import { useEffect } from "react";
 import "react-native-reanimated";
 
 import { useColorScheme } from "@/hooks/useColorScheme";
+import { LayoutProvider } from "@/context/layout-context";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -62,8 +63,10 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <DefaultLayout />
-      <StatusBar style="auto" />
+      <LayoutProvider>
+        <DefaultLayout />
+        <StatusBar style="auto" />
+      </LayoutProvider>
     </ThemeProvider>
   );
 }
