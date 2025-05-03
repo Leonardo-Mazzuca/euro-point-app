@@ -11,6 +11,7 @@ const PostButton = () => {
   return (
     <Button 
       size={"icon"} 
+      style={{zIndex:999}}
       className='bg-blue-primary rounded-full w-[60px] h-[60px]'
     >
       <AntDesign

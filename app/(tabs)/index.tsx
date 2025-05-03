@@ -62,6 +62,7 @@ const Home = () => {
         zIndex: 10, 
         transform: [{ translateY: uiTranslateY }],
         opacity: uiOpacity,
+        backgroundColor: "#fff"
       }}
         className="px-6 pt-4"
       >

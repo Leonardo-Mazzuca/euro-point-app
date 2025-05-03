@@ -1,5 +1,5 @@
 
-import { View, Text, FlatList, TouchableOpacity } from 'react-native'
+import { Text, FlatList, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { cn } from '@/lib/utils'
 
@@ -15,9 +15,10 @@ const CategoriesScroll = ({categories,selected, setSelected}: CategoriesScrollPr
   
   return (
     <FlatList
+      className='my-2'
       data={categories}
       renderItem={({item}) => (
-        <TouchableOpacity className={cn(selected === item ? 'bg-blue-primary' : 'bg-gray-300 ' ,'px-4 my-2 py-2 rounded-3xl mr-2')} onPress={() => setSelected(item)}>
+        <TouchableOpacity className={cn(selected === item ? 'bg-blue-primary' : 'bg-gray-300 ' ,'px-4 py-2 text-center rounded-3xl mr-2')} onPress={() => setSelected(item)}>
             <Text className={cn(selected === item ? 'text-white' : 'text-zinc-500' , 'font-semibold')}>
                 {item}
             </Text>
