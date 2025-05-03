@@ -1,5 +1,6 @@
 
 import { Colors } from '@/constants/Colors';
+import { useLayoutContext } from '@/context/layout-context';
 import AntDesign from '@expo/vector-icons/AntDesign'
 import Feather from '@expo/vector-icons/Feather';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
@@ -7,6 +8,8 @@ import { Tabs } from 'expo-router'
 
 
 const TabsLayout = () => {
+
+  const {hideUI} = useLayoutContext();
   return (
   <Tabs
     screenOptions={{
@@ -19,6 +22,7 @@ const TabsLayout = () => {
         backgroundColor: '#fff',
         borderTopLeftRadius: 25,
         borderTopEndRadius: 25,
+        display: hideUI ? 'none' : 'flex'
       },
       tabBarActiveTintColor: Colors.light.primaryBlue
     }}

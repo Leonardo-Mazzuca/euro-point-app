@@ -17,8 +17,7 @@ import { useLayoutContext } from "@/context/layout-context";
 const Home = () => {
   const [currentScreen, setCurrentScreen] = useState<HomeScreen>("for-you");
   const uiOpacity = useRef(new Animated.Value(1)).current;
-  const {hideUI, setHideUI} = useLayoutContext();
-  const [viewDisplay, setViewDisplay] = useState('flex');
+  const {setHideUI} = useLayoutContext();
 
   const uiTranslateY = useRef(new Animated.Value(0)).current;
   const currentOffset = useRef(0);
@@ -33,7 +32,7 @@ const Home = () => {
         useNativeDriver: true,
       }).start();
       setTimeout(()=> {
-        setViewDisplay('none')
+        setHideUI(true);
       },ANIMATION_DURATION);
     }
 
@@ -44,7 +43,7 @@ const Home = () => {
         useNativeDriver: true,
       }).start();
       setTimeout(()=> {
-        setViewDisplay('flex')
+        setHideUI(false);
       },ANIMATION_DURATION);
     }
 
@@ -54,7 +53,18 @@ const Home = () => {
 
   return (
     <TabsContainer>
-      <Animated.View style={{ transform: [{ translateY: uiTranslateY }],}} className="px-6 pt-4">
+      <Animated.View 
+      style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 10, 
+        transform: [{ translateY: uiTranslateY }],
+        opacity: uiOpacity,
+      }}
+        className="px-6 pt-4"
+      >
         <Tabs value={currentScreen} onValueChange={(e) => setCurrentScreen(e as HomeScreen)}>
         <Header />
           <TabsList className="flex-row w-full my-2">
@@ -84,8 +94,9 @@ const Home = () => {
             data={Array.from({ length: 5 })}
             renderItem={() => <PostCard />}
             keyExtractor={(_, i) => i.toString()}
-            contentContainerStyle={{ gap: 8 }}
+            contentContainerStyle={{  paddingTop: 180, paddingBottom: 100, gap: 8  }}
             onScroll={handleScroll}
+            
           />
         )}
 
@@ -94,7 +105,7 @@ const Home = () => {
             data={Array.from({ length: 3 })}
             renderItem={() => <PostCard />}
             keyExtractor={(_, i) => i.toString()}
-            contentContainerStyle={{ gap: 8 }}
+            contentContainerStyle={{  paddingTop: 180, paddingBottom: 100, gap: 8  }}
           />
         )}
       </View>
