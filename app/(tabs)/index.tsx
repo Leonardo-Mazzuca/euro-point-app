@@ -12,59 +12,18 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import PostCard from "@/components/post-card";
 import { cn } from "@/lib/utils";
 import TabsContainer from "@/components/tabs-container";
-import { useLayoutContext } from "@/context/layout-context";
+import AnimatedView from "@/components/animated-view";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 const Home = () => {
   const [currentScreen, setCurrentScreen] = useState<HomeScreen>("for-you");
-  const uiOpacity = useRef(new Animated.Value(1)).current;
-  const {setHideUI} = useLayoutContext();
-
   const uiTranslateY = useRef(new Animated.Value(0)).current;
-  const currentOffset = useRef(0);
-
-  const ANIMATION_DURATION = 200;
-  const handleScroll = (event: any) => {
-    const offsetY = event.nativeEvent.contentOffset.y;
-    if (offsetY > currentOffset.current + 10) {
-      Animated.timing(uiTranslateY, {
-        toValue: -350, 
-        duration: ANIMATION_DURATION,
-        useNativeDriver: true,
-      }).start();
-      setTimeout(()=> {
-        setHideUI(true);
-      },ANIMATION_DURATION);
-    }
-
-    if (offsetY < currentOffset.current - 10) {
-      Animated.timing(uiTranslateY, {
-        toValue: 0, 
-        duration: ANIMATION_DURATION,
-        useNativeDriver: true,
-      }).start();
-      setTimeout(()=> {
-        setHideUI(false);
-      },ANIMATION_DURATION);
-    }
-
-    currentOffset.current = offsetY;
-  };
-
+  const {handleScroll,uiOpacity} = useScrollAnimation({translateValue: uiTranslateY});
 
   return (
     <TabsContainer>
-      <Animated.View 
-      style={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        zIndex: 10, 
-        transform: [{ translateY: uiTranslateY }],
-        opacity: uiOpacity,
-        backgroundColor: "#fff"
-      }}
-        className="px-6 pt-4"
+      <AnimatedView
+        style={{ opacity: uiOpacity, transform: [{ translateY: uiTranslateY }] }}
       >
         <Tabs value={currentScreen} onValueChange={(e) => setCurrentScreen(e as HomeScreen)}>
         <Header />
@@ -87,7 +46,7 @@ const Home = () => {
           placeholder="Busque uma postagem..."
           suffixIcon={<AntDesign name="search1" size={24} color="grey" />}
         />
-      </Animated.View>
+      </AnimatedView>
 
       <View className="flex-1 px-6">
         {currentScreen === "for-you" && (

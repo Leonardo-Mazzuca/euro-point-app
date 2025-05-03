@@ -6,59 +6,19 @@ import { Animated, FlatList } from "react-native";
 import CategoriesScroll from "@/components/categories-scroll";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import NewsLetterCard from "@/components/newsletter-card";
-import { useLayoutContext } from "@/context/layout-context";
+import AnimatedView from "@/components/animated-view";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 const Newsletter = () => {
   const categories = ["Para você", "TI", "RH", "Corporativo", "Interno"];
   const [selected, setSelected] = useState(categories[0]);
-
-  const uiOpacity = useRef(new Animated.Value(1)).current;
-  const {setHideUI} = useLayoutContext();
-
   const uiTranslateY = useRef(new Animated.Value(0)).current;
-  const currentOffset = useRef(0);
-
-  const ANIMATION_DURATION = 200;
-  const handleScroll = (event: any) => {
-    const offsetY = event.nativeEvent.contentOffset.y;
-    if (offsetY > currentOffset.current + 10) {
-      Animated.timing(uiTranslateY, {
-        toValue: -350, 
-        duration: ANIMATION_DURATION,
-        useNativeDriver: true,
-      }).start();
-      setTimeout(()=> {
-        setHideUI(true);
-      },ANIMATION_DURATION);
-    }
-
-    if (offsetY < currentOffset.current - 10) {
-      Animated.timing(uiTranslateY, {
-        toValue: 0, 
-        duration: ANIMATION_DURATION,
-        useNativeDriver: true,
-      }).start();
-      setTimeout(()=> {
-        setHideUI(false);
-      },ANIMATION_DURATION);
-    }
-
-    currentOffset.current = offsetY;
-  };
+  const {handleScroll,uiOpacity} = useScrollAnimation({translateValue: uiTranslateY});
 
   return (
     <TabsContainer>
-      <Animated.View 
-      style={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        zIndex: 10, 
-        transform: [{ translateY: uiTranslateY }],
-        opacity: uiOpacity,
-      }}
-        className="px-6 pt-4"
+      <AnimatedView 
+        style={{ opacity: uiOpacity, transform: [{ translateY: uiTranslateY }] }}
       >
         <Header />
         <CategoriesScroll
@@ -71,7 +31,7 @@ const Newsletter = () => {
           placeholder="Busque uma postagem..."
           suffixIcon={<AntDesign name="search1" size={24} color="grey" />}
         />
-      </Animated.View>
+      </AnimatedView>
       <FlatList
           data={Array.from({length:10})}
           keyExtractor={(item, index) => index.toString()}

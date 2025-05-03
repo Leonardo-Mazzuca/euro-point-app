@@ -13,6 +13,7 @@ const LayoutProvider = ({children}:PropsWithChildren) => {
 
     const [hidePostButton, setHidePostButton] = useState(false);
     const [hideUI, setHideUI] = useState(false);
+    
 
     const value = {
         hidePostButton,
