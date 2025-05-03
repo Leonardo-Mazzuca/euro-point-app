@@ -18,25 +18,21 @@ export const useScrollAnimation = ({translateValue}: Props) => {
     const handleScroll = (event: any) => {
       const offsetY = event.nativeEvent.contentOffset.y;
       if (offsetY > currentOffset.current + 10) {
+        setHideUI(true);
         Animated.timing(uiTranslateY, {
           toValue: -350, 
           duration: ANIMATION_DURATION,
           useNativeDriver: true,
         }).start();
-        setTimeout(()=> {
-          setHideUI(true);
-        },ANIMATION_DURATION);
       }
   
       if (offsetY < currentOffset.current - 10) {
+        setHideUI(false);
         Animated.timing(uiTranslateY, {
           toValue: 0, 
           duration: ANIMATION_DURATION,
           useNativeDriver: true,
         }).start();
-        setTimeout(()=> {
-          setHideUI(false);
-        },ANIMATION_DURATION);
       }
   
       currentOffset.current = offsetY;
