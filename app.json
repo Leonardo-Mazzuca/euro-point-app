@@ -1,5 +1,8 @@
 {
   "expo": {
+    "updates": {
+      "enabled": false
+    },
     "name": "eurofarma_project",
     "slug": "eurofarma_project",
     "version": "1.0.0",

@@ -3,11 +3,20 @@ import React from "react";
 import { Card } from "@/components/Card";
 import { Text } from "./Text";
 import Entypo from "@expo/vector-icons/Entypo";
+import { router } from "expo-router";
 
 const NewsLetterCard = () => {
+
+  const handleNavigate = () => {
+    router.push('/newsletter/1')
+  }
+
   return (
     <Card className="mt-4">
-      <TouchableOpacity className="p-2">
+      <TouchableOpacity 
+        onPress={handleNavigate} 
+        className="p-2"
+      >
         <View className="items-center flex-row gap-5">
           <Image
             className="w-[150px] h-[150px] rounded-2xl"

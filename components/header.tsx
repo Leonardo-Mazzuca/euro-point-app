@@ -9,8 +9,9 @@ type HeaderProps = {
     leftChild?: React.ReactNode,
     rightChild?: React.ReactNode
     hideProfile?:boolean
+    hideLine?:boolean
 }
-const Header = ({hideProfile = false,leftChild,rightChild}: HeaderProps) => {
+const Header = ({hideProfile = false,leftChild,rightChild,hideLine}: HeaderProps) => {
   return (
     <View>
       <Container className='p-8 items-center flex-row'>
@@ -26,7 +27,9 @@ const Header = ({hideProfile = false,leftChild,rightChild}: HeaderProps) => {
         </View>
       </Container>
 
-      <View className='bg-gray-200' style={{height:1}} />
+      {!hideLine && (
+        <View className='bg-gray-200' style={{height:1}} />
+      )}
 
     </View>
   )

@@ -61,7 +61,7 @@ type FooterItemProps = {
   text: string;
 };
 
-const FooterItem = ({ icon, text }: FooterItemProps) => {
+export const FooterItem = ({ icon, text }: FooterItemProps) => {
   return (
     <View className="items-center flex-row gap-2">
       {icon}
