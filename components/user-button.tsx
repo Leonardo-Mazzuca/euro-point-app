@@ -1,13 +1,15 @@
 
 
-import { View, Text } from 'react-native'
+import { Text, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/Avatar'
+import { router } from 'expo-router'
 
 const UserButton = () => {
+  const onPress = () => router.push("/profile");
   return (
-    <View>
-    <Avatar alt='User image'>
+    <TouchableOpacity onPress={onPress}>
+    <Avatar className='h-14 w-14' alt='User image'>
       <AvatarImage
         source={{
           uri: "https://avatars.githubusercontent.com/u/66306912?v=4",
@@ -17,7 +19,7 @@ const UserButton = () => {
         <Text>LM</Text>
       </AvatarFallback>
     </Avatar>
-    </View>
+    </TouchableOpacity>
   )
 }
 
