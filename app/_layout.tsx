@@ -22,6 +22,7 @@ const DefaultLayout = () => {
 
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="post-screen" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
       </Stack>
 
@@ -62,11 +63,11 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+    // <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <LayoutProvider>
         <DefaultLayout />
         <StatusBar style="auto" />
       </LayoutProvider>
-    </ThemeProvider>
+    /* </ThemeProvider> */
   );
 }

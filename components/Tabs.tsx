@@ -1,8 +1,7 @@
-import { Text, TextClassContext } from "./Text";
+import { TextClassContext } from "./Text";
 import * as TabsPrimitive from "@rn-primitives/tabs";
 import { cn } from "@/lib/utils";
 import { ComponentPropsWithoutRef, ElementRef, forwardRef } from "react";
-import {Text as RnText} from 'react-native';
 
 const Tabs = TabsPrimitive.Root;
 
@@ -13,7 +12,7 @@ const TabsList = forwardRef<
   <TabsPrimitive.List
     ref={ref}
     className={cn(
-      "web:inline-flex h-10 native:h-12 items-center justify-center rounded-md bg-muted p-1 native:px-1.5",
+      "web:inline-flex h-10 native:h-12 items-center justify-center rounded-md p-1 native:px-1.5",
       className
     )}
     {...props}
