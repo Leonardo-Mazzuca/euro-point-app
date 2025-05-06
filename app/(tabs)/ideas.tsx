@@ -24,7 +24,6 @@ const Ideas = () => {
         </Button>
       </View>
       <FlatList 
-        className='mt-10'
         data={Array.from({ length: 5 })}
         keyExtractor={(item, index) => index.toString()}
         numColumns={2} 
