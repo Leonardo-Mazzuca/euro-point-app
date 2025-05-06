@@ -1,4 +1,5 @@
-import { Animated, FlatList } from "react-native";
+
+import { Animated } from "react-native";
 import React, { useRef, useState } from "react";
 import TabsContainer from "@/components/tabs-container";
 import AnimatedView from "@/components/animated-view";

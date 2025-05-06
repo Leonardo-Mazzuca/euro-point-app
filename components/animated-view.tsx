@@ -16,7 +16,7 @@ const AnimatedView = ({children,style,className}:AnimatedViewProps) => {
     const styles = [
         {
           position: 'absolute',
-          top: 0,
+          top: -30,
           left: 0,
           right: 0,
           zIndex: 1000,

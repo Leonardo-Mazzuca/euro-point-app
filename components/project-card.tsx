@@ -5,12 +5,16 @@ import React from 'react'
 import { Card } from '@/components/Card'
 import { Image, Text, TouchableOpacity, View } from 'react-native'
 import Entypo from '@expo/vector-icons/Entypo'
+import { router } from 'expo-router'
 
 const ProjectCard = () => {
+
+  const handleNavigate = () => {router.push('/projects/1')}
+  
   return (
     <Card className="mt-4">
     <TouchableOpacity 
-      // onPress={handleNavigate} 
+      onPress={handleNavigate} 
       className="p-2"
     >
       <View className="items-center flex-row gap-5">
