@@ -15,15 +15,7 @@ type ProfileCardProps = {
 const ProfileCard = ({items,title}:ProfileCardProps) => {
   return (
    <Card
-   style={{
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 6,
-        elevation: 3,
-        backgroundColor: 'white'
-    }}
-    className='rounded-lg border-0'
+    className='rounded-lg border-0 bg-white'
     >
     <CardHeader className='px-3 py-2'>
         <Text className='font-semibold tracking-[2px] text-[10px] text-gray-500 uppercase'>
