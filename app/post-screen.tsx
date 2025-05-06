@@ -12,7 +12,7 @@ const PostScreen = () => {
   return (
     <Container>
       <View className='flex-row items-center justify-between'>
-        <Button onPress={handleClose}>
+        <Button variant={"ghost"} onPress={handleClose}>
           <AntDesign name='close' size={24} color="black"/>
         </Button>
       </View>

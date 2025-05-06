@@ -44,7 +44,8 @@ module.exports = {
           foreground: 'hsl(var(--card-foreground))',
         },
         blue: {
-          primary: "#044B8B"
+          primary: "#044B8B",
+          secondary: "#D9E8FC"
         }
 
       },

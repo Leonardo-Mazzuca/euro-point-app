@@ -22,6 +22,11 @@ declare global {
         description: string,
         image: string
     }
+
+    type Idea = {
+
+    }
+    
 }
 
 export {}
