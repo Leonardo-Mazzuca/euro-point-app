@@ -1,12 +1,14 @@
 import React from "react";
-import Container from "@/components/container";
-import Header from "@/components/header";
 import { Text, TouchableOpacity, View } from "react-native";
-import { Button } from "@/components/Button";
 import Feather from "@expo/vector-icons/Feather";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/Avatar";
+import ProfileCard from "@/components/profile-card";
+import Ionicons from '@expo/vector-icons/Ionicons';
+import Foundation from '@expo/vector-icons/Foundation';
+import { Colors } from "@/constants/Colors";
+
 
 const ProfileHeader = () => {
   const onPress = () => router.back();
@@ -43,10 +45,33 @@ const ProfileAvatar = () => (
   </View>
 );
 const Profile = () => {
+
+  const personal:ProfileItem[] = [
+    {
+      icon: <Feather name="user" size={28} color={Colors.light.primaryBlue} />,
+      title: "Dados do perfil",
+      link: "/"
+    },
+    {
+      icon: <Ionicons name="notifications-outline" size={28} color={Colors.light.primaryBlue} />,
+      title: "Notificações",
+      isToggler: true
+    },
+    {
+      icon:<Foundation name="key" size={28} color={Colors.light.primaryBlue} />,
+      title: "Alterar senha",
+      link: "/"
+    },
+  ];
+
   return (
     <SafeAreaView className="flex-1 py-4 px-8">
       <ProfileHeader />
       <ProfileAvatar />
+      <ProfileCard
+        title="conta"
+        items={personal}
+      />
     </SafeAreaView>
   );
 };

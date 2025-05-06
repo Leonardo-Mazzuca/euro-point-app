@@ -4,7 +4,7 @@ import { router, useLocalSearchParams } from "expo-router";
 import Header from "@/components/header";
 import { Button } from "@/components/Button";
 import Feather from "@expo/vector-icons/Feather";
-import { Card, CardFooter } from "@/components/Card";
+import { Card } from "@/components/Card";
 import Entypo from "@expo/vector-icons/Entypo";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { FooterItem } from "@/components/post-card";
