@@ -46,6 +46,9 @@ module.exports = {
         blue: {
           primary: "#044B8B",
           secondary: "#D9E8FC"
+        },
+        yeallow: {
+          primary: "#FBF304"
         }
 
       },
