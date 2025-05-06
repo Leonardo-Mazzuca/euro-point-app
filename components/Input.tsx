@@ -2,7 +2,7 @@ import { ComponentPropsWithoutRef, ElementRef, forwardRef, ReactNode } from "rea
 import { TextInput, View } from "react-native";
 import { cn } from "@/lib/utils";
 
-type InputProps = {
+export type InputProps = {
   prefixIcon?: ReactNode;
   suffixIcon?: ReactNode;
 } & ComponentPropsWithoutRef<typeof TextInput>;

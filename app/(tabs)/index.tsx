@@ -7,13 +7,12 @@ import {
 } from "react-native";
 import Header from "@/components/header";
 import { Tabs, TabsList, TabsTrigger } from "@/components/Tabs";
-import { Input } from "@/components/Input";
-import AntDesign from "@expo/vector-icons/AntDesign";
 import PostCard from "@/components/post-card";
 import { cn } from "@/lib/utils";
 import TabsContainer from "@/components/tabs-container";
 import AnimatedView from "@/components/animated-view";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import SearchInput from "@/components/search-input";
 
 const Home = () => {
   const [currentScreen, setCurrentScreen] = useState<HomeScreen>("for-you");
@@ -41,11 +40,7 @@ const Home = () => {
           </TabsList>
         </Tabs>
 
-        <Input
-          className="my-4 rounded-2xl"
-          placeholder="Busque uma postagem..."
-          suffixIcon={<AntDesign name="search1" size={24} color="grey" />}
-        />
+        <SearchInput />
       </AnimatedView>
 
       <View className="flex-1 px-6">
