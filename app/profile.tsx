@@ -23,16 +23,22 @@ const ProfileHeader = () => {
 
 const ProfileAvatar = () => (
   <View className="my-5 gap-2 flex-row items-center">
-    <Avatar className="h-[100px] w-[100px]" alt="User image">
-      <AvatarImage
-        source={{
-          uri: "https://avatars.githubusercontent.com/u/66306912?v=4",
-        }}
+    <View className="relative">
+      <View 
+        style={{borderRadius: 100}}
+        className="bg-green-400 h-4 w-4 absolute right-5 bottom-0 z-50"
       />
-      <AvatarFallback>
-        <Text>LM</Text>
-      </AvatarFallback>
-    </Avatar>
+      <Avatar className="h-[100px] w-[100px]" alt="User image">
+        <AvatarImage
+          source={{
+            uri: "https://avatars.githubusercontent.com/u/66306912?v=4",
+          }}
+        />
+        <AvatarFallback>
+          <Text>LM</Text>
+        </AvatarFallback>
+      </Avatar>
+    </View>
     <View>
         <Text className="font-semibold text-2xl">
             Leonardo Mazzuca
