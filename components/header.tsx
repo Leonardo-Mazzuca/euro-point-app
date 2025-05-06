@@ -13,7 +13,7 @@ type HeaderProps = {
 }
 const Header = ({hideProfile = false,leftChild,rightChild,hideLine}: HeaderProps) => {
   return (
-    <View>
+    <View className='mt-5'>
       <Container className='p-8 items-center flex-row'>
         <View className='flex-1'>
           {leftChild}
