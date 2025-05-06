@@ -23,7 +23,7 @@ const Checkbox = forwardRef<
         <AntDesign
           size={12}
           name="check"
-          color={props.checked ? "black" : "transparent"}
+          color={props.checked ? "white" : "transparent"}
         />
       </CheckboxPrimitive.Indicator>
     </CheckboxPrimitive.Root>

@@ -16,6 +16,10 @@ declare global {
 
     }
 
+    type Post = {
+        id:string
+    }
+
     type Project = {
         id: string,
         title: string,
@@ -24,7 +28,9 @@ declare global {
     }
 
     type Idea = {
-
+        id:string,
+        title: string,
+        content: string
     }
     
 }
