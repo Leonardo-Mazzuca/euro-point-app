@@ -8,19 +8,34 @@ import IdeaCard from "@/components/idea-card";
 import { useLayoutContext } from "@/context/layout-context";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { Colors } from "@/constants/Colors";
+import { useIsFocused } from "@react-navigation/native";
 
 const Ideas = () => {
   const [enablePost, setEnablePost] = useState(false);
   const { setPostButtonProps } = useLayoutContext();
 
-  useEffect(() => {
-    setPostButtonProps({
-      className: "bg-yeallow-primary",
-      children: (
-        <AntDesign size={24} color={Colors.light.primaryBlue} name="plus" />
-      ),
-    });
+  const isFocused = useIsFocused();
 
+  useEffect(() => {
+    if (!isFocused) {
+      setPostButtonProps({
+        className: "bg-blue-primary",
+        children: (
+          <AntDesign size={24} color={Colors.light.primaryYeallow} name="plus" />
+        ),
+      });
+    } else {
+      setPostButtonProps({
+        className: "bg-yeallow-primary",
+        children: (
+          <AntDesign size={24} color={Colors.light.primaryBlue} name="plus" />
+        ),
+      });
+  
+    }
+  }, [isFocused]);
+
+  useEffect(() => {
     if (enablePost) {
       setPostButtonProps({
         className: "bg-yeallow-primary",
