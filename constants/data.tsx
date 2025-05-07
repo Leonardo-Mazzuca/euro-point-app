@@ -6,6 +6,20 @@ import Entypo from '@expo/vector-icons/Entypo';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 
+const postTypeOptions:Option[] = [
+  {
+    label: "Newsletter",
+    value: "newsletter",
+  },
+  {
+    label: "Projeto",
+    value: "project",
+  },
+  {
+    label: "Portal Avisos",
+    value: "post",
+  },
+]
 
 const accountProfileItems:ProfileItem[] = [
     {
@@ -66,5 +80,6 @@ const helpProfileItems:ProfileItem[] = [
 export {
   accountProfileItems,
   preferenceProfileItems,
-  helpProfileItems
+  helpProfileItems,
+  postTypeOptions
 }

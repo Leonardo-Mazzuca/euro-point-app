@@ -16,6 +16,13 @@ declare global {
 
     }
 
+    type Option = {
+        label: string,
+        value: string
+    }
+
+    type PostType = "project" | "newsletter" | "post"
+
     type Post = {
         id:string
     }
