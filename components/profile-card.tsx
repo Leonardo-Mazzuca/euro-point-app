@@ -5,6 +5,8 @@ import { Colors } from '@/constants/Colors'
 import Feather from '@expo/vector-icons/Feather'
 import { Text, View } from 'react-native'
 import { Button } from '@/components/Button'
+import { Switch } from '@/components/Switch'
+import { useState } from 'react'
 
 
 type ProfileCardProps = {
@@ -42,6 +44,8 @@ const ProfileCardItem = ({item: {
     isToggler,
     rightChild
 }}:{item:ProfileItem}) => {
+
+    const [switchChecked, setSwitchChecked] = useState(false);
     return (
         <View className='flex-row my-2 items-center justify-between gap-2'>
             <View className='flex-row items-center gap-2'>
@@ -63,8 +67,10 @@ const ProfileCardItem = ({item: {
                 )}
    
                 {isToggler && (
-                    <>
-                    </>
+                    <Switch
+                        checked={switchChecked}
+                        onCheckedChange={setSwitchChecked}
+                    />
                 )}
             </View>
         </View>

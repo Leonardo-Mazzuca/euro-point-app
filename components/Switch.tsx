@@ -17,7 +17,7 @@ const SwitchWeb = forwardRef<
   <SwitchPrimitives.Root
     className={cn(
       "peer flex-row h-6 w-11 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed",
-      props.checked ? "bg-primary" : "bg-input",
+      props.checked ? "bg-gray-300" : "bg-input",
       props.disabled && "opacity-50",
       className
     )}
@@ -80,7 +80,7 @@ const SwitchNative = forwardRef<
       <SwitchPrimitives.Root
         className={cn(
           "flex-row h-8 w-[46px] shrink-0 items-center rounded-full border-2 border-transparent",
-          props.checked ? "bg-primary" : "bg-input",
+          props.checked ? "bg-gray-400" : "bg-gray-300",
           className
         )}
         {...props}

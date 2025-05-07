@@ -29,7 +29,7 @@ const preferenceProfileItems:ProfileItem[] = [
   {
     icon: <Feather name="moon" size={28} color={Colors.light.primaryBlue} />,
     title: "Tema escuro",
-    link: "/"
+    isToggler: true
   },
   {
     icon: <Entypo name="language" size={28} color={Colors.light.primaryBlue} />,
