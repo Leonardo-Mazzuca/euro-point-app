@@ -2,7 +2,9 @@
 import { Button } from '@/components/Button'
 import Container from '@/components/container'
 import DropDown from '@/components/dropdown'
-import { Input } from '@/components/Input'
+import NewsletterForm from '@/components/newsletter-form'
+import PostForm from '@/components/post-form'
+import ProjectForm from '@/components/project-form'
 import { postTypeOptions } from '@/constants/data'
 import AntDesign from '@expo/vector-icons/AntDesign'
 import { router } from 'expo-router'
@@ -22,9 +24,7 @@ const PostScreen = () => {
         </Button>
         <View className='flex-1'>
           <DropDown
-            onChange={item => {
-              setPostType(item.value as PostType);
-            }}
+            onChange={item => setPostType(item.value as PostType)}
             data={postTypeOptions}
             value={postType}
             labelField="label"
@@ -33,7 +33,13 @@ const PostScreen = () => {
           />
         </View>
       </View>
-      <Input />
+
+      <View className='mt-5 w-full h-full'>
+        {postType === "project" && (<ProjectForm />)}
+        {postType === "newsletter" && (<NewsletterForm />)}
+        {postType === "post" && (<PostForm />)}
+      </View>
+
     </Container>
   )
 }
