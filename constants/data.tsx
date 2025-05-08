@@ -5,19 +5,20 @@ import Foundation from "@expo/vector-icons/Foundation";
 import Entypo from '@expo/vector-icons/Entypo';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
+import { PostFormEnum } from "@/schemas/post";
 
 const postTypeOptions:Option[] = [
   {
     label: "Newsletter",
-    value: "newsletter",
+    value: PostFormEnum.newsletter,
   },
   {
     label: "Projeto",
-    value: "project",
+    value: PostFormEnum.project,
   },
   {
     label: "Portal Avisos",
-    value: "post",
+    value: PostFormEnum.post,
   },
 ]
 

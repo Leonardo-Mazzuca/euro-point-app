@@ -21,8 +21,6 @@ declare global {
         value: string
     }
 
-    type PostType = "project" | "newsletter" | "post"
-
     type Post = {
         id:string
     }
