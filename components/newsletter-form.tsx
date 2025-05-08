@@ -23,7 +23,7 @@ const NewsletterForm = () => {
                 variant='line'
             />
         </View>
-        <View>
+        <View className='flex-1'>
             <Label>
                 Contéudo
             </Label>
