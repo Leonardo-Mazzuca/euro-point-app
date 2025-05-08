@@ -15,6 +15,7 @@
     "preset": "jest-expo"
   },
   "dependencies": {
+    "@expensify/react-native-live-markdown": "^0.1.274",
     "@expo/vector-icons": "^14.0.2",
     "@hookform/resolvers": "^5.0.1",
     "@react-native-community/blur": "^4.4.1",
@@ -31,6 +32,7 @@
     "@rn-primitives/types": "^1.1.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "expensify-common": "^2.0.136",
     "expo": "^53.0.0",
     "expo-blur": "~14.1.4",
     "expo-constants": "~17.1.5",

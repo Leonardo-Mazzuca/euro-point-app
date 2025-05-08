@@ -31,9 +31,7 @@ const NewsletterForm = () => {
           name="newsletter.content"
           render={({ field }) => (
             <Quill 
-                setContent={field.onChange} 
-                content={field.value}
-                setError={() => setError('newsletter.content', { type: 'required', message: 'Campo obrigatório' })}
+
              />
           )}
         />
