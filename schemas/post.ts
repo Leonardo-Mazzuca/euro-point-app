@@ -7,9 +7,7 @@ enum PostFormEnum {
 }
 
 const singlePostSchema = z.object({
-    title: z.string({ required_error: 'O título é necessário!' }),
     content: z.string({ required_error: 'O conteúdo é necessário!' }),
-    images: z.array(z.string(), {required_error: 'Insira ao menos 1 imagem!'})
 })
 
 const newsletterSchema = z.object({

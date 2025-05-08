@@ -30,9 +30,7 @@ const NewsletterForm = () => {
           control={control}
           name="newsletter.content"
           render={({ field }) => (
-            <Quill 
-
-             />
+            <></>
           )}
         />
         <Text className="text-red-500">

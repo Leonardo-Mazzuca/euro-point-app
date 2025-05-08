@@ -20,7 +20,7 @@ const FormInputField = ({
 
 }: FormInputFieldProps) => {
   return (
-    <View className="">
+    <View className="mt-3">
       <Label>{label}</Label>
 
         <Controller

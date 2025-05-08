@@ -6,13 +6,15 @@ import NewsletterForm from '@/components/newsletter-form'
 import PostForm from '@/components/post-form'
 import ProjectForm from '@/components/project-form'
 import { postTypeOptions } from '@/constants/data'
-import { PostCreateType, PostFormEnum, postSchema } from '@/schemas/post'
+import {  PostFormEnum, postSchema } from '@/schemas/post'
 import AntDesign from '@expo/vector-icons/AntDesign'
 import { router } from 'expo-router'
-import { useState } from 'react'
-import { ScrollView, Text, View } from 'react-native'
+import { KeyboardAvoidingView, Platform, ScrollView, Text, View } from 'react-native'
 import {FormProvider, useForm} from 'react-hook-form'
 import {zodResolver} from '@hookform/resolvers/zod'
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
+import { Colors } from '@/constants/Colors'
+
 
 const PostScreen = () => {
 
@@ -39,39 +41,53 @@ const PostScreen = () => {
   }
 
   return (
-    <ScrollView>
-      <Container className='flex-col'>
-        <View className='flex-row w-full items-center justify-between'>
-          <Button variant={"ghost"} onPress={handleClose}>
-            <AntDesign name='close' size={24} color="black"/>
-          </Button>
-          <View className='flex-1'>
-            <DropDown
-              onChange={item => handleFormType(item.value as PostFormEnum)}
-              data={postTypeOptions}
-              value={postType}
-              labelField="label"
-              valueField="value"
-              placeholder='Selecione'
-            />
-          </View>
-        </View>
-
-        <FormProvider {...formMethods}>
-          <View className='mt-5 w-full h-full'>
-            {postType === "project" && (<ProjectForm />)}
-            {postType === "newsletter" && (<NewsletterForm />)}
-            {postType === "post" && (<PostForm />)}
-            <Button className='mt-10' onPress={handleSubmit(onSubmit)}>
-              <Text>
-                Salvar
-              </Text>
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={100} 
+    >
+      <ScrollView>
+        <Container className='flex-col'>
+          <View className='flex-row w-full items-center justify-between'>
+            <Button variant={"ghost"} onPress={handleClose}>
+              <AntDesign name='close' size={24} color="black"/>
             </Button>
+            <View className='flex-1'>
+              <DropDown
+                onChange={item => handleFormType(item.value as PostFormEnum)}
+                data={postTypeOptions}
+                value={postType}
+                labelField="label"
+                valueField="value"
+                placeholder='Selecione'
+              />
+            </View>
           </View>
-        </FormProvider>
 
-      </Container>
-    </ScrollView>
+          <FormProvider {...formMethods}>
+            <View className='mt-5 w-full h-full'>
+              {postType === "project" && (<ProjectForm />)}
+              {postType === "newsletter" && (<NewsletterForm />)}
+              {postType === "post" && (<PostForm />)}
+              <View className="flex-row mt-10 w-full gap-2 justify-end items-center">
+                <Button size="icon" variant="ghost" onPress={() => {}}>
+                  <FontAwesome6 name="earth-americas" size={24} color={Colors.light.primaryBlue} />
+                </Button>
+                <Button size="icon" variant="ghost" onPress={() => {}}>
+                  <AntDesign name="clouduploado" size={24} color={Colors.light.primaryBlue} />
+                </Button>
+                <Button className='w-[100px] bg-blue-primary' onPress={handleSubmit(onSubmit)}>
+                  <Text className='text-white font-semibold'>
+                    Salvar
+                  </Text>
+                </Button>
+              </View>
+            </View>
+          </FormProvider>
+
+        </Container>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 

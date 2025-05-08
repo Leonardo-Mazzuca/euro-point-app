@@ -1,19 +1,22 @@
 import React from "react";
 import { View } from "react-native";
-import {MarkdownTextInput, parseExpensiMark} from '@expensify/react-native-live-markdown';
+import { Input } from "@/components/Input";
 
+type QuillProps = {
+  value: string,
+  setValue: (value: string) => void,
+};
 
-type QuillProps = {};
-
-const Quill = ({}: QuillProps) => {
-  const [text, setText] = React.useState('Hello, *world*!');
+const Quill = ({setValue,value}: QuillProps) => {
+  
   return (
     <View className="flex-1">
-      <MarkdownTextInput
-        value={text}
-        onChangeText={setText}
-        parser={parseExpensiMark}
-      />
+        <Input 
+          numberOfLines={4}
+          className="h-[200px]"
+          value={value}
+          onChangeText={(text) => setValue(text)}
+        />
     </View>
   );
 };
