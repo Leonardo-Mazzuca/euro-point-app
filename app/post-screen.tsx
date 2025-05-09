@@ -14,11 +14,14 @@ import {FormProvider, useForm} from 'react-hook-form'
 import {zodResolver} from '@hookform/resolvers/zod'
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import { Colors } from '@/constants/Colors'
+import { useState } from 'react'
+import Sheet from '@/components/sheet'
 
 
 const PostScreen = () => {
 
   const handleClose = () => router.back();
+  const [openPublicChanger, setOpenPublicChanger] = useState(false)
 
   const formMethods = useForm({
     resolver: zodResolver(postSchema),
@@ -70,7 +73,7 @@ const PostScreen = () => {
               {postType === "newsletter" && (<NewsletterForm />)}
               {postType === "post" && (<PostForm />)}
               <View className="flex-row mt-10 w-full gap-2 justify-end items-center">
-                <Button size="icon" variant="ghost" onPress={() => {}}>
+                <Button size="icon" variant="ghost" onPress={() => setOpenPublicChanger(true)}>
                   <FontAwesome6 name="earth-americas" size={24} color={Colors.light.primaryBlue} />
                 </Button>
                 <Button size="icon" variant="ghost" onPress={() => {}}>
@@ -84,6 +87,13 @@ const PostScreen = () => {
               </View>
             </View>
           </FormProvider>
+          
+          
+          {openPublicChanger && (
+            <Sheet height={300} onClose={()=>setOpenPublicChanger(false)}>
+              <></>
+            </Sheet>
+          )}
 
         </Container>
       </ScrollView>

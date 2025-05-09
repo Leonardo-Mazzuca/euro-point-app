@@ -13,6 +13,7 @@ import "react-native-reanimated";
 
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { LayoutProvider } from "@/context/layout-context";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -64,11 +65,13 @@ export default function RootLayout() {
   }
 
   return (
-    // <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <LayoutProvider>
-        <DefaultLayout />
-        <StatusBar style="auto" />
-      </LayoutProvider>
-    /* </ThemeProvider> */
+    <GestureHandlerRootView className="flex-1">
+      // <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+        <LayoutProvider>
+          <DefaultLayout />
+          <StatusBar style="auto" />
+        </LayoutProvider>
+      /* </ThemeProvider> */
+    </GestureHandlerRootView>
   );
 }
