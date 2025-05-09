@@ -29,7 +29,7 @@ const TabsContainer = ({className,children,...rest}:TabsContainerProps) => {
   }, [hideUI]);
 
   return (
-    <SafeAreaView className={cn('relative flex-1',className)} {...rest}>
+    <SafeAreaView className={cn('relative dark:bg-dark-primary bg-white flex-1',className)} {...rest}>
         {children}
 
           <Animated.View

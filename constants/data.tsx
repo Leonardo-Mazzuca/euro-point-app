@@ -40,34 +40,6 @@ const accountProfileItems:ProfileItem[] = [
     },
 ];
 
-const preferenceProfileItems:ProfileItem[] = [
-  {
-    icon: <Feather name="moon" size={28} color={Colors.light.primaryBlue} />,
-    title: "Tema escuro",
-    isToggler: true
-  },
-  {
-    icon: <Entypo name="language" size={28} color={Colors.light.primaryBlue} />,
-    title: "Linguagem",
-    link: "/"
-  },
-  {
-    icon: <AntDesign name="barschart" size={24} color={Colors.light.primaryBlue} />,
-    title: "Pontuação dos quizzes",
-    link: "/"
-  },
-  {
-    icon: <Feather name="bookmark" size={24} color={Colors.light.primaryBlue} />,
-    title: "Itens salvos",
-    link: "/"
-  },
-  {
-    icon: <FontAwesome6 name="book-open-reader" size={24} color={Colors.light.primaryBlue} />,
-    title: "Minhas conquistas",
-    link: "/"
-  },
-];
-
 const helpProfileItems:ProfileItem[] = [
   {
     icon: <AntDesign name="questioncircleo" size={24} color={Colors.light.primaryBlue} />,
@@ -80,7 +52,6 @@ const helpProfileItems:ProfileItem[] = [
 
 export {
   accountProfileItems,
-  preferenceProfileItems,
   helpProfileItems,
   postTypeOptions
 }

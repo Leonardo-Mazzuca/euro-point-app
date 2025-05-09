@@ -13,7 +13,7 @@ type HeaderProps = {
 }
 const Header = ({hideProfile = false,leftChild,rightChild,hideLine}: HeaderProps) => {
   return (
-    <View style={{marginTop:25}}>
+    <View className='bg-white dark:bg-black' style={{marginTop:25}}>
       <Container className='p-8 items-center flex-row'>
         <View className='flex-1'>
           {leftChild}
@@ -28,7 +28,7 @@ const Header = ({hideProfile = false,leftChild,rightChild,hideLine}: HeaderProps
       </Container>
 
       {!hideLine && (
-        <View className='bg-gray-200' style={{height:1}} />
+        <View className='bg-gray-200 dark:bg-transparent' style={{height:1}} />
       )}
 
     </View>

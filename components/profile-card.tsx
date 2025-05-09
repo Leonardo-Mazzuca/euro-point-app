@@ -6,7 +6,7 @@ import Feather from '@expo/vector-icons/Feather'
 import { Text, View } from 'react-native'
 import { Button } from '@/components/Button'
 import { Switch } from '@/components/Switch'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 
 type ProfileCardProps = {
@@ -17,10 +17,10 @@ type ProfileCardProps = {
 const ProfileCard = ({items,title}:ProfileCardProps) => {
   return (
    <Card
-    className='rounded-lg border-0 bg-white'
+    className='rounded-lg border-0 bg-white dark:bg-dark-card'
     >
     <CardHeader className='px-3 py-2'>
-        <Text className='font-semibold tracking-[2px] text-[10px] text-gray-500 uppercase'>
+        <Text className='font-semibold tracking-[2px] text-[10px] dark:text-gray-400 text-gray-500 uppercase'>
             {title}
         </Text>
     </CardHeader>
@@ -42,15 +42,17 @@ const ProfileCardItem = ({item: {
     title,
     link,
     isToggler,
-    rightChild
+    rightChild,
+    isTogglerActive,
+    setToggleActive
 }}:{item:ProfileItem}) => {
 
-    const [switchChecked, setSwitchChecked] = useState(false);
+
     return (
         <View className='flex-row my-2 items-center justify-between gap-2'>
             <View className='flex-row items-center gap-2'>
                 {icon}
-                <Text className='text-xl font-semibold'>
+                <Text className='text-xl dark:text-white font-semibold'>
                     {title}
                 </Text>
             </View>
@@ -68,8 +70,8 @@ const ProfileCardItem = ({item: {
    
                 {isToggler && (
                     <Switch
-                        checked={switchChecked}
-                        onCheckedChange={setSwitchChecked}
+                        checked={isTogglerActive!}
+                        onCheckedChange={(val) => setToggleActive?.(val)}
                     />
                 )}
             </View>

@@ -13,6 +13,8 @@ declare global {
         link?: string,
         isToggler?:boolean
         rightChild?: React.ReactNode
+        isTogglerActive?:boolean
+        setToggleActive?: (value:boolean) => void
 
     }
 

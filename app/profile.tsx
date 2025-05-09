@@ -1,22 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import Feather from "@expo/vector-icons/Feather";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/Avatar";
 import ProfileCard from "@/components/profile-card";
-import { accountProfileItems, helpProfileItems, preferenceProfileItems } from "@/constants/data";
+import { accountProfileItems, helpProfileItems } from "@/constants/data";
 import { Button } from "@/components/Button";
+import { Colors } from "@/constants/Colors";
+import { AntDesign, Entypo, FontAwesome6 } from "@expo/vector-icons";
+import { useLayoutContext } from "@/context/layout-context";
 
 
 const ProfileHeader = () => {
   const onPress = () => router.back();
+  const {theme} = useLayoutContext();
   return (
     <View className="flex-row items-center gap-2">
       <TouchableOpacity onPress={onPress}>
-        <Feather name="chevron-left" size={28} color={"black"} />
+        <Feather name="chevron-left" size={28} color={theme === "dark" ? Colors.dark.icon : Colors.light.icon} />
       </TouchableOpacity>
-      <Text className="text-2xl font-semibold">Perfil</Text>
+      <Text className="text-2xl dark:text-white font-semibold">Perfil</Text>
     </View>
   );
 };
@@ -40,10 +44,10 @@ const ProfileAvatar = () => (
       </Avatar>
     </View>
     <View>
-        <Text className="font-semibold text-2xl">
+        <Text className="font-semibold dark:text-gray-200 text-2xl">
             Leonardo Mazzuca
         </Text>
-        <Text className="text-gray-600 text-lg">
+        <Text className="text-gray-600 dark:text-gray-400 text-lg">
             TI Projetos
         </Text>
     </View>
@@ -51,9 +55,49 @@ const ProfileAvatar = () => (
 );
 const Profile = () => {
 
+  const {theme} = useLayoutContext();
+
+  const [checkToggler, setCheckToggler] = useState(false);
+
+  useEffect(()=> {
+    if(theme === "dark"){
+      setCheckToggler(true)
+    }
+  },[theme])
+
+  const preferenceProfileItems:ProfileItem[] = [
+    {
+      icon: <Feather name="moon" size={28} color={Colors.light.primaryBlue} />,
+      title: "Tema escuro",
+      isToggler: true,
+      isTogglerActive: checkToggler,
+      setToggleActive: setCheckToggler
+    },
+    {
+      icon: <Entypo name="language" size={28} color={Colors.light.primaryBlue} />,
+      title: "Linguagem",
+      link: "/"
+    },
+    {
+      icon: <AntDesign name="barschart" size={24} color={Colors.light.primaryBlue} />,
+      title: "Pontuação dos quizzes",
+      link: "/"
+    },
+    {
+      icon: <Feather name="bookmark" size={24} color={Colors.light.primaryBlue} />,
+      title: "Itens salvos",
+      link: "/"
+    },
+    {
+      icon: <FontAwesome6 name="book-open-reader" size={24} color={Colors.light.primaryBlue} />,
+      title: "Minhas conquistas",
+      link: "/"
+    },
+  ];
+  
 
   return (
-    <SafeAreaView className="flex-1 py-4 px-8">
+    <SafeAreaView className="flex-1 dark:bg-dark-primary bg-white py-4 px-8">
       <ScrollView>
         <ProfileHeader />
         <ProfileAvatar />
@@ -70,7 +114,7 @@ const Profile = () => {
             title="preferências"
             items={helpProfileItems}
           />
-          <Button className="bg-white" variant={"ghost"}>
+          <Button className="bg-white dark:bg-dark-card" variant={"ghost"}>
             <Text className="text-red-600 font-semibold">
               Sair
             </Text>

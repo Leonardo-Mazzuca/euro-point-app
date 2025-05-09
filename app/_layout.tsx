@@ -12,27 +12,33 @@ import { useEffect } from "react";
 import "react-native-reanimated";
 
 import { useColorScheme } from "@/hooks/useColorScheme";
-import { LayoutProvider } from "@/context/layout-context";
+import { LayoutProvider, useLayoutContext } from "@/context/layout-context";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 const DefaultLayout = () => {
+
+  const {theme} = useLayoutContext();
+
   return (
 
+    <ThemeProvider value={theme === "dark" ? DarkTheme : DefaultTheme}>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="post-screen" options={{ headerShown: false }} />
         <Stack.Screen name="profile" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
       </Stack>
+    </ThemeProvider>
 
   );
 };
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
+
+  
   const [loaded] = useFonts({
     'Inter-Black': require('../assets/fonts/Inter-Black.otf'),
     'Inter-BlackItalic': require('../assets/fonts/Inter-BlackItalic.otf'),
@@ -66,12 +72,12 @@ export default function RootLayout() {
 
   return (
     <GestureHandlerRootView className="flex-1">
-      // <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+       
         <LayoutProvider>
           <DefaultLayout />
           <StatusBar style="auto" />
         </LayoutProvider>
-      /* </ThemeProvider> */
+
     </GestureHandlerRootView>
   );
 }

@@ -7,11 +7,14 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import { Colors } from "@/constants/Colors";
 import Feather from "@expo/vector-icons/Feather";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { View } from "react-native";
+import { useColorScheme, View } from "react-native";
 
 type PostCardProps = {};
 
 const PostCard = ({}: PostCardProps) => {
+
+  const colorsScheme = useColorScheme();
+
   return (
     <Card className="mt-4">
       <CardHeader className="flex-row p-4 items-center gap-3">
@@ -40,15 +43,15 @@ const PostCard = ({}: PostCardProps) => {
       </CardContent>
       <CardFooter className="gap-6">
         <FooterItem
-          icon={<AntDesign name="heart" size={20} color={Colors.light.hearthRed} />}
+          icon={<AntDesign name="heart" size={20} color={colorsScheme === "dark" ? Colors.dark.hearthRed : Colors.light.hearthRed} />}
           text="48.8k"
         />
         <FooterItem
-          icon={<Feather name="eye" size={22} color="grey" />}
+          icon={<Feather name="eye" size={22} color={colorsScheme === "dark" ? Colors.dark.icon : Colors.light.icon} />}
           text="12M"
         />
         <FooterItem
-          icon={<FontAwesome name="bookmark-o" size={22} color="black" />}
+          icon={<FontAwesome name="bookmark-o" size={22} color={colorsScheme === "dark" ? Colors.dark.icon : Colors.light.icon} />}
           text="82K"
         />
       </CardFooter>
@@ -65,7 +68,7 @@ export const FooterItem = ({ icon, text }: FooterItemProps) => {
   return (
     <View className="items-center flex-row gap-2">
       {icon}
-      <Text className="text-gray-600">{text}</Text>
+      <Text className="text-gray-600 dark:text-gray-100">{text}</Text>
     </View>
   );
 };
@@ -73,14 +76,14 @@ export const FooterItem = ({ icon, text }: FooterItemProps) => {
 const TextSample = () => {
   return (
     <>
-      <Text className="text-gray-600 my-2">Colaboradores(as),</Text>
-      <Text className="text-gray-600">
+      <Text className="text-gray-600 dark:text-gray-200 my-2">Colaboradores(as),</Text>
+      <Text className="text-gray-600 dark:text-gray-200">
         Atualizem seus dados no sistema interno até 30/04 (endereço, telefone,
         etc.). É essencial para mantermos tudo regularizado.
       </Text>
-      <Text className="text-gray-500 my-2">
+      <Text className="text-gray-500 dark:text-gray-200 my-2">
         Duvidas:{" "}
-        <Text className="font-bold text-gray-600">rh@empresa.com.br</Text>
+        <Text className="font-bold text-gray-600 dark:text-gray-200">rh@empresa.com.br</Text>
       </Text>
     </>
   );

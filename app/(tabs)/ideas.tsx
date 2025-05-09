@@ -14,6 +14,7 @@ const Ideas = () => {
   const [enablePost, setEnablePost] = useState(false);
   const { setPostButtonProps } = useLayoutContext();
 
+
   const isFocused = useIsFocused();
 
   useEffect(() => {

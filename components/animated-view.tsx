@@ -16,18 +16,17 @@ const AnimatedView = ({children,style,className}:AnimatedViewProps) => {
     const styles = [
         {
           position: 'absolute',
-          top: -30,
+          top: 0,
           left: 0,
           right: 0,
           zIndex: 1000,
-          backgroundColor: '#f8f4f4'
         },
         style,
       ]
 
   return (
     <Animated.View 
-    className={cn("px-6 pt-4",className)}
+    className={cn("px-6 pt-4 dark:bg-dark-primary bg-white",className)}
         //@ts-ignore
         style={styles}
     >

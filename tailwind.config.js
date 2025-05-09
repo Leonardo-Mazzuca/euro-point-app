@@ -1,4 +1,6 @@
 const { hairlineWidth } = require('nativewind/theme');
+import {Colors} from './constants/Colors';
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: 'class',
@@ -49,6 +51,10 @@ module.exports = {
         },
         yeallow: {
           primary: "#FBF304"
+        },
+        dark: {
+          primary: Colors.dark.background,
+          card: Colors.dark.cardBg 
         }
 
       },

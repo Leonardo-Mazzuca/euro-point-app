@@ -1,5 +1,5 @@
 
-import { Animated } from "react-native";
+import { Animated, View } from "react-native";
 import React, { useRef, useState } from "react";
 import TabsContainer from "@/components/tabs-container";
 import AnimatedView from "@/components/animated-view";
@@ -33,13 +33,15 @@ const Projects = () => {
         />
 
       </AnimatedView>
-      <ScrollableList 
-          data={Array.from({length:10})}
-          renderItem={() => 
-            <ProjectCard />
-          }
-          handleScroll={handleScroll}
-        />
+      <View className="mt-10 flex-1 px-6">
+        <ScrollableList 
+            data={Array.from({length:10})}
+            renderItem={() => 
+              <ProjectCard />
+            }
+            handleScroll={handleScroll}
+          />
+      </View>
     </TabsContainer>
   );
 };

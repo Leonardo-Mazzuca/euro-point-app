@@ -13,9 +13,9 @@ const ScrollableList = <T,>({
 }: ScrollableListProps<T>) => {
   return (
     <FlatList
-      className={cn("mt-5", className)} //"mt-10"
+      className={cn("mt-10", className)} //"mt-10"
       keyExtractor={(item, index) => index.toString()}
-      contentContainerStyle={{ paddingTop: 180, paddingBottom: 100, gap: 8 }}
+      contentContainerStyle={{ paddingTop: 180, paddingBottom: 100, gap: 8}}
       onScroll={handleScroll}
       {...rest}
     />

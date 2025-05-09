@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils'
 
 const Container = ({children,className,...rest}:ViewProps) => {
   return (
-    <View className={cn('flex p-8 items-center justify-between flex-row',className)} {...rest}>
+    <View className={cn('flex dark:bg-dark-primary p-8 items-center justify-between flex-row',className)} {...rest}>
         {children}
     </View>
   )

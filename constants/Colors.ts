@@ -18,10 +18,11 @@ export const Colors = {
     hearthRed: "#F2513A",
     primaryYeallow: '#FBF304', 
     neutralGray: "#F5F5F5",
+    cardBg: '#F5F5F5',
   },
   dark: {
     text: '#ECEDEE',
-    background: '#151718',
+    background: '#151515',
     tint: tintColorDark,
     icon: '#9BA1A6',
     tabIconDefault: '#9BA1A6',
@@ -30,5 +31,6 @@ export const Colors = {
     hearthRed: "#F2513A",
     primaryYeallow: '#FBF304',
     neutralGray: "#F5F5F5",
+    cardBg: '#2e2e2e',
   },
 };

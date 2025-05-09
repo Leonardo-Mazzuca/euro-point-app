@@ -1,5 +1,7 @@
 import { ButtonProps } from "@/components/Button";
-import { createContext, CSSProperties, PropsWithChildren, useContext, useState } from "react"
+import { createContext, PropsWithChildren, useContext, useState } from "react"
+import { ColorSchemeName, useColorScheme } from "react-native";
+
 
 type LayoutState = {
     hidePostButton: boolean,
@@ -8,6 +10,8 @@ type LayoutState = {
     setHideUI: (hideUI: boolean) => void,
     postButtonProps: ButtonProps
     setPostButtonProps: (props: ButtonProps) => void
+    theme: ColorSchemeName
+    setTheme : (theme: ColorSchemeName) => void
 }
 
 const LayoutContext = createContext<LayoutState | undefined>(undefined);
@@ -17,7 +21,8 @@ const LayoutProvider = ({children}:PropsWithChildren) => {
     const [hidePostButton, setHidePostButton] = useState(false);
     const [hideUI, setHideUI] = useState(false);
     const [postButtonProps, setPostButtonProps] = useState({} as ButtonProps);
-    
+    const currentTheme = useColorScheme();
+    const [theme, setTheme] = useState(currentTheme);
 
     const value = {
         hidePostButton,
@@ -25,7 +30,9 @@ const LayoutProvider = ({children}:PropsWithChildren) => {
         hideUI,
         setHideUI,
         postButtonProps,
-        setPostButtonProps
+        setPostButtonProps,
+        theme,
+        setTheme
     }
 
     return (
