@@ -46,6 +46,14 @@ declare global {
         image: string,
         description: string
     }
+
+    type Quiz = {
+        id: string,
+        totalQuestions: number,
+        image: string,
+        title: string,
+        duration: string
+    }
     
 }
 
