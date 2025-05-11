@@ -39,6 +39,13 @@ declare global {
         title: string,
         content: string
     }
+
+    type Program = {
+        id: string,
+        title: string,
+        image: string,
+        description: string
+    }
     
 }
 

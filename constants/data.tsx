@@ -48,10 +48,43 @@ const helpProfileItems:ProfileItem[] = [
   },
 ]
 
+const programData = [
+  {
+    id: "1",
+    title: "Clic",
+    description: "Aqui vai o texto da descrição",
+    image: "https://images.unsplash.com/photo-1511485977113-f34c92461ad9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
+  },
+  {
+    id: "1",
+    title: "Clic",
+    description: "Aqui vai o texto da descrição",
+    image: "https://images.unsplash.com/photo-1511485977113-f34c92461ad9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
+  },
+  {
+    id: "1",
+    title: "Clic",
+    description: "Aqui vai o texto da descrição",
+    image: "https://images.unsplash.com/photo-1511485977113-f34c92461ad9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
+  },
+  {
+    id: "1",
+    title: "Clic",
+    description: "Aqui vai o texto da descrição",
+    image: "https://images.unsplash.com/photo-1511485977113-f34c92461ad9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
+  },
+  {
+    id: "1",
+    title: "Clic",
+    description: "Aqui vai o texto da descrição",
+    image: "https://images.unsplash.com/photo-1511485977113-f34c92461ad9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
+  },
+]
 
 
 export {
   accountProfileItems,
   helpProfileItems,
-  postTypeOptions
+  postTypeOptions,
+  programData
 }

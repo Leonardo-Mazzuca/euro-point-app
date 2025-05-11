@@ -1,7 +1,6 @@
 import React, { useRef, useState } from "react";
 import {
   Animated,
-  FlatList,
   Text,
   View,
 } from "react-native";
@@ -13,6 +12,7 @@ import TabsContainer from "@/components/tabs-container";
 import AnimatedView from "@/components/animated-view";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import SearchInput from "@/components/search-input";
+import ScrollableList from "@/components/scrollable-list";
 
 const Home = () => {
   const [currentScreen, setCurrentScreen] = useState<HomeScreen>("for-you");
@@ -45,22 +45,19 @@ const Home = () => {
 
       <View className="mt-16 flex-1 px-6">
         {currentScreen === "for-you" && (
-          <FlatList
+          <ScrollableList
             data={Array.from({ length: 5 })}
             renderItem={() => <PostCard />}
-            keyExtractor={(_, i) => i.toString()}
-            contentContainerStyle={{  paddingTop: 180, paddingBottom: 100, gap: 8  }}
-            onScroll={handleScroll}
+            handleScroll={handleScroll}
             
           />
         )}
 
         {currentScreen === "following" && (
-          <FlatList
+          <ScrollableList
             data={Array.from({ length: 3 })}
             renderItem={() => <PostCard />}
-            keyExtractor={(_, i) => i.toString()}
-            contentContainerStyle={{  paddingTop: 180, paddingBottom: 100, gap: 8  }}
+            handleScroll={handleScroll}
           />
         )}
       </View>
