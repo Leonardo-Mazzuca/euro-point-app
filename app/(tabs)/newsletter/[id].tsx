@@ -2,7 +2,6 @@ import { View, Text, Image } from "react-native";
 import React from "react";
 import { router, useLocalSearchParams } from "expo-router";
 import Header from "@/components/header";
-import { Button } from "@/components/Button";
 import Feather from "@expo/vector-icons/Feather";
 import { Card } from "@/components/Card";
 import Entypo from "@expo/vector-icons/Entypo";
@@ -10,20 +9,16 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import { FooterItem } from "@/components/post-card";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Colors } from "react-native/Libraries/NewAppScreen";
+import { SafeAreaView } from "react-native-safe-area-context";
+import BackButton from "@/components/back-button";
 
 const SingleNewsletter = () => {
   const { id } = useLocalSearchParams();
   const handleBack = () => router.back();
 
-  const LeftChild = () => (
-    <Button onPress={handleBack} className="me-auto" variant={"ghost"}>
-      <Feather name="chevron-left" size={24} color="black" />
-    </Button>
-  );
-
   return (
-    <View className="mt-10">
-      <Header leftChild={<LeftChild />} hideProfile hideLine />
+    <SafeAreaView className="flex-1 dark:bg-dark-primary">
+      <Header leftChild={<BackButton handleBack={handleBack} />} hideProfile hideLine />
 
       <View className="p-5">
         <Card className="p-3 border border-gray-200">
@@ -64,7 +59,7 @@ const SingleNewsletter = () => {
           </View>
         </Card>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

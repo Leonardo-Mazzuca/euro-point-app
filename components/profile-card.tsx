@@ -6,7 +6,6 @@ import Feather from '@expo/vector-icons/Feather'
 import { Text, View } from 'react-native'
 import { Button } from '@/components/Button'
 import { Switch } from '@/components/Switch'
-import { useEffect, useState } from 'react'
 
 
 type ProfileCardProps = {
@@ -47,7 +46,6 @@ const ProfileCardItem = ({item: {
     setToggleActive
 }}:{item:ProfileItem}) => {
 
-
     return (
         <View className='flex-row my-2 items-center justify-between gap-2'>
             <View className='flex-row items-center gap-2'>
@@ -71,7 +69,7 @@ const ProfileCardItem = ({item: {
                 {isToggler && (
                     <Switch
                         checked={isTogglerActive!}
-                        onCheckedChange={(val) => setToggleActive?.(val)}
+                        onCheckedChange={(val:any) => setToggleActive?.(val)}
                     />
                 )}
             </View>

@@ -25,7 +25,7 @@ const NewsLetterCard = () => {
           <View>
             <View className="gap-2">
               <Text className="font-bold text-2xl">Compilado do mês</Text>
-              <Text className="font-normal text-gray-500">
+              <Text className="font-normal dark:text-gray-300 text-gray-500">
                 Por Leonardo Mazzuca
               </Text>
             </View>
@@ -34,7 +34,7 @@ const NewsLetterCard = () => {
                 <View className="flex-row">
                     <Text className="font-semibold text-blue-primary">TI</Text>
                     <Entypo name="dot-single" size={18} color="grey" />
-                    <Text className="text-gray-500">
+                    <Text className="text-gray-500 dark:text-gray-400">
                         9 dias atrás
                     </Text>
             

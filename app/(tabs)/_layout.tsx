@@ -16,7 +16,7 @@ const TabsLayout = () => {
   <Tabs
     screenOptions={{
       tabBarStyle: {
-        height: 60,
+        height: 70,
         borderTopColor: 'transparent',
         borderTopWidth: 0,
         elevation: 0,
@@ -24,9 +24,13 @@ const TabsLayout = () => {
         backgroundColor: theme === 'dark' ? Colors.dark.background : Colors.light.background,
         borderTopLeftRadius: 25,
         borderTopEndRadius: 25,
-        display: hideUI ? 'none' : 'flex'
+        display: hideUI ? 'none' : 'flex',
+        position: 'absolute',
       },
-      tabBarActiveTintColor: Colors.light.primaryBlue
+      tabBarActiveTintColor: Colors.light.primaryBlue,
+      tabBarItemStyle: {
+        marginTop: 5
+      }
     }}
   >
     <Tabs.Screen 

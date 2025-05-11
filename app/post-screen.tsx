@@ -16,6 +16,7 @@ import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import { Colors } from '@/constants/Colors'
 import { useState } from 'react'
 import Sheet from '@/components/sheet'
+import CloseButton from '@/components/close-button'
 
 
 const PostScreen = () => {
@@ -49,12 +50,10 @@ const PostScreen = () => {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       keyboardVerticalOffset={100} 
     >
-      <ScrollView>
+      <ScrollView className=' dark:bg-dark-primary'>
         <Container className='flex-col'>
           <View className='flex-row w-full items-center justify-between'>
-            <Button variant={"ghost"} onPress={handleClose}>
-              <AntDesign name='close' size={24} color="black"/>
-            </Button>
+            <CloseButton handleClose={handleClose} />
             <View className='flex-1'>
               <DropDown
                 onChange={item => handleFormType(item.value as PostFormEnum)}

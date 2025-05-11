@@ -55,23 +55,15 @@ const ProfileAvatar = () => (
 );
 const Profile = () => {
 
-  const {theme} = useLayoutContext();
-
-  const [checkToggler, setCheckToggler] = useState(false);
-
-  useEffect(()=> {
-    if(theme === "dark"){
-      setCheckToggler(true)
-    }
-  },[theme])
-
+  const {theme,toggleTheme} = useLayoutContext();
+  
   const preferenceProfileItems:ProfileItem[] = [
     {
       icon: <Feather name="moon" size={28} color={Colors.light.primaryBlue} />,
       title: "Tema escuro",
       isToggler: true,
-      isTogglerActive: checkToggler,
-      setToggleActive: setCheckToggler
+      isTogglerActive: theme === "dark",
+      setToggleActive: toggleTheme
     },
     {
       icon: <Entypo name="language" size={28} color={Colors.light.primaryBlue} />,

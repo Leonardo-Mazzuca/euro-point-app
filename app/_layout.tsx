@@ -10,8 +10,6 @@ import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import "react-native-reanimated";
-
-import { useColorScheme } from "@/hooks/useColorScheme";
 import { LayoutProvider, useLayoutContext } from "@/context/layout-context";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
@@ -20,21 +18,35 @@ SplashScreen.preventAutoHideAsync();
 
 const DefaultLayout = () => {
 
-  const {theme} = useLayoutContext();
-
+  
   return (
 
-    <ThemeProvider value={theme === "dark" ? DarkTheme : DefaultTheme}>
+    // <ThemeProvider value={DarkTheme}>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="post-screen" options={{ headerShown: false }} />
         <Stack.Screen name="profile" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
       </Stack>
-    </ThemeProvider>
+    // </ThemeProvider>
 
   );
 };
+
+
+const InnerBar = () => {
+    
+  const {theme} = useLayoutContext();
+  const isDarkMode = theme === "dark";
+  
+  return (
+    <StatusBar 
+      style={"auto"}
+      backgroundColor={isDarkMode ? "#000" : "#FF6A13"} 
+    />
+
+  )
+}
 
 export default function RootLayout() {
 
@@ -75,7 +87,7 @@ export default function RootLayout() {
        
         <LayoutProvider>
           <DefaultLayout />
-          <StatusBar style="auto" />
+          <InnerBar />
         </LayoutProvider>
 
     </GestureHandlerRootView>

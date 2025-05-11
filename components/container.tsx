@@ -1,6 +1,6 @@
 
 
-import { View, Text, ViewProps } from 'react-native'
+import { View, ViewProps } from 'react-native'
 import React from 'react'
 import { cn } from '@/lib/utils'
 

@@ -12,21 +12,17 @@ import { FooterItem } from '@/components/post-card';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { Colors } from '@/constants/Colors';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { Button } from '@/components/Button';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import BackButton from '@/components/back-button';
 
 const SingleProject = () => {
     const { id } = useLocalSearchParams();
     const handleBack = () => router.back();
   
-    const LeftChild = () => (
-      <Button onPress={handleBack} className="me-auto" variant={"ghost"}>
-        <Feather name="chevron-left" size={24} color="black" />
-      </Button>
-    );
   
     return (
-      <View className="mt-10">
-        <Header leftChild={<LeftChild />} hideProfile hideLine />
+      <SafeAreaView className="flex-1 dark:bg-dark-primary">
+        <Header leftChild={<BackButton handleBack={handleBack} />} hideProfile hideLine />
   
         <View className="p-5">
           <Card className="p-3 border border-gray-200">
@@ -38,11 +34,11 @@ const SingleProject = () => {
             />
   
             <View className="flex-row items-center my-3">
-              <Text className="font-semibold text-xl">
+              <Text className="font-semibold dark:text-white text-xl">
                 Projeto X
               </Text>
               <Entypo name="dot-single" size={20} color="grey" />
-              <Text className="text-gray-500">6 horas atrás</Text>
+              <Text className="text-gray-500 dark:text-gray-300">6 horas atrás</Text>
             </View>
   
             <View className="gap-6 flex-row">
@@ -67,7 +63,7 @@ const SingleProject = () => {
             </View>
           </Card>
         </View>
-      </View>
+      </SafeAreaView>
     );
 }
 

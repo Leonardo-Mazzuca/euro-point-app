@@ -1,8 +1,11 @@
 import { ButtonProps } from "@/components/Button";
-import { createContext, PropsWithChildren, useContext, useState } from "react"
-import { ColorSchemeName, useColorScheme } from "react-native";
+import { useColorScheme } from "nativewind";
+import { createContext, PropsWithChildren, useContext, useEffect, useState } from "react"
+import AsyncStorage from "@react-native-async-storage/async-storage"
+import { View } from "react-native";
+import { themes } from "@/util/color-theme";
 
-
+type Theme = 'dark' | 'light' | undefined
 type LayoutState = {
     hidePostButton: boolean,
     setHidePostButton: (hidePostButton: boolean) => void,
@@ -10,8 +13,8 @@ type LayoutState = {
     setHideUI: (hideUI: boolean) => void,
     postButtonProps: ButtonProps
     setPostButtonProps: (props: ButtonProps) => void
-    theme: ColorSchemeName
-    setTheme : (theme: ColorSchemeName) => void
+    toggleTheme: () => void
+    theme: Theme
 }
 
 const LayoutContext = createContext<LayoutState | undefined>(undefined);
@@ -21,8 +24,27 @@ const LayoutProvider = ({children}:PropsWithChildren) => {
     const [hidePostButton, setHidePostButton] = useState(false);
     const [hideUI, setHideUI] = useState(false);
     const [postButtonProps, setPostButtonProps] = useState({} as ButtonProps);
-    const currentTheme = useColorScheme();
-    const [theme, setTheme] = useState(currentTheme);
+    const {colorScheme,setColorScheme} = useColorScheme()
+
+    const toggleTheme = async () => {
+
+        const newTheme = colorScheme === 'dark' ? 'light' : 'dark';
+        setColorScheme(newTheme);
+        await AsyncStorage.setItem('theme', newTheme); 
+
+    };
+
+    useEffect(() => {
+        const getTheme = async () => {
+            const savedTheme = await AsyncStorage.getItem('theme');
+            if (savedTheme) {
+                setColorScheme(savedTheme as 'dark' | 'light'); 
+            } else {
+                setColorScheme(colorScheme as 'dark' | 'light');
+            }
+        };
+        getTheme();
+    }, []);
 
     const value = {
         hidePostButton,
@@ -31,13 +53,16 @@ const LayoutProvider = ({children}:PropsWithChildren) => {
         setHideUI,
         postButtonProps,
         setPostButtonProps,
-        theme,
-        setTheme
+        theme: colorScheme,
+        toggleTheme
     }
 
     return (
         <LayoutContext.Provider value={value}>
-            {children}
+            {/* @ts-ignore */}
+            <View style={themes[colorScheme]} className="flex-1 dark">
+                {children}
+            </View>
         </LayoutContext.Provider>
     )
 }

@@ -30,7 +30,7 @@ export const Colors = {
     primaryBlue: "#044B8B",
     hearthRed: "#F2513A",
     primaryYeallow: '#FBF304',
-    neutralGray: "#F5F5F5",
+    neutralGray: "#2e2e2e",
     cardBg: '#2e2e2e',
   },
 };

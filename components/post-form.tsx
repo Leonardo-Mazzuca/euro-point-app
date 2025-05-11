@@ -1,6 +1,6 @@
 
 
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
 import React from 'react'
 import { useFormContext } from 'react-hook-form';
 import { PostCreateType } from '@/schemas/post';
