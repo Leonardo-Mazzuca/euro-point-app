@@ -7,13 +7,14 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import { Colors } from "@/constants/Colors";
 import Feather from "@expo/vector-icons/Feather";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { useColorScheme, View } from "react-native";
+import { View } from "react-native";
+import { useLayoutContext } from "@/context/layout-context";
 
 type PostCardProps = {};
 
 const PostCard = ({}: PostCardProps) => {
 
-  const colorsScheme = useColorScheme();
+  const {theme} = useLayoutContext();
 
   return (
     <Card className="mt-4">
@@ -32,10 +33,10 @@ const PostCard = ({}: PostCardProps) => {
         <Entypo name="dot-single" size={18} color="grey" />
         <Text className="font-normal text-lg text-gray-400">1 hora atrás</Text>
         <Button size={"icon"} variant="ghost">
-          <AntDesign name="plus" size={28} color={Colors.light.primaryBlue} />
+          <AntDesign name="plus" size={28} color={theme === "dark" ? Colors.dark.primaryBlue : Colors.light.primaryBlue} />
         </Button>
         <Button variant="ghost">
-          <Text className="text-blue-primary font-normal text-xl">Seguir</Text>
+          <Text style={{ color: theme === "dark" ? Colors.dark.primaryBlue : Colors.light.primaryBlue }} className="font-normal text-xl">Seguir</Text>
         </Button>
       </CardHeader>
       <CardContent>
@@ -43,15 +44,15 @@ const PostCard = ({}: PostCardProps) => {
       </CardContent>
       <CardFooter className="gap-6">
         <FooterItem
-          icon={<AntDesign name="heart" size={20} color={colorsScheme === "dark" ? Colors.dark.hearthRed : Colors.light.hearthRed} />}
+          icon={<AntDesign name="heart" size={20} color={Colors.dark.hearthRed} />}
           text="48.8k"
         />
         <FooterItem
-          icon={<Feather name="eye" size={22} color={colorsScheme === "dark" ? Colors.dark.icon : Colors.light.icon} />}
+          icon={<Feather name="eye" size={22} color={theme === "dark" ? Colors.dark.icon : Colors.light.icon} />}
           text="12M"
         />
         <FooterItem
-          icon={<FontAwesome name="bookmark-o" size={22} color={colorsScheme === "dark" ? Colors.dark.icon : Colors.light.icon} />}
+          icon={<FontAwesome name="bookmark-o" size={22} color={theme === "dark" ? Colors.dark.icon : Colors.light.icon} />}
           text="82K"
         />
       </CardFooter>

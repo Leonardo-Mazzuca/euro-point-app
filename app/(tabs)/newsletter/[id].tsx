@@ -30,21 +30,17 @@ const SingleNewsletter = () => {
           />
 
           <View className="flex-row items-center my-3">
-            <Text className="font-semibold text-xl">
+            <Text className="font-semibold dark:text-white text-xl">
               Segurança e conformidade
             </Text>
             <Entypo name="dot-single" size={20} color="grey" />
-            <Text className="text-gray-500">6 horas atrás</Text>
+            <Text className="text-gray-500 dark:text-gray-400">6 horas atrás</Text>
           </View>
 
           <View className="gap-6 flex-row">
             <FooterItem
               icon={
-                <AntDesign
-                  name="heart"
-                  size={20}
-                  color={Colors.light.hearthRed}
-                />
+                <AntDesign name="heart" size={20} color={Colors.dark.hearthRed} />
               }
               text="48.8k"
             />
@@ -53,7 +49,7 @@ const SingleNewsletter = () => {
               text="12M"
             />
             <FooterItem
-              icon={<FontAwesome name="bookmark-o" size={22} color="black" />}
+              icon={<FontAwesome name="bookmark-o" size={22} color="grey" />}
               text="82K"
             />
           </View>

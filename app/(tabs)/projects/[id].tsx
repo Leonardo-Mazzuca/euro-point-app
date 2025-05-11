@@ -44,11 +44,7 @@ const SingleProject = () => {
             <View className="gap-6 flex-row">
               <FooterItem
                 icon={
-                  <AntDesign
-                    name="heart"
-                    size={20}
-                    color={Colors.light.hearthRed}
-                  />
+                  <AntDesign name="heart" size={20} color={Colors.dark.hearthRed} />
                 }
                 text="48.8k"
               />
@@ -57,7 +53,7 @@ const SingleProject = () => {
                 text="12M"
               />
               <FooterItem
-                icon={<FontAwesome name="bookmark-o" size={22} color="black" />}
+                icon={<FontAwesome name="bookmark-o" size={22} color="grey" />}
                 text="82K"
               />
             </View>
