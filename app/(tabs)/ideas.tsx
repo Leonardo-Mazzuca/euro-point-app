@@ -1,40 +1,46 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import TabsContainer from "@/components/tabs-container";
 import Header from "@/components/header";
 import SearchInput from "@/components/search-input";
 import { Button } from "@/components/Button";
-import { FlatList, Text, View } from "react-native";
+import { BackHandler, FlatList, Text, View } from "react-native";
 import IdeaCard from "@/components/idea-card";
 import { useLayoutContext } from "@/context/layout-context";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { Colors } from "@/constants/Colors";
-import { useIsFocused } from "@react-navigation/native";
+import { useFocusEffect } from "expo-router";
+import ModalScreen from "@/components/modal-screen";
+
 
 const Ideas = () => {
   const [enablePost, setEnablePost] = useState(false);
-  const { setPostButtonProps } = useLayoutContext();
+  const { setPostButtonProps, setHideTabs } = useLayoutContext();
+  const [openAlertModal, setOpenAlertModal] = useState(false);
 
+  const handlePost = () => {
+    setHideTabs(true);
+    setEnablePost(!enablePost);
+  }
 
-  const isFocused = useIsFocused();
-
-  useEffect(() => {
-    if (!isFocused) {
-      setPostButtonProps({
-        className: "bg-blue-primary",
-        children: (
-          <AntDesign size={24} color={Colors.light.primaryYeallow} name="plus" />
-        ),
-      });
-    } else {
-      setPostButtonProps({
-        className: "bg-yeallow-primary",
-        children: (
-          <AntDesign size={24} color={Colors.light.primaryBlue} name="plus" />
-        ),
-      });
+  useFocusEffect(
+    useCallback(() => {
+      const onBackPress = () => {
+        if (enablePost) {
+          setOpenAlertModal(true);
+          return true;
+        }
+        return false;
+      };
   
-    }
-  }, [isFocused]);
+      const subscription = BackHandler.addEventListener(
+        "hardwareBackPress",
+        onBackPress
+      );
+  
+      return () => subscription.remove();
+    }, [enablePost])
+  );
+  
 
   useEffect(() => {
     if (enablePost) {
@@ -42,6 +48,14 @@ const Ideas = () => {
         className: "bg-yeallow-primary",
         children: (
           <AntDesign size={24} color={Colors.light.primaryBlue} name="check" />
+        ),
+      });
+    } else {
+      setHideTabs(false)
+      setPostButtonProps({
+        className: "bg-yeallow-primary",
+        children: (
+          <AntDesign size={24} color={Colors.light.primaryBlue} name="plus" />
         ),
       });
     }
@@ -53,8 +67,8 @@ const Ideas = () => {
         <Header />
         <SearchInput placeholder="Procure uma ideia" />
         <Button
-          onPress={() => setEnablePost(!enablePost)}
-          className="bg-blue-primary mx-auto rounded-full py-2 px-5"
+          onPress={handlePost}
+          className="bg-blue-primary dark:bg-dark-card mx-auto rounded-full py-2 px-5"
         >
           <Text className="text-white font-semibold text-lg">
             {!enablePost ? "Publicar ideia" : "Cancelar"}
@@ -75,6 +89,18 @@ const Ideas = () => {
           renderItem={({ item }) => <IdeaCard enablePost={enablePost} />}
         />
       </View>
+      <ModalScreen 
+        visible={openAlertModal}
+        onRequestClose={() => setOpenAlertModal(false)}
+        wrapperClassNames="w-[300px] h-[100px]"
+      >
+        <Text className="dark:text-white font-semibold text-xl">
+          Ops!
+        </Text>
+        <Text className="dark:text-gray-200 font-medium text-lg">
+          Você não pode sair dessa tela enquanto estiver publicando uma ideia!
+        </Text>
+      </ModalScreen>
     </TabsContainer>
   );
 };

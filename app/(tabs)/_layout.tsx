@@ -5,13 +5,12 @@ import AntDesign from '@expo/vector-icons/AntDesign'
 import Feather from '@expo/vector-icons/Feather';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { Tabs } from 'expo-router'
-import { useColorScheme } from 'react-native';
 
 
 const TabsLayout = () => {
 
-  const {hideUI} = useLayoutContext();
-  const {theme} = useLayoutContext();
+  const {theme, hideTabs, hideUI} = useLayoutContext();
+
   return (
   <Tabs
     screenOptions={{
@@ -24,13 +23,14 @@ const TabsLayout = () => {
         backgroundColor: theme === 'dark' ? Colors.dark.background : Colors.light.background,
         borderTopLeftRadius: 25,
         borderTopEndRadius: 25,
-        display: hideUI ? 'none' : 'flex',
+        display: (hideUI || hideTabs) ? 'none' : 'flex',
         position: 'absolute',
       },
       tabBarActiveTintColor: Colors.light.primaryBlue,
       tabBarItemStyle: {
         marginTop: 5
-      }
+      },
+      
     }}
   >
     <Tabs.Screen 

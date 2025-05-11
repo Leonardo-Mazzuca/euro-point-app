@@ -15,6 +15,8 @@ type LayoutState = {
     setPostButtonProps: (props: ButtonProps) => void
     toggleTheme: () => void
     theme: Theme
+    hideTabs: boolean
+    setHideTabs: (hideTabs: boolean) => void
 }
 
 const LayoutContext = createContext<LayoutState | undefined>(undefined);
@@ -24,6 +26,7 @@ const LayoutProvider = ({children}:PropsWithChildren) => {
     const [hidePostButton, setHidePostButton] = useState(false);
     const [hideUI, setHideUI] = useState(false);
     const [postButtonProps, setPostButtonProps] = useState({} as ButtonProps);
+    const [hideTabs, setHideTabs] = useState(false);
     const {colorScheme,setColorScheme} = useColorScheme()
 
     const toggleTheme = async () => {
@@ -54,7 +57,9 @@ const LayoutProvider = ({children}:PropsWithChildren) => {
         postButtonProps,
         setPostButtonProps,
         theme: colorScheme,
-        toggleTheme
+        toggleTheme,
+        hideTabs,
+        setHideTabs
     }
 
     return (

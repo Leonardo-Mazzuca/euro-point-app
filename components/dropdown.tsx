@@ -53,9 +53,9 @@ const DropDown = <T,>({ ...rest }: DropdownProps<T>) => {
       placeholder="Selecione"
       renderRightIcon={() =>
         !isFocus ? (
-          <Feather color={"black"} name="chevron-down" size={20} />
+          <Feather color={color} name="chevron-down" size={20} />
         ) : (
-          <Feather color={"black"} name="chevron-up" size={20} />
+          <Feather color={color} name="chevron-up" size={20} />
         )
       }
     />

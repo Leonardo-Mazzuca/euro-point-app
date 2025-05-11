@@ -9,7 +9,7 @@ const Card = forwardRef<ViewRef, ComponentPropsWithoutRef<typeof View>>(
     <View
       ref={ref}
       className={cn(
-        "rounded-2xl border dark:bg-dark-card border-gray-200 dark:border-zinc-600",
+        "rounded-2xl border dark:bg-dark-card border-gray-200 dark:border-zinc-800",
         className
       )}
       {...props}

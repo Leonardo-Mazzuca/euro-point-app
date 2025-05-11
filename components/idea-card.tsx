@@ -2,9 +2,8 @@ import { Text, View, TouchableOpacity, ScrollView, TextInput } from "react-nativ
 import React, { useState } from "react";
 import { Checkbox } from "@/components/Checkbox";
 import ModalScreen from "@/components/modal-screen";
-import { Button } from "@/components/Button";
-import Entypo from '@expo/vector-icons/Entypo';
-import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
+import BackButton from "@/components/back-button";
+import DeleteButton from "@/components/delete-button";
 
 type IdeaCardProps = {
   idea?: Idea;
@@ -37,11 +36,11 @@ const IdeaCard = ({ enablePost, idea }: IdeaCardProps) => {
     <>
     
       <TouchableOpacity
-        className={"bg-blue-secondary gap-3 rounded-2xl p-3 flex-1"}
+        className={"bg-blue-secondary dark:bg-blue-primary gap-3 rounded-2xl p-3 flex-1"}
         onPress={handleOpen}
       >
         <View className="flex-row">
-          <Text className="text-xl font-semibold">Title</Text>
+          <Text className="text-xl dark:text-white font-semibold">Title</Text>
           {enablePost && (
             <Checkbox
               className="ms-auto"
@@ -50,7 +49,7 @@ const IdeaCard = ({ enablePost, idea }: IdeaCardProps) => {
             />
           )}
         </View>
-        <Text>Adasdasdsadsadsadasdasdsdasdsadsadadadsadsad</Text>
+        <Text className="dark:text-gray-300">Adasdasdsadsadsadasdasdsdasdsadsadadadsadsad</Text>
       </TouchableOpacity>
 
       <ModalScreen 
@@ -59,17 +58,13 @@ const IdeaCard = ({ enablePost, idea }: IdeaCardProps) => {
         wrapperClassNames="w-[300px] h-[700px]"
         header={
         <View className="flex-row items-center justify-between">
-          <Button onPress={handleClose} variant={"ghost"}>
-            <Entypo name="chevron-left" size={24} color="black" />
-          </Button>
-          <Button onPress={handleDelete} variant={"ghost"}>
-            <FontAwesome5 name="trash" size={16} color="black" />
-          </Button>
+          <BackButton handleBack={handleClose} />
+          <DeleteButton handleDelete={handleDelete} />
         </View>
         }
 
       >
-        <Text className="text-2xl font-semibold">
+        <Text className="text-2xl dark:text-white font-semibold">
           Product management
         </Text>
         <ScrollView>
@@ -77,6 +72,7 @@ const IdeaCard = ({ enablePost, idea }: IdeaCardProps) => {
           multiline
           value={text}
           onChangeText={setText}
+          className="dark:text-gray-300"
         />
         </ScrollView>
 

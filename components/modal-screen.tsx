@@ -3,6 +3,8 @@ import { Button } from "@/components/Button";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { BlurView } from 'expo-blur'
 import { cn } from "@/lib/utils";
+import { useLayoutContext } from "@/context/layout-context";
+import { Colors } from "@/constants/Colors";
 
 type IdeaModalProps = {
   idea?: Idea;
@@ -11,6 +13,9 @@ type IdeaModalProps = {
 } & ModalProps;
 
 const ModalScreen = ({ header, children,onRequestClose,wrapperClassNames, ...rest }: IdeaModalProps) => {
+
+  const {theme} = useLayoutContext();
+
   return (
     <Modal {...rest} animationType="fade" transparent>
       <TouchableWithoutFeedback>
@@ -19,7 +24,7 @@ const ModalScreen = ({ header, children,onRequestClose,wrapperClassNames, ...res
             tint="dark"
             intensity={100}
           >
-            <View className="bg-white px-3 py-2 mx-auto my-auto rounded-xl min-w-[250px] min-h-[250px]">
+            <View className="bg-white dark:bg-dark-card px-3 py-2 mx-auto my-auto rounded-xl min-w-[250px]">
               {header ? (
                 header
               ) : (
@@ -28,10 +33,10 @@ const ModalScreen = ({ header, children,onRequestClose,wrapperClassNames, ...res
                   onPress={onRequestClose}
                   variant={"ghost"}
                 >
-                  <AntDesign name="close" color={"#000"} size={24} />
+                  <AntDesign name="close" color={theme === "dark" ? Colors.dark.icon : Colors.light.icon} size={24} />
                 </Button>
               )}
-              <View className={cn("min-w-[250px] min-h-[250px]",wrapperClassNames)}>
+              <View className={cn("min-w-[250px]",wrapperClassNames)}>
                 {children}
               </View>
             </View>
