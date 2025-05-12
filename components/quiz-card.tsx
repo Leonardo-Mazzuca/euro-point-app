@@ -14,7 +14,7 @@ const QuizCard = () => {
             className='flex-row items-center gap-3'
         >
             <Image
-                className='w-[100px] h-[100px] rounded-xl'
+                className='w-[70px] h-[70px] rounded-xl'
                 source={{
                     uri: "https://marcaspelomundo.com.br/wp-content/uploads/2025/01/IMG_7660-e1738353337221-875x1024.jpeg",
                 }}
@@ -23,10 +23,10 @@ const QuizCard = () => {
                 <Text className='text-blue-primary font-semibold text-xl'>
                     CLIC
                 </Text>
-                <Text className='text-gray-200 flex-row items-center'>
+                <Text className='text-gray-400 text-sm flex-row items-center'>
                     <AntDesign name="profile" size={12} color="gray" /> 10 Questões
                 </Text>
-                <Text className='text-gray-200 flex-row items-center'>
+                <Text className='text-gray-400 text-sm flex-row items-center'>
                     <FontAwesome6 name="clock" size={12} color="grey" /> 20 min
                 </Text>
             </View>

@@ -12,6 +12,7 @@ import { useEffect } from "react";
 import "react-native-reanimated";
 import { LayoutProvider, useLayoutContext } from "@/context/layout-context";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { Colors } from "@/constants/Colors";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -41,8 +42,8 @@ const InnerBar = () => {
   
   return (
     <StatusBar 
-      style={"auto"}
-      backgroundColor={isDarkMode ? "#000" : "#FF6A13"} 
+      style={"light"}
+      backgroundColor={isDarkMode ? "#000" : Colors.light.primaryBlue} 
     />
 
   )

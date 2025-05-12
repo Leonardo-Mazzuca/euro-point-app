@@ -88,7 +88,28 @@ const quizzes = [
     title: "Clic",
     duration: "10 min",
     totalQuestions: 10 
-  }
+  },
+  {
+    id: "2",
+    image: "https://images.unsplash.com/photo-1511485977113-f34c92461ad9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
+    title: "Kaizen",
+    duration: "10 min",
+    totalQuestions: 10 
+  },
+  {
+    id: "3",
+    image: "https://images.unsplash.com/photo-1511485977113-f34c92461ad9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
+    title: "Test",
+    duration: "10 min",
+    totalQuestions: 10 
+  },
+  {
+    id: "4",
+    image: "https://images.unsplash.com/photo-1511485977113-f34c92461ad9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
+    title: "Test",
+    duration: "10 min",
+    totalQuestions: 10 
+  },
 ]
 
 export {
