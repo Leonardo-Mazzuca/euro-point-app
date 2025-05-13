@@ -70,7 +70,7 @@ const Trainings = () => {
         )}
 
         {category === 'Quizzes' && (
-          <View className='px-4' style={{paddingTop: 220}}>
+          <View className='px-4' style={{paddingTop: 200}}>
             <FlatList
               className='h-[300px]'
               data={quizzes}
