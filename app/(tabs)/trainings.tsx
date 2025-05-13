@@ -76,7 +76,10 @@ const Trainings = () => {
               data={quizzes}
               keyExtractor={(item, index) => index.toString()}
               renderItem={({item}) => (
-                <QuizCard />
+                <QuizCard
+                  isSelected={selectedQuiz === item.id}
+                  setIsSelected={() => setSelectedQuiz(item.id)}
+                />
               )}
               contentContainerStyle={{gap: 15}}
             />

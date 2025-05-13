@@ -3,10 +3,19 @@ import React from "react";
 import { Card } from "@/components/Card";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import { AntDesign } from "@expo/vector-icons";
+import { cn } from "@/lib/utils";
 
-const QuizCard = () => {
+type QuizCardProps = {
+  isSelected:boolean;
+  setIsSelected: (value: boolean) => void
+}
+
+const QuizCard = ({isSelected, setIsSelected}:QuizCardProps) => {
   return (
-    <TouchableOpacity className="flex-row w-full">
+    <TouchableOpacity 
+      onPress={()=> setIsSelected(!isSelected)} 
+      className={cn("flex-row w-full")}
+    >
       <Card className="bg-white flex-1 flex-row px-4 gap-3 py-2">
         <Image
           className="w-[70px] h-[70px] rounded-xl"
