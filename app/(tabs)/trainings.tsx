@@ -70,26 +70,27 @@ const Trainings = () => {
         )}
 
         {category === 'Quizzes' && (
-          <View className='px-4' style={{paddingTop: 200}}>
+          <View className='px-4' style={{paddingTop: 220}}>
             <FlatList
               className='h-[300px]'
               data={quizzes}
               keyExtractor={(item, index) => index.toString()}
               renderItem={({item}) => (
                 <QuizCard
-                  isSelected={selectedQuiz === item.id}
-                  setIsSelected={() => setSelectedQuiz(item.id)}
+                  selected={selectedQuiz}
+                  setSelected={setSelectedQuiz}
+                  quiz={item}
                 />
               )}
               contentContainerStyle={{gap: 15}}
             />
-            <View className='my-3'>
-              <Text className='font-semibold text-xl'>
+            <View>
+              <Text className='font-semibold dark:text-white my-3 text-xl'>
                 Continue
               </Text>
               <RunningQuiz />
             </View>
-            <Button className='bg-blue-primary'>
+            <Button disabled={selectedQuiz === ""} className='bg-blue-primary mt-10'>
               <Text className='font-semibold text-xl text-white'>
                 Começar Quiz
               </Text>

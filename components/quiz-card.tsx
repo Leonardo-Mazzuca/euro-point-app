@@ -4,19 +4,36 @@ import { Card } from "@/components/Card";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import { AntDesign } from "@expo/vector-icons";
 import { cn } from "@/lib/utils";
+import { LinearGradient } from "expo-linear-gradient";
 
 type QuizCardProps = {
-  isSelected:boolean;
-  setIsSelected: (value: boolean) => void
-}
+  selected: string;
+  setSelected: (value: string) => void;
+  quiz: Quiz
+};
 
-const QuizCard = ({isSelected, setIsSelected}:QuizCardProps) => {
+const QuizCard = ({ selected, setSelected, quiz}: QuizCardProps) => {
+
+  const RADIUS = 10;
+
   return (
-    <TouchableOpacity 
-      onPress={()=> setIsSelected(!isSelected)} 
-      className={cn("flex-row w-full")}
+    <LinearGradient
+      colors={selected === quiz.id ? ["#3550DC", "#27E9F7"] : ["#dedede", "#dedede"]}
+      style={{ 
+        borderRadius: RADIUS,
+        width: "100%",
+        padding: 2
+      }}
+      start={{x:0,y:0}}
+      end={{x:1,y:0}}
     >
-      <Card className="bg-white flex-1 flex-row px-4 gap-3 py-2">
+      <TouchableOpacity
+        onPress={() => setSelected(quiz.id)}
+        className={"flex-1 dark:bg-dark-primary bg-white flex-row px-4 gap-3 py-2"}
+        style={{
+          borderRadius: RADIUS
+        }}
+      >
         <Image
           className="w-[70px] h-[70px] rounded-xl"
           source={{
@@ -32,8 +49,8 @@ const QuizCard = ({isSelected, setIsSelected}:QuizCardProps) => {
             <FontAwesome6 name="clock" size={12} color="grey" /> 20 min
           </Text>
         </View>
-      </Card>
-    </TouchableOpacity>
+      </TouchableOpacity>
+    </LinearGradient>
   );
 };
 

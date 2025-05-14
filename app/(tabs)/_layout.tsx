@@ -15,7 +15,7 @@ const TabsLayout = () => {
   <Tabs
     screenOptions={{
       tabBarStyle: {
-        height: 100,
+
         borderTopColor: 'transparent',
         borderTopWidth: 0,
         elevation: 0,
@@ -25,6 +25,7 @@ const TabsLayout = () => {
         borderTopEndRadius: 25,
         display: (hideUI || hideTabs) ? 'none' : 'flex',
         position: 'absolute',
+        bottom: 10
       },
       tabBarActiveTintColor: Colors.light.primaryBlue,
       tabBarItemStyle: {
