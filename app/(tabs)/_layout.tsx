@@ -74,6 +74,7 @@ const TabsLayout = () => {
         tabBarIcon: ({color})=> (<FontAwesome5 name="lightbulb" size={24} color={color} />)
       }}
     />
+    
   </Tabs>
   );
 }

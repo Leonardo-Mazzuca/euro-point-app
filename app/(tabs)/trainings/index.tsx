@@ -16,6 +16,7 @@ import { Button } from '@/components/Button'
 import RunningQuiz from '@/components/running-quiz'
 import { useLayoutContext } from '@/context/layout-context'
 import { useIsFocused } from '@react-navigation/native'
+import { router } from 'expo-router'
 
 const Trainings = () => {
 
@@ -37,6 +38,10 @@ const Trainings = () => {
   },[isFocused])
 
   const placeholder = category === "Programas" ? "Busque um programa..." : "Busque um quiz...";
+
+  const handleQuizClick = () => {
+    router.push(`/trainings/${selectedQuiz}`)
+  }
 
   return (
     <TabsContainer>
@@ -90,7 +95,7 @@ const Trainings = () => {
               </Text>
               <RunningQuiz />
             </View>
-            <Button disabled={selectedQuiz === ""} className='bg-blue-primary mt-10'>
+            <Button onPress={handleQuizClick} disabled={selectedQuiz === ""} className='bg-blue-primary mt-10'>
               <Text className='font-semibold text-xl text-white'>
                 Começar Quiz
               </Text>
