@@ -19,7 +19,7 @@ const ProgramCard = ({}: ProgramCardProps) => {
         />
         <View>
           <View className="gap-2">
-            <Text className="font-bold text-2xl">CLIC</Text>
+            <Text className="font-bold dark:text-gray-400 text-2xl">CLIC</Text>
             <Text className="font-normal dark:text-gray-300 text-gray-500">
               Descrição do programa
             </Text>
