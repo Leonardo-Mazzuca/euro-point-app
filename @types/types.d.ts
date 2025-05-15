@@ -54,7 +54,21 @@ declare global {
         title: string,
         duration: string
     }
+
+    type Question = {
+        quizId: string,
+        id: string,
+        title: string,
+        options: QuestionOption[]
+        correctAnswer: string,
+    }
     
+    type QuestionOptions = {
+        questionId: string,
+        id: string,
+        title: string,
+        answer: string
+    }
 }
 
 export {}

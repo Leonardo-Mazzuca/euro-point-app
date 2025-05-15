@@ -112,10 +112,42 @@ const quizzes = [
   },
 ]
 
+const questions:Question[] = [
+  {
+    quizId: "1",
+    id: "1",
+    title: "Qual é a capital do Brasil?",
+    options: [
+      {
+        id: "1",
+        title: "Brasília",
+        answer: "A"
+      },
+      {
+        id: "2",
+        title: "São Paulo",
+        answer: "B"
+      },
+      {
+        id: "3",
+        title: "Rio de Janeiro",
+        answer: "C"
+      },
+      {
+        id: "4",
+        title: "Salvador",
+        answer: "D"
+      }
+    ],
+    correctAnswer: "A"
+  }
+]
+
 export {
   accountProfileItems,
   helpProfileItems,
   postTypeOptions,
   programData,
-  quizzes
+  quizzes,
+  questions
 }

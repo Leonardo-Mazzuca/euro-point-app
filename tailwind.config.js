@@ -54,7 +54,8 @@ module.exports = {
         },
         dark: {
           primary: Colors.dark.background,
-          card: Colors.dark.cardBg 
+          card: Colors.dark.cardBg ,
+          secondary: Colors.dark.secondBg
         }
 
       },

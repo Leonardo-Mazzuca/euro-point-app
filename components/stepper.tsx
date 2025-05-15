@@ -1,23 +1,36 @@
 
 
 import { View, Text, FlatList, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import Badge from '@/components/badge'
 import { LinearGradient } from 'expo-linear-gradient'
 import { Colors } from '@/constants/Colors'
+import { useLayoutContext } from '@/context/layout-context'
 
 type StepperProps = {
     steps: number
     currentStep: number
     setCurrentStep: (value: number) => void
-}
+} 
 const Stepper = ({currentStep,steps,setCurrentStep}: StepperProps) => {
 
-  const disabledColors = ["#D4D4D4","#D4D4D4"];
+  const {theme} = useLayoutContext();
+  const disabledColors = theme !== "dark" ? [Colors.light.secondBg,Colors.light.secondBg] : [Colors.dark.secondBg,Colors.dark.secondBg];
+
+  const flatListRef = useRef<FlatList>(null);
+  
+  useEffect(() => {
+    flatListRef.current?.scrollToIndex({
+      index: currentStep - 1,
+      animated: true,
+      viewPosition: 0.5,
+    });
+  }, [currentStep]);
 
   return (
     <View className='px-4'>
       <FlatList
+        ref={flatListRef}
         data={Array.from({ length: steps })}
         keyExtractor={(_, index) => index.toString()}
         horizontal

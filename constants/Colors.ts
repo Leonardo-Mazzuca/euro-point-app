@@ -19,6 +19,7 @@ export const Colors = {
     primaryYeallow: '#FBF304', 
     neutralGray: "#F5F5F5",
     cardBg: '#F5F5F5',
+    secondBg: "#D4D4D4",
   },
   dark: {
     text: '#ECEDEE',
@@ -32,6 +33,7 @@ export const Colors = {
     primaryYeallow: '#FBF304',
     neutralGray: "#2e2e2e",
     cardBg: '#2e2e2e',
+    secondBg: "#1E1E2D",
   },
   default: {
     lightGradientBlue1: "#3550DC",
