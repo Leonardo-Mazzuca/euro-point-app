@@ -12,6 +12,7 @@ import { useLayoutContext } from "@/context/layout-context";
 import { useIsFocused } from "@react-navigation/native";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Colors } from "@/constants/Colors";
+import { AntDesign } from "@expo/vector-icons";
 const SingleQuiz = () => {
 
   const { quizId } = useLocalSearchParams();
@@ -30,7 +31,9 @@ const SingleQuiz = () => {
       })
     } else {
       setPostButtonProps({
-        children: <></>
+        children: (
+          <AntDesign size={24} color={Colors.light.primaryYeallow} name="plus" />
+        ),
       })
     }
   },[isFocused])

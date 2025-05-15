@@ -53,7 +53,7 @@ const Ideas = () => {
     } else {
       setHideTabs(false)
       setPostButtonProps({
-        className: "bg-yeallow-primary",
+        className: "bg-blue-primary",
         children: (
           <AntDesign size={24} color={Colors.light.primaryBlue} name="plus" />
         ),

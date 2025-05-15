@@ -61,9 +61,9 @@ const Trainings = () => {
         {category === "Programas" && (
           <ScrollableList
             data={programData}
-            handleScroll={handleScroll}
+            handleScroll={()=>{}}
             renderItem={({ item }) => <ProgramCard />}
-            contentContainerStyle={{paddingTop:0,paddingBottom:0, gap: 15}}
+            contentContainerStyle={{paddingTop:0,paddingBottom:80, gap: 15}}
           />
         )}
 
