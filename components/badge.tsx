@@ -5,14 +5,16 @@ import { View, Text } from 'react-native'
 import React from 'react'
 import { LinearGradient, LinearGradientProps } from 'expo-linear-gradient'
 import { Colors } from '@/constants/Colors'
+import { cn } from '@/lib/utils'
 
 type BadgeProps = {
     children: React.ReactNode
     className?: string
     colors?: string[]
+    textClasses?:string
 } 
 
-const Badge = ({colors,className,children,...rest}:BadgeProps) => {
+const Badge = ({colors,className,children,textClasses,...rest}:BadgeProps) => {
   return (
     <LinearGradient
         className={className}
@@ -23,7 +25,7 @@ const Badge = ({colors,className,children,...rest}:BadgeProps) => {
         {...rest}
         style={{borderRadius:100,width:40,height: 40,alignItems:"center",justifyContent:"center",marginStart: 2}}
     >
-        <Text className='text-white font-semibold text-xl'>
+        <Text className={cn('text-white font-semibold text-xl',textClasses)}>
             {children}
         </Text>
     </LinearGradient>
