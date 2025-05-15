@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocalSearchParams } from "expo-router";
 import TabsContainer from "@/components/tabs-container";
 import Header from "@/components/header";
@@ -8,14 +8,32 @@ import GradientText from "@/components/gradient-text";
 import ArrowButton from "@/components/arrow-button";
 import QuestionCard from "@/components/question-card";
 import { questions } from "@/constants/data";
+import { useLayoutContext } from "@/context/layout-context";
+import { useIsFocused } from "@react-navigation/native";
+import Ionicons from '@expo/vector-icons/Ionicons';
+import { Colors } from "@/constants/Colors";
 const SingleQuiz = () => {
 
   const { quizId } = useLocalSearchParams();
   const [currentStep, setCurrentStep] = useState(1);
+  const {setPostButtonProps} = useLayoutContext();
+
+  const isFocused = useIsFocused();
 
   const quizQuestions = questions.find((question)=>question.quizId === quizId);
 
-  console.log(quizQuestions);
+  useEffect(()=> {
+    if(isFocused){
+      setPostButtonProps({
+        children: <Ionicons name="sparkles" size={24} color={Colors.light.primaryYeallow} />,
+        onPress: ()=> {}
+      })
+    } else {
+      setPostButtonProps({
+        children: <></>
+      })
+    }
+  },[isFocused])
   
 
   const FinishButton = () => (
