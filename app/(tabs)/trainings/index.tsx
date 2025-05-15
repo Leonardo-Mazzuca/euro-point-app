@@ -1,102 +1,99 @@
-
-
-import { Animated, FlatList, Text, View } from 'react-native'
-import React, { useEffect, useRef, useState } from 'react'
-import TabsContainer from '@/components/tabs-container'
-import AnimatedView from '@/components/animated-view'
-import Header from '@/components/header'
-import CategoriesScroll from '@/components/categories-scroll'
-import SearchInput from '@/components/search-input'
-import { programData, quizzes } from '@/constants/data'
-import ProgramCard from '@/components/program-card'
-import ScrollableList from '@/components/scrollable-list'
-import { useScrollAnimation } from '@/hooks/useScrollAnimation'
-import QuizCard from '@/components/quiz-card'
-import { Button } from '@/components/Button'
-import RunningQuiz from '@/components/running-quiz'
-import { useLayoutContext } from '@/context/layout-context'
-import { useIsFocused } from '@react-navigation/native'
-import { router } from 'expo-router'
+import { Animated, FlatList, Text, View } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import TabsContainer from "@/components/tabs-container";
+import AnimatedView from "@/components/animated-view";
+import Header from "@/components/header";
+import CategoriesScroll from "@/components/categories-scroll";
+import SearchInput from "@/components/search-input";
+import { programData, quizzes } from "@/constants/data";
+import ProgramCard from "@/components/program-card";
+import ScrollableList from "@/components/scrollable-list";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import QuizCard from "@/components/quiz-card";
+import { Button } from "@/components/Button";
+import RunningQuiz from "@/components/running-quiz";
+import { useLayoutContext } from "@/context/layout-context";
+import { useIsFocused } from "@react-navigation/native";
+import { router } from "expo-router";
 
 const Trainings = () => {
-
-  const categories = ["Programas", "Quizzes"]
+  const categories = ["Programas", "Quizzes"];
   const [category, setCategory] = useState(categories[0]);
   const uiTranslateY = useRef(new Animated.Value(0)).current;
-  const {handleScroll,uiOpacity} = useScrollAnimation({translateValue: uiTranslateY});
+  const { handleScroll, uiOpacity } = useScrollAnimation({
+    translateValue: uiTranslateY,
+  });
   const [selectedQuiz, setSelectedQuiz] = useState("");
-  const {setHidePostButton} = useLayoutContext();
+  const { setHidePostButton } = useLayoutContext();
 
   const isFocused = useIsFocused();
 
-  useEffect(()=> {
-    if(isFocused) {
-      setHidePostButton(true)
+  useEffect(() => {
+    if (isFocused) {
+      setHidePostButton(true);
     } else {
-      setHidePostButton(false)
+      setHidePostButton(false);
     }
-  },[isFocused])
+  }, [isFocused]);
 
-  const placeholder = category === "Programas" ? "Busque um programa..." : "Busque um quiz...";
+  const placeholder =
+    category === "Programas" ? "Busque um programa..." : "Busque um quiz...";
 
   const handleQuizClick = () => {
-    router.push(`/trainings/${selectedQuiz}`)
-  }
+    router.push(`/trainings/${selectedQuiz}`);
+  };
 
   return (
     <TabsContainer>
-      <AnimatedView 
-        style={{ opacity: uiOpacity, transform: [{ translateY: uiTranslateY }] }}
-      >
-
+      <View className="px-4">
         <Header />
 
-        <CategoriesScroll 
+        <CategoriesScroll
           categories={categories}
           selected={category}
           setSelected={setCategory}
         />
 
-        <SearchInput 
-          placeholder={placeholder}
-        />
+        <SearchInput placeholder={placeholder} />
+      </View>
 
-      </AnimatedView>
-
-      <View className='flex-1 mt-5 px-6'>
-        {category === 'Programas' && (
-          <ScrollableList 
+      <View className="flex-1 px-6">
+        {category === "Programas" && (
+          <ScrollableList
             data={programData}
             handleScroll={handleScroll}
-            renderItem={({item})=> (
-              <ProgramCard />
-            )}  
+            renderItem={({ item }) => <ProgramCard />}
+            contentContainerStyle={{paddingTop:0,paddingBottom:0, gap: 15}}
           />
         )}
 
-        {category === 'Quizzes' && (
-          <View className='px-4' style={{paddingTop: 220}}>
+        {category === "Quizzes" && (
+          <View>
             <FlatList
-              className='h-[300px]'
               data={quizzes}
               keyExtractor={(item, index) => index.toString()}
-              renderItem={({item}) => (
+              renderItem={({ item }) => (
                 <QuizCard
                   selected={selectedQuiz}
                   setSelected={setSelectedQuiz}
                   quiz={item}
                 />
               )}
-              contentContainerStyle={{gap: 15}}
+              className="h-[200px]"
+              contentContainerStyle={{ gap: 15 }}
             />
-            <View>
-              <Text className='font-semibold dark:text-white my-3 text-xl'>
-                Continue
-              </Text>
-              <RunningQuiz />
-            </View>
-            <Button onPress={handleQuizClick} disabled={selectedQuiz === ""} className='bg-blue-primary mt-10'>
-              <Text className='font-semibold text-xl text-white'>
+
+            <Text className="font-semibold dark:text-white my-3 text-xl">
+              Continue
+            </Text>
+            <RunningQuiz />
+
+            <Button
+              onPress={handleQuizClick}
+              disabled={selectedQuiz === ""}
+              className="bg-blue-primary mt-10"
+            >
+              <Text className="font-semibold text-xl text-white">
                 Começar Quiz
               </Text>
             </Button>
@@ -104,7 +101,7 @@ const Trainings = () => {
         )}
       </View>
     </TabsContainer>
-  )
-}
+  );
+};
 
-export default Trainings
+export default Trainings;

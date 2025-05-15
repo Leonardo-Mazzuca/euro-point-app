@@ -4,18 +4,20 @@ import { cn } from "@/lib/utils";
 
 type ScrollableListProps<T> = {
   handleScroll: (event: any) => void;
+  paddingTop?:number
 } & FlatListProps<T>;
 
 const ScrollableList = <T,>({
   handleScroll,
   className,
+  paddingTop,
   ...rest
 }: ScrollableListProps<T>) => {
   return (
     <FlatList
       className={cn("mt-10", className)} //"mt-10"
       keyExtractor={(item, index) => index.toString()}
-      contentContainerStyle={{ paddingTop: 180, paddingBottom: 100, gap: 8}}
+      contentContainerStyle={{ paddingTop:180, paddingBottom: 100, gap: 8, ...(rest.contentContainerStyle as object) }}
       onScroll={handleScroll}
       {...rest}
     />
