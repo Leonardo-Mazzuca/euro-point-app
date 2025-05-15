@@ -22,6 +22,7 @@ const SingleQuiz = () => {
         <Stepper
           steps={10}
           currentStep={currentStep}
+          setCurrentStep={setCurrentStep}
         />
       </View>
     </TabsContainer>

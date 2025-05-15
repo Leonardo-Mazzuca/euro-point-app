@@ -33,4 +33,8 @@ export const Colors = {
     neutralGray: "#2e2e2e",
     cardBg: '#2e2e2e',
   },
+  default: {
+    lightGradientBlue1: "#3550DC",
+    lightGradientBlue2: "#27E9F7"
+  }
 };

@@ -5,6 +5,8 @@ import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import { AntDesign } from "@expo/vector-icons";
 import { cn } from "@/lib/utils";
 import { LinearGradient } from "expo-linear-gradient";
+import { useLayoutContext } from "@/context/layout-context";
+import { Colors } from "@/constants/Colors";
 
 type QuizCardProps = {
   selected: string;
@@ -16,9 +18,14 @@ const QuizCard = ({ selected, setSelected, quiz}: QuizCardProps) => {
 
   const RADIUS = 10;
 
+  const {theme} = useLayoutContext();
+
+  const colors = theme === "dark" ? ["#1E1E2D", "#1E1E2D"] : ["#dedede", "#dedede"];
+
   return (
     <LinearGradient
-      colors={selected === quiz.id ? ["#3550DC", "#27E9F7"] : ["#dedede", "#dedede"]}
+      //@ts-ignore
+      colors={selected === quiz.id ? [Colors.default.lightGradientBlue1, Colors.default.lightGradientBlue2] : colors}
       style={{ 
         borderRadius: RADIUS,
         width: "100%",
@@ -41,7 +48,7 @@ const QuizCard = ({ selected, setSelected, quiz}: QuizCardProps) => {
           }}
         />
         <View>
-          <Text className="text-blue-primary font-semibold text-xl">CLIC</Text>
+          <Text className="text-blue-primary dark:text-blue-secondary font-semibold text-xl">CLIC</Text>
           <Text className="text-gray-400 text-sm flex-row items-center">
             <AntDesign name="profile" size={12} color="gray" /> 10 Questões
           </Text>
