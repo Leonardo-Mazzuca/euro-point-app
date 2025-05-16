@@ -10,12 +10,14 @@ type QuestionCardProps = {
   selectedAnswer: string;
   setSelectedAnswer: (value: string) => void;
   isWrong: boolean;
+  isSubmitted: boolean;
 };
 const QuestionCard = ({
   question: { correctAnswer, options, title },
   selectedAnswer,
   setSelectedAnswer,
   isWrong,
+  isSubmitted,
 }: QuestionCardProps) => {
   const selectedColors = [
     Colors.default.lightGradientBlue1,
@@ -46,7 +48,13 @@ const QuestionCard = ({
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => (
             <TouchableOpacity
-              className={"flex-row p-2 rounded-3xl items-center gap-2"}
+              className={cn(
+                "flex-row p-2 rounded-3xl items-center gap-2",
+                isWrong && item.answer === correctAnswer && "bg-green-500",
+                isWrong && item.answer === selectedAnswer && "bg-red-500",
+                isSubmitted && "pointer-events-none",
+                isSubmitted && item.answer === correctAnswer && "bg-green-500"
+              )}
               onPress={() => setSelectedAnswer(item.answer)}
             >
               <Badge

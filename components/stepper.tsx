@@ -11,8 +11,9 @@ type StepperProps = {
     steps: number
     currentStep: number
     setCurrentStep: (value: number) => void
+    badgeStatus? : 'error' | 'success'
 } 
-const Stepper = ({currentStep,steps,setCurrentStep}: StepperProps) => {
+const Stepper = ({currentStep,steps,setCurrentStep,badgeStatus}: StepperProps) => {
 
   const {theme} = useLayoutContext();
   const disabledColors = theme !== "dark" ? [Colors.light.secondBg,Colors.light.secondBg] : [Colors.dark.secondBg,Colors.dark.secondBg];
@@ -38,7 +39,7 @@ const Stepper = ({currentStep,steps,setCurrentStep}: StepperProps) => {
         renderItem={({ item, index }) => (
           <View className="items-center">
             <TouchableOpacity onPress={() => setCurrentStep(index + 1)}>
-              <Badge colors={currentStep === index + 1 ? undefined : disabledColors}>
+              <Badge colors={(currentStep === index + 1 ? undefined : disabledColors)}>
                 {index + 1}
               </Badge>
             </TouchableOpacity>

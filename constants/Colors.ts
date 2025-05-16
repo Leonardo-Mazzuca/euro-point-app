@@ -39,6 +39,8 @@ export const Colors = {
     lightGradientBlue1: "#3550DC",
     lightGradientBlue2: "#27E9F7",
     darkGray: "#333333",
-    lightGray: "#999999"
+    lightGray: "#999999",
+    error: "#F2513A",
+    success: "#4CAF50",
   }
 };

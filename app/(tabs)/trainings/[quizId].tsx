@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Alert } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useLocalSearchParams } from "expo-router";
 import TabsContainer from "@/components/tabs-container";
@@ -12,11 +12,14 @@ import { useIsFocused } from "@react-navigation/native";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Colors } from "@/constants/Colors";
 import { AntDesign } from "@expo/vector-icons";
+import ConfettiCannon from 'react-native-confetti-cannon';
 const SingleQuiz = () => {
 
   const { quizId } = useLocalSearchParams();
   const [currentStep, setCurrentStep] = useState(1);
   const [isWrong, setIsWrong] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isFinished, setIsFinished] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState("");
   const {setPostButtonProps} = useLayoutContext();
 
@@ -40,25 +43,36 @@ const SingleQuiz = () => {
   },[isFocused])
   
   const handleFinishButton = () => {
-    if(currentStep === 10) {
-      setCurrentStep(1);
-      return;
-    }
+    
+    setIsSubmitted(true)
 
     if(selectedAnswer !== quizQuestions?.correctAnswer){
       setIsWrong(true);
-      setTimeout(()=>setIsWrong(false),500)
+      setTimeout(()=>{
+        setIsWrong(false);
+      }
+      ,1000)
+    } 
+
+    if(currentStep === 10){
+      setIsFinished(true);
+      return
     }
 
-    // setCurrentStep((prev) => prev + 1);
+    setTimeout(()=>{
+      setCurrentStep((prev) => prev + 1);
+      setIsSubmitted(false)
+      setSelectedAnswer("");
+    }
+    ,1000)
+
   }
 
-  const onWrongAnswer = () => {
 
-  }
 
   const FinishButton = () => (
     <TouchableOpacity
+    disabled={!selectedAnswer || isFinished}
     onPress={handleFinishButton}
     className="border border-blue-primary dark:border-zinc-800 w-[200px] rounded-lg px-2 py-4">
       <GradientText text={currentStep!==10 ? "Proximo" : "Finalizar"} />
@@ -84,6 +98,7 @@ const SingleQuiz = () => {
           selectedAnswer={selectedAnswer}
           setSelectedAnswer={setSelectedAnswer}
           isWrong={isWrong}
+          isSubmitted={isSubmitted}
 
         />
 
@@ -100,6 +115,9 @@ const SingleQuiz = () => {
           direction="right"
         /> */}
       </View>
+      {isFinished && (
+        <ConfettiCannon count={200} origin={{x: -10, y: 0}} />
+      )}
     </TabsContainer>
   );
 };
