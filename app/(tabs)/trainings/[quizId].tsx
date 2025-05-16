@@ -1,11 +1,10 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Alert } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useLocalSearchParams } from "expo-router";
 import TabsContainer from "@/components/tabs-container";
 import Header from "@/components/header";
 import Stepper from "@/components/stepper";
 import GradientText from "@/components/gradient-text";
-import ArrowButton from "@/components/arrow-button";
 import QuestionCard from "@/components/question-card";
 import { questions } from "@/constants/data";
 import { useLayoutContext } from "@/context/layout-context";
@@ -17,6 +16,8 @@ const SingleQuiz = () => {
 
   const { quizId } = useLocalSearchParams();
   const [currentStep, setCurrentStep] = useState(1);
+  const [isWrong, setIsWrong] = useState(false);
+  const [selectedAnswer, setSelectedAnswer] = useState("");
   const {setPostButtonProps} = useLayoutContext();
 
   const isFocused = useIsFocused();
@@ -38,17 +39,31 @@ const SingleQuiz = () => {
     }
   },[isFocused])
   
+  const handleFinishButton = () => {
+    if(currentStep === 10) {
+      setCurrentStep(1);
+      return;
+    }
+
+    if(selectedAnswer !== quizQuestions?.correctAnswer){
+      setIsWrong(true);
+      setTimeout(()=>setIsWrong(false),500)
+    }
+
+    // setCurrentStep((prev) => prev + 1);
+  }
+
+  const onWrongAnswer = () => {
+
+  }
 
   const FinishButton = () => (
     <TouchableOpacity
-    disabled={currentStep!==10} 
+    onPress={handleFinishButton}
     className="border border-blue-primary dark:border-zinc-800 w-[200px] rounded-lg px-2 py-4">
-      <GradientText text="Finalizar" />
+      <GradientText text={currentStep!==10 ? "Proximo" : "Finalizar"} />
     </TouchableOpacity>
   );
-
-  const handleLeft = () => setCurrentStep((prev) => prev - 1);
-  const handleRight = () => setCurrentStep((prev) => prev + 1);
 
   return (
     <TabsContainer>
@@ -66,21 +81,24 @@ const SingleQuiz = () => {
    
         <QuestionCard 
           question={quizQuestions!}
+          selectedAnswer={selectedAnswer}
+          setSelectedAnswer={setSelectedAnswer}
+          isWrong={isWrong}
+
         />
 
-
       <View className="my-3 px-5 flex-row justify-center gap-4">
-        <ArrowButton
+        {/* <ArrowButton
           onPress={handleLeft}
           disabled={currentStep === 1}
           direction="left"
-        />
+        /> */}
         <FinishButton />
-        <ArrowButton
+        {/* <ArrowButton
           onPress={handleRight}
           disabled={currentStep === 10}
           direction="right"
-        />
+        /> */}
       </View>
     </TabsContainer>
   );

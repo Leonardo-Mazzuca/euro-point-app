@@ -4,7 +4,9 @@
 
 import { View, Text, Image } from 'react-native'
 import React from 'react'
-import { AntDesign, FontAwesome6 } from '@expo/vector-icons'
+import { AntDesign, FontAwesome6, Feather } from '@expo/vector-icons'
+import { Button } from '@/components/Button'
+import { Colors } from '@/constants/Colors'
 
 const RunningQuiz = () => {
   return (
@@ -14,9 +16,17 @@ const RunningQuiz = () => {
         source={{uri: "https://images.unsplash.com/photo-1511485977113-f34c92461ad9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",}}
       />
       <View className='flex-1'>
-        <Text className='text-blue-primary dark:text-blue-secondary font-semibold text-2xl'>
-          CLIC DESAFIOS
-        </Text>
+        <View className='flex-row items-center justify-between'>
+          <Text className='text-blue-primary dark:text-blue-secondary font-semibold text-2xl'>
+            CLIC DESAFIOS
+          </Text>
+          <Button
+            variant={"ghost"}
+            size={"icon"}
+          >
+            <Feather name="trash-2" size={20} color={Colors.default.lightGray} />
+          </Button>
+        </View>
         <View>
           <View className='flex-row gap-2 items-center'>
             <AntDesign name="profile" size={12} color="gray" />
@@ -30,6 +40,11 @@ const RunningQuiz = () => {
               <Text className='text-blue-primary dark:text-blue-secondary'>10</Text> min
             </Text>
           </View>
+          <Button className='my-2 bg-dark-gray  h-[60px]' >
+            <Text className='text-white font-medium dark:text-gray-300'>
+              Continue o quiz
+            </Text>
+          </Button>
         </View>
       </View>
     </View>
