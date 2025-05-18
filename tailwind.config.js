@@ -47,16 +47,23 @@ module.exports = {
         },
         blue: {
           primary: "#044B8B",
-          secondary: "#D9E8FC"
+          secondary: "#D9E8FC",
+          tertiary: Colors.light.tertiaryBlue
         },
         yeallow: {
           primary: "#FBF304"
+        },
+        green: {
+          primary:Colors.light.primaryGreen
         },
         dark: {
           primary: Colors.dark.background,
           card: Colors.dark.cardBg ,
           secondary: Colors.dark.secondBg,
           gray: Colors.default.darkGray,
+        },
+        gray: {
+          light: '#F2F4F5'
         }
 
       },

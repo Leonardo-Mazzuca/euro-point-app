@@ -1,5 +1,5 @@
 
-import React, { useEffect } from 'react'
+import React from 'react'
 import UserButton from './user-button'
 import Logo from './logo'
 import Container from './container'
@@ -9,10 +9,11 @@ import { useLayoutContext } from '@/context/layout-context'
 type HeaderProps = {
     leftChild?: React.ReactNode,
     rightChild?: React.ReactNode
+    middleChild?: React.ReactNode
     hideProfile?:boolean
     hideLine?:boolean
 }
-const Header = ({hideProfile = false,leftChild,rightChild,hideLine}: HeaderProps) => {
+const Header = ({hideProfile = false,leftChild,rightChild,hideLine, middleChild}: HeaderProps) => {
 
   const {theme} = useLayoutContext();
 
@@ -25,7 +26,11 @@ const Header = ({hideProfile = false,leftChild,rightChild,hideLine}: HeaderProps
           {!hideProfile && <UserButton />}
         </View>
 
-         <Logo />
+          {!middleChild && (
+           <Logo />
+          )}
+
+          {middleChild}
 
         <View className='flex-1'>
         {rightChild}

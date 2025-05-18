@@ -1,9 +1,7 @@
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import React from "react";
-import { Card } from "@/components/Card";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import { AntDesign } from "@expo/vector-icons";
-import { cn } from "@/lib/utils";
 import { LinearGradient } from "expo-linear-gradient";
 import { useLayoutContext } from "@/context/layout-context";
 import { Colors } from "@/constants/Colors";

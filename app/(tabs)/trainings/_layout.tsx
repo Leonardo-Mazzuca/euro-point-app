@@ -17,6 +17,12 @@ const QuizLayout = () => {
                 headerShown: false,
             }}
         />
+        <Stack.Screen
+            name='quiz-help'
+            options={{
+                headerShown: false,
+            }}
+        />
     </Stack>
   )
 }

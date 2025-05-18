@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
-import { useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import TabsContainer from "@/components/tabs-container";
 import Header from "@/components/header";
 import Stepper from "@/components/stepper";
@@ -31,7 +31,7 @@ const SingleQuiz = () => {
     if(isFocused){
       setPostButtonProps({
         children: <Ionicons name="sparkles" size={24} color={Colors.light.primaryYeallow} />,
-        onPress: ()=> {}
+        onPress: ()=> router.push('/(tabs)/trainings/quiz-help')
       })
     } else {
       setPostButtonProps({
