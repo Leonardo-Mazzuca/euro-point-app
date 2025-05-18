@@ -21,7 +21,7 @@ dayjs.utc();
 
 const EuroHelpLogo = () => {
   return (
-    <View className="rounded-full p-2 bg-blue-tertiary/5">
+    <View className="rounded-full p-2 bg-blue-tertiary/5 dark:bg-blue-tertiary/20">
       <MaterialCommunityIcons
         name="robot-excited-outline"
         size={32}
