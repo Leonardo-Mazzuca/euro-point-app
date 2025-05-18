@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import TabsContainer from "@/components/tabs-container";
 import Header from "@/components/header";
 import BackButton from "@/components/back-button";
 import { router } from "expo-router";

@@ -6,7 +6,8 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/Avatar'
 import { router } from 'expo-router'
 
 const UserButton = () => {
-  const onPress = () => router.push("/profile");
+  //@ts-ignore
+  const onPress = () => router.push("/(profile)");
   return (
     <TouchableOpacity onPress={onPress}>
     <Avatar className='h-14 w-14' alt='User image'>

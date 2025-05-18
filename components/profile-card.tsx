@@ -6,6 +6,7 @@ import Feather from '@expo/vector-icons/Feather'
 import { Text, View } from 'react-native'
 import { Button } from '@/components/Button'
 import { Switch } from '@/components/Switch'
+import { RelativePathString, router } from 'expo-router'
 
 
 type ProfileCardProps = {
@@ -46,6 +47,8 @@ const ProfileCardItem = ({item: {
     setToggleActive
 }}:{item:ProfileItem}) => {
 
+    const handleNavigate = () => router.push(link! as RelativePathString);
+
     return (
         <View className='flex-row my-2 items-center justify-between gap-2'>
             <View className='flex-row items-center gap-2'>
@@ -57,7 +60,7 @@ const ProfileCardItem = ({item: {
             <View className='flex-row'>
                 {rightChild}
                 {link && (
-                    <Button variant={"ghost"} size={"icon"}>
+                    <Button onPress={handleNavigate} variant={"ghost"} size={"icon"}>
                         <Feather
                             color={Colors.light.primaryBlue}
                             size={24}

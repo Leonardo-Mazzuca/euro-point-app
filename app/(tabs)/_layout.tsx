@@ -15,7 +15,7 @@ const TabsLayout = () => {
   <Tabs
     screenOptions={{
       tabBarStyle: {
-        height:70,
+        height:80,
         paddingBottom: 30,
         borderTopColor: 'transparent',
         borderTopWidth: 0,
