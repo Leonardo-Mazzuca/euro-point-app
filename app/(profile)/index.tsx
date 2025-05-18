@@ -2,57 +2,17 @@ import React from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import Feather from "@expo/vector-icons/Feather";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { router } from "expo-router";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/Avatar";
 import ProfileCard from "@/components/profile-card";
 import { Button } from "@/components/Button";
 import { Colors } from "@/constants/Colors";
 import { AntDesign, Entypo, FontAwesome6, Foundation, Ionicons } from "@expo/vector-icons";
 import { useLayoutContext } from "@/context/layout-context";
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import ProfileHeader from "@/components/profile-header";
+import ProfileAvatar from "@/components/profile-avatar";
 
 
-const ProfileHeader = () => {
-  const onPress = () => router.back();
-  const {theme} = useLayoutContext();
-  return (
-    <View className="flex-row items-center gap-2">
-      <TouchableOpacity onPress={onPress}>
-        <Feather name="chevron-left" size={28} color={theme === "dark" ? Colors.dark.icon : Colors.light.icon} />
-      </TouchableOpacity>
-      <Text className="text-2xl dark:text-white font-semibold">Perfil</Text>
-    </View>
-  );
-};
 
-const ProfileAvatar = () => (
-  <View className="my-5 gap-2 flex-row items-center">
-    <View className="relative">
-      <View 
-        style={{borderRadius: 100}}
-        className="bg-green-400 h-4 w-4 absolute right-5 bottom-0 z-50"
-      />
-      <Avatar className="h-[100px] w-[100px]" alt="User image">
-        <AvatarImage
-          source={{
-            uri: "https://avatars.githubusercontent.com/u/66306912?v=4",
-          }}
-        />
-        <AvatarFallback>
-          <Text>LM</Text>
-        </AvatarFallback>
-      </Avatar>
-    </View>
-    <View>
-        <Text className="font-semibold dark:text-gray-200 text-2xl">
-            Leonardo Mazzuca
-        </Text>
-        <Text className="text-gray-600 dark:text-gray-400 text-lg">
-            TI Projetos
-        </Text>
-    </View>
-  </View>
-);
 const Profile = () => {
 
   const {theme,toggleTheme} = useLayoutContext();
@@ -122,7 +82,7 @@ const Profile = () => {
   return (
     <SafeAreaView className="flex-1 dark:bg-dark-primary bg-white py-4 px-8">
       <ScrollView>
-        <ProfileHeader />
+        <ProfileHeader text="Perfil" />
         <ProfileAvatar />
         <View className="gap-5 mb-5">
           <ProfileCard

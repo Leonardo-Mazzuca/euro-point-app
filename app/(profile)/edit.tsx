@@ -1,14 +1,15 @@
 
-
-
-import { View, Text } from 'react-native'
 import React from 'react'
+import ProfileContainer from '@/components/profile-container'
+import ProfileHeader from '@/components/profile-header'
+import ProfileAvatar from '@/components/profile-avatar'
 
 const ProfileEdit = () => {
   return (
-    <View>
-      <Text>ProfileEdit</Text>
-    </View>
+    <ProfileContainer>
+      <ProfileHeader text='Dados do Perfil'/>
+      <ProfileAvatar horientation='column' />
+    </ProfileContainer>
   )
 }
 
