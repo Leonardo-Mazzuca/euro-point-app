@@ -38,7 +38,7 @@ const EuroHelp = () => {
     <View className="flex-row gap-1 items-center">
        <EuroHelpLogo />
       <View>
-        <Text className="text-xl font-semibold">Euro Help</Text>
+        <Text className="text-xl font-semibold dark:text-white">Euro Help</Text>
         <View className="flex-row gap-2 items-center">
           <View className="rounded-full w-[12px] h-[12px] bg-green-primary" />
           <Text className="text-gray-400">Ativo</Text>
@@ -50,8 +50,8 @@ const EuroHelp = () => {
 
 const ChatBox = ({text, type}:{text:string, type :'user' | 'bot'}) => {
     return (
-        <View className={cn("p-3 w-[250px] rounded-3xl rounded-tl-none", type === 'user' ? 'bg-blue-tertiary/5' : 'bg-gray-light/50')}>
-            <Text className={cn("text-lg", type === 'user' ? 'text-blue-tertiary font-semibold' : 'text-black')}>
+        <View className={cn("p-3 w-[250px] rounded-3xl rounded-tl-none", type === 'user' ? 'bg-blue-tertiary/5 dark:bg-blue-tertiary/20' : 'bg-gray-light/50 dark:bg-zinc-800')}>
+            <Text className={cn("text-lg", type === 'user' ? 'text-blue-tertiary font-semibold' : 'text-black dark:text-white')}>
                 {text}
             </Text>
         </View>

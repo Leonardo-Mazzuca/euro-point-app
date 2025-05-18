@@ -8,11 +8,13 @@ import Voice, {
 import { Button } from "@/components/Button";
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { Colors } from "@/constants/Colors";
+import { useLayoutContext } from "@/context/layout-context";
 
 type AudioButtonProps = {};
 
 const AudioButton = ({}: AudioButtonProps) => {
   const [isListening, setIsListening] = useState(false);
+  const {theme} = useLayoutContext();
 
   const startSpeechToText = async () => {
     try {
@@ -43,7 +45,7 @@ const AudioButton = ({}: AudioButtonProps) => {
       onPressIn={startSpeechToText}
       onPressOut={stopSpeechToText}
     >
-      <MaterialCommunityIcons size={24} color={"#000"} name="microphone" />
+      <MaterialCommunityIcons size={24} color={theme === "dark" ? Colors.dark.primaryBlue : "#000"} name="microphone" />
     </Pressable>
   );
 };
@@ -56,7 +58,7 @@ const ChatInput = ({}: ChatInputProps) => {
       <View className="relative flex-row items-center gap-2">
         <TextInput
           placeholder="Digite sua mensagem..."
-          className="border border-gray-400 h-[40px] w-[250px] rounded-full px-4 py-2"
+          className="border border-gray-400 dark:border-zinc-800 dark:placeholder:text-white h-[40px] w-[250px] rounded-full px-4 py-2"
         />
         <AudioButton />
       </View>
