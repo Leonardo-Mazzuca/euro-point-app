@@ -10,6 +10,7 @@ import { useLayoutContext } from "@/context/layout-context";
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import ProfileHeader from "@/components/profile-header";
 import ProfileAvatar from "@/components/profile-avatar";
+import ExitButton from "@/components/exit-button";
 
 
 
@@ -97,11 +98,7 @@ const Profile = () => {
             title="preferências"
             items={helpProfileItems}
           />
-          <Button className="bg-white dark:bg-dark-card" variant={"ghost"}>
-            <Text className="text-red-600 font-semibold">
-              Sair
-            </Text>
-          </Button>
+            <ExitButton />
         </View>
       </ScrollView>
     </SafeAreaView>
