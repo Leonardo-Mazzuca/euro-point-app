@@ -23,6 +23,7 @@ const DefaultLayout = () => {
 
     // <ThemeProvider value={DarkTheme}>
       <Stack>
+        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="(profile)" options={{ headerShown: false }} />
         <Stack.Screen name="post-screen" options={{ headerShown: false }} />
