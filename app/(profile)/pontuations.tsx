@@ -2,14 +2,28 @@
 
 
 
+import ProfileContainer from '@/components/profile-container'
+import ProfileHeader from '@/components/profile-header'
 import React from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { FlatList, View } from 'react-native'
+
 
 const Pontuations = () => {
   return (
-    <SafeAreaView className='flex-1'>
-
-    </SafeAreaView>
+    <ProfileContainer>
+      <ProfileHeader
+        text='Pontuações quizzes'
+      />  
+      <View className='px-6 flex-1'>
+        <FlatList 
+          data={Array.from({length: 10})}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({item}) => (
+            <></>
+          )}
+        />
+      </View>
+    </ProfileContainer>
   )
 }
 

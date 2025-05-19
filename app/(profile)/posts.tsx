@@ -1,14 +1,15 @@
 
-
-
-import { View, Text } from 'react-native'
 import React from 'react'
+import ProfileContainer from '@/components/profile-container'
+import ProfileHeader from '@/components/profile-header'
 
 const MyPosts = () => {
   return (
-    <View>
-      <Text>MyPosts</Text>
-    </View>
+    <ProfileContainer>
+      <ProfileHeader
+        text='Minhas publicações'
+      />
+    </ProfileContainer>
   )
 }
 
