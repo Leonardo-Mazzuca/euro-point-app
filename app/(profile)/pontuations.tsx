@@ -5,7 +5,7 @@
 import ProfileContainer from '@/components/profile-container'
 import ProfileHeader from '@/components/profile-header'
 import QuizCard from '@/components/quiz-card'
-import { answeredQuizzes, quizzes } from '@/constants/data'
+import { quizzes } from '@/constants/data'
 import React, { useState } from 'react'
 import { FlatList, View } from 'react-native'
 

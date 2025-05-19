@@ -1,6 +1,5 @@
 import { FlatListProps, FlatList } from "react-native";
 import React from "react";
-import { cn } from "@/lib/utils";
 
 type ScrollableListProps<T> = {
   handleScroll: (event: any) => void;
@@ -14,8 +13,7 @@ const ScrollableList = <T,>({
   ...rest
 }: ScrollableListProps<T>) => {
   return (
-    <FlatList
-      className={cn("mt-10", className)} //"mt-10"
+    <FlatList 
       keyExtractor={(item, index) => index.toString()}
       contentContainerStyle={{ paddingTop:180, paddingBottom: 100, gap: 8, ...(rest.contentContainerStyle as object) }}
       onScroll={handleScroll}

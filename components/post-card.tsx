@@ -7,14 +7,19 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import { Colors } from "@/constants/Colors";
 import Feather from "@expo/vector-icons/Feather";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { View } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import { useLayoutContext } from "@/context/layout-context";
+import { useState } from "react";
 
 type PostCardProps = {};
 
 const PostCard = ({}: PostCardProps) => {
+  
+  const { theme } = useLayoutContext();
 
-  const {theme} = useLayoutContext();
+  const [isSaved, setIsSaved] = useState(false);
+
+  const handleSave = () => setIsSaved(!isSaved);
 
   return (
     <Card className="mt-4">
@@ -33,10 +38,28 @@ const PostCard = ({}: PostCardProps) => {
         <Entypo name="dot-single" size={18} color="grey" />
         <Text className="font-normal text-lg text-gray-400">1 hora atrás</Text>
         <Button size={"icon"} variant="ghost">
-          <AntDesign name="plus" size={28} color={theme === "dark" ? Colors.dark.primaryBlue : Colors.light.primaryBlue} />
+          <AntDesign
+            name="plus"
+            size={28}
+            color={
+              theme === "dark"
+                ? Colors.dark.primaryBlue
+                : Colors.light.primaryBlue
+            }
+          />
         </Button>
         <Button variant="ghost">
-          <Text style={{ color: theme === "dark" ? Colors.dark.primaryBlue : Colors.light.primaryBlue }} className="font-normal text-xl">Seguir</Text>
+          <Text
+            style={{
+              color:
+                theme === "dark"
+                  ? Colors.dark.primaryBlue
+                  : Colors.light.primaryBlue,
+            }}
+            className="font-normal text-xl"
+          >
+            Seguir
+          </Text>
         </Button>
       </CardHeader>
       <CardContent>
@@ -44,17 +67,50 @@ const PostCard = ({}: PostCardProps) => {
       </CardContent>
       <CardFooter className="gap-6">
         <FooterItem
-          icon={<AntDesign name="heart" size={20} color={Colors.dark.hearthRed} />}
+          icon={
+            <AntDesign name="heart" size={20} color={Colors.dark.hearthRed} />
+          }
           text="48.8k"
         />
         <FooterItem
-          icon={<Feather name="eye" size={22} color={theme === "dark" ? Colors.dark.icon : Colors.light.icon} />}
+          icon={
+            <Feather
+              name="eye"
+              size={22}
+              color={theme === "dark" ? Colors.dark.icon : Colors.light.icon}
+            />
+          }
           text="12M"
         />
-        <FooterItem
-          icon={<FontAwesome name="bookmark-o" size={22} color={theme === "dark" ? Colors.dark.icon : Colors.light.icon} />}
-          text="82K"
-        />
+        <TouchableOpacity onPress={handleSave}>
+          {isSaved ? (
+            <FooterItem
+              icon={
+                <FontAwesome
+                  name="bookmark"
+                  size={22}
+                  color={
+                    theme === "dark" ? Colors.dark.icon : Colors.light.icon
+                  }
+                />
+              }
+              text="82K"
+            />
+          ) : (
+            <FooterItem
+              icon={
+                <FontAwesome
+                  name="bookmark-o"
+                  size={22}
+                  color={
+                    theme === "dark" ? Colors.dark.icon : Colors.light.icon
+                  }
+                />
+              }
+              text="82K"
+            />
+          )}
+        </TouchableOpacity>
       </CardFooter>
     </Card>
   );
@@ -77,14 +133,18 @@ export const FooterItem = ({ icon, text }: FooterItemProps) => {
 const TextSample = () => {
   return (
     <>
-      <Text className="text-gray-600 dark:text-gray-200 my-2">Colaboradores(as),</Text>
+      <Text className="text-gray-600 dark:text-gray-200 my-2">
+        Colaboradores(as),
+      </Text>
       <Text className="text-gray-600 dark:text-gray-200">
         Atualizem seus dados no sistema interno até 30/04 (endereço, telefone,
         etc.). É essencial para mantermos tudo regularizado.
       </Text>
       <Text className="text-gray-500 dark:text-gray-200 my-2">
         Duvidas:{" "}
-        <Text className="font-bold text-gray-600 dark:text-gray-200">rh@empresa.com.br</Text>
+        <Text className="font-bold text-gray-600 dark:text-gray-200">
+          rh@empresa.com.br
+        </Text>
       </Text>
     </>
   );
