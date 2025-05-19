@@ -17,11 +17,14 @@ export const Colors = {
     primaryBlue: "#044B8B",
     hearthRed: "#F2513A",
     primaryYeallow: '#FBF304', 
+    secondaryYeallow: "#FFC800",
     neutralGray: "#F5F5F5",
+    softGray: "#CACACA",
     cardBg: '#F5F5F5',
     secondBg: "#D4D4D4",
     tertiaryBlue: '#0070F0',
-    primaryGreen: '#7DDE86'
+    primaryGreen: '#7DDE86',
+    tertiaryYeallow:"#FFE066"
   },
   dark: {
     text: '#ECEDEE',
@@ -33,12 +36,15 @@ export const Colors = {
     primaryBlue: "#D9E8FC",
     hearthRed: "#F2513A",
     primaryYeallow: '#FBF304',
+    secondaryYeallow: "#FFC800",
     neutralGray: "#2e2e2e",
+    softGray: "#CACACA",
     cardBg: '#2e2e2e',
     secondBg: "#1E1E2D",
     lightSoftBlue: '#F2F8FF',
     tertiaryBlue: '#0070F0',
-    primaryGreen: '#7DDE86'
+    primaryGreen: '#7DDE86',
+        tertiaryYeallow:"#FFE066"
   },
   default: {
     lightGradientBlue1: "#3550DC",

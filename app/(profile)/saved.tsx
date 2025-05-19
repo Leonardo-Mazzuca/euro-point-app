@@ -25,7 +25,7 @@ const Saved = () => {
         />
 
         <ScrollableList 
-          data={Array.from({ length: 5 })}
+          data={Array.from({ length: 3 })}
           renderItem={() => (
             <PostCard />
           )}

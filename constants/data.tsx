@@ -142,10 +142,38 @@ const questions:Question[] = [
   }
 ]
 
+const achieviments: Achieviment[] = [
+  {
+    id:"1",
+    title: "Pegando fogo",
+    description: "Entre 3 dias seguidos",
+    progress: 100,
+  },
+  {
+    id:"2",
+    title: "Mestre ensinador",
+    description: "Obtenha 100xp",
+    progress: 100,
+  },
+  {
+    id:"3",
+    title: "Escritor",
+    description: "Escreva mais de 200 palavras",
+    progress: 0,
+  },
+  {
+    id:"4",
+    title: "Escritor",
+    description: "Escreva mais de 200 palavras",
+    progress: 20,
+  },
+]
+
 export {
   postTypeOptions,
   programData,
   quizzes,
   questions,
-  answeredQuizzes
+  answeredQuizzes,
+  achieviments
 }

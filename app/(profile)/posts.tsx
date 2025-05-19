@@ -25,7 +25,7 @@ const MyPosts = () => {
           />
   
           <ScrollableList 
-            data={Array.from({ length: 5 })}
+            data={Array.from({ length: 2 })}
             renderItem={() => (
               <PostCard />
             )}

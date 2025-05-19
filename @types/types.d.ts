@@ -69,6 +69,13 @@ declare global {
         title: string,
         answer: string
     }
+
+    type Achieviment = {
+        id: string,
+        title: string,
+        progress: number,
+        description: string,
+    }
 }
 
 export {}
