@@ -5,20 +5,53 @@ import { AntDesign } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { useLayoutContext } from "@/context/layout-context";
 import { Colors } from "@/constants/Colors";
+import { answeredQuizzes } from "@/constants/data";
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 type QuizCardProps = {
   selected: string;
   setSelected: (value: string) => void;
   quiz: Quiz
+  showAnswered?: boolean
 };
 
-const QuizCard = ({ selected, setSelected, quiz}: QuizCardProps) => {
+const QuizCard = ({ selected, setSelected, quiz, showAnswered}: QuizCardProps) => {
 
   const RADIUS = 10;
 
   const {theme} = useLayoutContext();
 
+  const quizAnswers = answeredQuizzes.find((q) => q.id === quiz.id);
+
   const colors = theme === "dark" ? ["#1E1E2D", "#1E1E2D"] : ["#dedede", "#dedede"];
+
+  const AnswerText = () => {
+    return (
+      showAnswered && quizAnswers ? (
+        <Text className="text-gray-400 text-sm flex-row items-center">
+          <AntDesign name="profile" size={12} color="gray" /> {quizAnswers.answeredQuestions} / {quiz.totalQuestions}
+        </Text>
+      ) : (
+        <Text className="text-gray-400 text-sm flex-row items-center">
+          <AntDesign name="profile" size={12} color="gray" /> {quiz.totalQuestions} Questões
+        </Text>
+      )
+    )
+  }
+
+  const AnswerFooterText = () => {
+    return (
+      showAnswered && quizAnswers ? (
+        <Text className="text-gray-400 text-sm flex-row items-center">
+          <MaterialIcons name="sports-score" size={12} color="grey" /> {quizAnswers.totalPoints} pontos
+        </Text>
+      ) : (
+        <Text className="text-gray-400 text-sm flex-row items-center">
+            <FontAwesome6 name="clock" size={12} color="grey" /> 20 min
+        </Text>
+      )
+    );
+  }
 
   return (
     <LinearGradient
@@ -47,12 +80,8 @@ const QuizCard = ({ selected, setSelected, quiz}: QuizCardProps) => {
         />
         <View>
           <Text className="text-blue-primary dark:text-blue-secondary font-semibold text-xl">CLIC</Text>
-          <Text className="text-gray-400 text-sm flex-row items-center">
-            <AntDesign name="profile" size={12} color="gray" /> 10 Questões
-          </Text>
-          <Text className="text-gray-400 text-sm flex-row items-center">
-            <FontAwesome6 name="clock" size={12} color="grey" /> 20 min
-          </Text>
+          <AnswerText />
+          <AnswerFooterText />
         </View>
       </TouchableOpacity>
     </LinearGradient>

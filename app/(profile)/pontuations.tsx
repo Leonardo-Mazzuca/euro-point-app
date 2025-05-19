@@ -4,11 +4,16 @@
 
 import ProfileContainer from '@/components/profile-container'
 import ProfileHeader from '@/components/profile-header'
-import React from 'react'
+import QuizCard from '@/components/quiz-card'
+import { answeredQuizzes, quizzes } from '@/constants/data'
+import React, { useState } from 'react'
 import { FlatList, View } from 'react-native'
 
 
 const Pontuations = () => {
+
+  const [selected, setSelected] = useState("");
+
   return (
     <ProfileContainer>
       <ProfileHeader
@@ -16,10 +21,17 @@ const Pontuations = () => {
       />  
       <View className='px-6 flex-1'>
         <FlatList 
-          data={Array.from({length: 10})}
+          className='mt-10'
+          data={quizzes.filter(quiz => quiz.answerdId !== undefined)}
           keyExtractor={(item, index) => index.toString()}
+          contentContainerStyle={{gap: 25}}
           renderItem={({item}) => (
-            <></>
+            <QuizCard 
+              quiz={item}
+              selected={selected}
+              setSelected={setSelected}
+              showAnswered
+            />
           )}
         />
       </View>

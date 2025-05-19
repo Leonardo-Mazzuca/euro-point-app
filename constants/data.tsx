@@ -62,21 +62,24 @@ const quizzes = [
     image: "https://images.unsplash.com/photo-1511485977113-f34c92461ad9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
     title: "Clic",
     duration: "10 min",
-    totalQuestions: 10 
+    totalQuestions: 10,
+    answerdId: "1"
   },
   {
     id: "2",
     image: "https://images.unsplash.com/photo-1511485977113-f34c92461ad9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
     title: "Kaizen",
     duration: "10 min",
-    totalQuestions: 10 
+    totalQuestions: 10 ,
+    answerdId: "2"
   },
   {
     id: "3",
     image: "https://images.unsplash.com/photo-1511485977113-f34c92461ad9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
     title: "Test",
     duration: "10 min",
-    totalQuestions: 10 
+    totalQuestions: 10,
+    answerdId: "3"
   },
   {
     id: "4",
@@ -84,6 +87,27 @@ const quizzes = [
     title: "Test",
     duration: "10 min",
     totalQuestions: 10 
+  },
+]
+
+const answeredQuizzes = [
+  {
+    id: "1",
+    quizId: "1",
+    totalPoints: 560,
+    answeredQuestions: 10,
+  },
+  {
+    id: "2",
+    quizId: "2",
+    totalPoints: 550,
+    answeredQuestions: 7,
+  },
+  {
+    id: "3",
+    quizId: "3",
+    totalPoints: 450,
+    answeredQuestions: 5,
   },
 ]
 
@@ -122,5 +146,6 @@ export {
   postTypeOptions,
   programData,
   quizzes,
-  questions
+  questions,
+  answeredQuizzes
 }
