@@ -22,9 +22,15 @@ export const useAuth = () => {
         await AsyncStorage.setItem("email", email);
 
     }
+    
+    const logout = async () => {
+        await AsyncStorage.removeItem("email");
+        router.push("/(auth)/sign-in");
+    }
 
     return {
         login,
-        formMethods
+        formMethods,
+        logout
     }
 }

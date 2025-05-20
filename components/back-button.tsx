@@ -6,9 +6,10 @@ import { Colors } from "@/constants/Colors";
 
 type BackButtonProps = {
   handleBack: () => void;
+  iconSize?:number
 } & ButtonProps;
 
-const BackButton = ({ handleBack, ...rest }: BackButtonProps) => {
+const BackButton = ({ handleBack,iconSize = 24, ...rest }: BackButtonProps) => {
   const { theme } = useLayoutContext();
 
   return (
@@ -17,10 +18,11 @@ const BackButton = ({ handleBack, ...rest }: BackButtonProps) => {
       onPress={handleBack}
       className="me-auto"
       variant={"ghost"}
+      size={"icon"}
     >
       <Feather
         name="chevron-left"
-        size={24}
+        size={iconSize}
         color={theme === "dark" ? Colors.dark.icon : Colors.light.icon}
       />
     </Button>

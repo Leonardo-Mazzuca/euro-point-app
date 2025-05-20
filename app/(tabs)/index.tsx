@@ -28,12 +28,12 @@ const Home = () => {
         <Header />
           <TabsList className="flex-row w-full my-2">
             <TabsTrigger value="for-you" className="flex-1">
-              <Text className={cn("text-xl", currentScreen === "for-you" ? "text-blue-500" : "dark:text-white")}>
+              <Text className={cn("text-xl font-semibold", currentScreen === "for-you" ? "text-blue-500" : "dark:text-white")}>
                 Para você
               </Text>
             </TabsTrigger>
             <TabsTrigger value="following" className="flex-1">
-              <Text className={cn("text-xl", currentScreen === "following" ? "text-blue-500" : "dark:text-white")}>
+              <Text className={cn("text-xl font-semibold", currentScreen === "following" ? "text-blue-500" : "dark:text-white")}>
                 Seguindo
               </Text>
             </TabsTrigger>

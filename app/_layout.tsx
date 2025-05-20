@@ -31,7 +31,6 @@ const DefaultLayout = () => {
         <Stack.Screen name="+not-found" />
       </Stack>
 
-
   );
 };
 

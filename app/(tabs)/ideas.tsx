@@ -11,11 +11,11 @@ import { Colors } from "@/constants/Colors";
 import { useFocusEffect } from "expo-router";
 import ModalScreen from "@/components/modal-screen";
 
-
 const Ideas = () => {
   const [enablePost, setEnablePost] = useState(false);
   const { setPostButtonProps, setHideTabs } = useLayoutContext();
   const [openAlertModal, setOpenAlertModal] = useState(false);
+
 
   const handlePost = () => {
     setHideTabs(true);
@@ -55,10 +55,11 @@ const Ideas = () => {
       setPostButtonProps({
         className: "bg-blue-primary",
         children: (
-          <AntDesign size={24} color={Colors.light.primaryBlue} name="plus" />
+          <AntDesign size={24} color={Colors.light.primaryYeallow} name="plus" />
         ),
       });
     }
+
   }, [enablePost]);
 
   return (

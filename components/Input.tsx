@@ -33,7 +33,7 @@ const Input = forwardRef<ElementRef<typeof TextInput>, InputProps>(
             suffixIcon && "pl-12",
             props.editable === false && "opacity-50 web:cursor-not-allowed",
             className,
-            "dark:text-white ps-2"
+            "dark:text-gray-300 dark:placeholder:text-gray-300"
           )}
           placeholderClassName={cn("text-muted-foreground", placeholderClassName)}
           {...props}

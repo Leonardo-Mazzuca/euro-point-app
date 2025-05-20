@@ -16,7 +16,8 @@ const Logo = () => {
   return (
     <Image
       source={isDark ? logoLight : logo}
-      className='w-[250px] h-[50px]'
+      className='w-[150px] h-[50px]'
+      resizeMode='contain'
     />
   )
 }
