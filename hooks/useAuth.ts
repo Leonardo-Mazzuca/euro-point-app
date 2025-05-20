@@ -1,5 +1,6 @@
 import { loginSchema } from "@/schemas/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -7,7 +8,6 @@ import { z } from "zod";
 
 export const useAuth = () => {
 
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     const formMethods = useForm<z.infer<typeof loginSchema>>({
         resolver: zodResolver(loginSchema),
@@ -17,14 +17,14 @@ export const useAuth = () => {
         }
     })
 
-    const login = ({email,password}: z.infer<typeof loginSchema>) => {
+    const login = async ({email,password}: z.infer<typeof loginSchema>) => {
         router.push("/(tabs)");
-        setIsLoggedIn(true);
+        await AsyncStorage.setItem("email", email);
+
     }
 
     return {
         login,
-        isLoggedIn,
         formMethods
     }
 }

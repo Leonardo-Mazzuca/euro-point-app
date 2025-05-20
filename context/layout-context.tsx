@@ -17,6 +17,7 @@ type LayoutState = {
     theme: Theme
     hideTabs: boolean
     setHideTabs: (hideTabs: boolean) => void
+    isLogged: boolean
 }
 
 const LayoutContext = createContext<LayoutState | undefined>(undefined);
@@ -27,7 +28,8 @@ const LayoutProvider = ({children}:PropsWithChildren) => {
     const [hideUI, setHideUI] = useState(false);
     const [postButtonProps, setPostButtonProps] = useState({} as ButtonProps);
     const [hideTabs, setHideTabs] = useState(false);
-    const {colorScheme,setColorScheme} = useColorScheme()
+    const {colorScheme,setColorScheme} = useColorScheme();
+    const [isLogged, setIsLogged] = useState(false);
 
     const toggleTheme = async () => {
 
@@ -49,6 +51,21 @@ const LayoutProvider = ({children}:PropsWithChildren) => {
         getTheme();
     }, []);
 
+    useEffect(()=> {
+
+        const verfifyAuthentication = async () => {
+            const email = await AsyncStorage.getItem('email');
+            if(email) {
+                setIsLogged(true)
+            } else {
+                setIsLogged(false)
+            }
+        }
+
+        verfifyAuthentication();
+
+    },[])
+
     const value = {
         hidePostButton,
         setHidePostButton,
@@ -59,7 +76,8 @@ const LayoutProvider = ({children}:PropsWithChildren) => {
         theme: colorScheme,
         toggleTheme,
         hideTabs,
-        setHideTabs
+        setHideTabs,
+        isLogged
     }
 
     return (

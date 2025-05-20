@@ -1,15 +1,22 @@
 
 
 
-import { View, Text, Image } from 'react-native'
+import { Image } from 'react-native'
 import React from 'react'
 
-import {logo} from '@/util/images'
+import {logo, logoLight} from '@/util/images'
+import { useLayoutContext } from '@/context/layout-context'
 
 const Logo = () => {
+
+  const {theme} = useLayoutContext();
+
+  const isDark = theme === "dark";
+
   return (
     <Image
-      source={logo}
+      source={isDark ? logoLight : logo}
+      className='w-[250px] h-[50px]'
     />
   )
 }

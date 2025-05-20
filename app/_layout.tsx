@@ -1,11 +1,6 @@
 import "../style/global.css";
-import {
-  DarkTheme,
-  DefaultTheme,
-  ThemeProvider,
-} from "@react-navigation/native";
 import { useFonts } from "expo-font";
-import { router, Stack } from "expo-router";
+import {  router, Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
@@ -19,9 +14,15 @@ SplashScreen.preventAutoHideAsync();
 
 const DefaultLayout = () => {
 
+  const {isLogged} = useLayoutContext();
+
+  useEffect(()=> {
+    if(isLogged) router.push("/(tabs)");
+  },[isLogged])
+
   return (
 
-    // <ThemeProvider value={DarkTheme}>
+
       <Stack>
         <Stack.Screen name="(auth)" options={{ headerShown: false }} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
@@ -29,7 +30,7 @@ const DefaultLayout = () => {
         <Stack.Screen name="post-screen" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
       </Stack>
-    // </ThemeProvider>
+
 
   );
 };
