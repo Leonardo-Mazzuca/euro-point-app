@@ -76,6 +76,8 @@ declare global {
         progress: number,
         description: string,
     }
+
+    type IdeaStatus = "in-progress" | "recused" | "approved"
 }
 
 export {}

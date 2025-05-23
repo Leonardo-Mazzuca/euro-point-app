@@ -4,6 +4,7 @@ import { Checkbox } from "@/components/Checkbox";
 import ModalScreen from "@/components/modal-screen";
 import BackButton from "@/components/back-button";
 import DeleteButton from "@/components/delete-button";
+import IdeaTag from "./idea-tag";
 
 type IdeaCardProps = {
   idea?: Idea;
@@ -58,7 +59,13 @@ const IdeaCard = ({ enablePost, idea }: IdeaCardProps) => {
         wrapperClassNames="w-[300px] h-[700px]"
         header={
         <View className="flex-row items-center justify-between">
-          <BackButton handleBack={handleClose} />
+          <View className="flex-row gap-1 items-center">
+            <BackButton handleBack={handleClose} />
+            <Text className="dark:text-white font-semibold text-xl">
+              Status: 
+            </Text>
+            <IdeaTag status={"approved"} />
+          </View>
           <DeleteButton handleDelete={handleDelete} />
         </View>
         }
