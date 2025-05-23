@@ -43,7 +43,7 @@ const IdeaTag = ({status}: IdeaTagProps) => {
   }
 
   return (
-    <View className={cn("rounded-2xl py-1 px-2", renderWrapperClasses())}>
+    <View className={cn("rounded-2xl px-2", renderWrapperClasses())}>
         <Text className={cn("text-red-500 font-normal", renderTextClasses())}>
             {renderStatus()}
         </Text>
