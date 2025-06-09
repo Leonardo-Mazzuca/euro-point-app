@@ -15,7 +15,6 @@ declare global {
         rightChild?: React.ReactNode
         isTogglerActive?:boolean
         setToggleActive?: (value:boolean) => void
-
     }
 
     type Option = {
@@ -23,21 +22,67 @@ declare global {
         value: string
     }
 
+    type User = {
+        id: number,
+        password: string,
+        username: string,
+        email: string,
+        phone_number: string
+        saved: {
+            newsletter_ids: number[],
+            posts_ids: number[],
+            projects_ids: number[]
+        }
+    }
+
+    type Channel = {
+        id: number,
+        name: string,
+        user_id: number[],
+        contact_email: string
+    }
+
     type Post = {
-        id:string
+        id: number,
+        user_id: number,
+        total_likes: number,
+        total_views: number,
+        created_at: string,
+        content: string, 
+        channel_id: number,
+        images: string[]
+        is_saved: boolean
+    }
+
+    type Newsletter = {
+        id: number,
+        title: string,
+        owner_id: number,
+        image: string
+        channel_id: number
+        created_at: string
+        total_likes: number,
+        total_views: number,
+        content: string
+    }
+
+    type Team = {
+        id:number,
+        name: string,
+        members_ids: number[]
     }
 
     type Project = {
         id: string,
         title: string,
-        description: string,
+        content: string,
         image: string
-    }
-
-    type Idea = {
-        id:string,
+        owner_id: number,
+        channel_id: number,
+        members_ids: number[],
+        created_at: string,
         title: string,
-        content: string
+        team_id: number
     }
 
     type Program = {
@@ -53,6 +98,7 @@ declare global {
         image: string,
         title: string,
         duration: string
+        total_points: number
     }
 
     type Question = {
@@ -78,6 +124,12 @@ declare global {
     }
 
     type IdeaStatus = "in-progress" | "recused" | "approved"
+
+    type Idea = {
+        id:string,
+        title: string,
+        content: string
+    }
 }
 
 export {}
