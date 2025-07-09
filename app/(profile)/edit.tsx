@@ -8,8 +8,11 @@ import { Label } from '@/components/Label'
 import { Input } from '@/components/Input'
 import { Button } from '@/components/Button'
 import ExitButton from '@/components/exit-button'
+import { useLayoutContext } from '@/context/layout-context'
 
 const ProfileEdit = () => {
+
+  const {currentUser} = useLayoutContext();
 
   return (
     <ProfileContainer>
@@ -20,25 +23,25 @@ const ProfileEdit = () => {
             <Label>
               Nome
             </Label>
-            <Input variant='outline'/>
+            <Input value={currentUser?.username} variant='outline'/>
         </View>
         <View className='py-2'>
             <Label>
               Área
             </Label>
-            <Input variant='outline' />
+            <Input value={String(currentUser.area?.name)} variant='outline' />
         </View>
         <View className='py-2'>
             <Label>
               Email
             </Label>
-            <Input variant='outline' />
+            <Input value={currentUser?.email} variant='outline' />
         </View>
         <View className='py-2'>
             <Label>
               Telefone
             </Label>
-            <Input variant='outline' />
+            <Input value={currentUser?.phone_number} variant='outline' />
         </View>
         <Button className='mt-10  bg-blue-primary'>
           <Text className='text-lg font-semibold text-white'>

@@ -8,6 +8,7 @@ import "react-native-reanimated";
 import { LayoutProvider, useLayoutContext } from "@/context/layout-context";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Colors } from "@/constants/Colors";
+import Toast from 'react-native-toast-message';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -89,6 +90,7 @@ export default function RootLayout() {
         <LayoutProvider>
           <DefaultLayout />
           <InnerBar />
+          <Toast />
         </LayoutProvider>
 
     </GestureHandlerRootView>

@@ -1,14 +1,16 @@
 import { loginSchema } from "@/schemas/auth";
+import { postNoAuth } from "@/service/helpers";
 import { zodResolver } from "@hookform/resolvers/zod";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import Toast from 'react-native-toast-message'
+import { useLayoutContext } from "@/context/layout-context";
 
 export const useAuth = () => {
 
-
+    const {setCurrentUser} = useLayoutContext();
     const formMethods = useForm<z.infer<typeof loginSchema>>({
         resolver: zodResolver(loginSchema),
         defaultValues: {
@@ -18,8 +20,34 @@ export const useAuth = () => {
     })
 
     const login = async ({email,password}: z.infer<typeof loginSchema>) => {
-        router.push("/(tabs)");
-        await AsyncStorage.setItem("email", email);
+        
+            const data = {
+                email,
+                password
+            }
+
+            try {
+                
+                const res = await postNoAuth("/auth/login", data) as LoginPayload;
+
+                if(res.token){
+                    await AsyncStorage.setItem("token", res.token);
+                }
+
+                Toast.show({
+                    type: 'success',
+                    text1: res.message
+                });
+
+                setCurrentUser(res.user);
+                router.push('/(tabs)');
+                
+            } catch (error:any) {
+                Toast.show({
+                    type: 'error',
+                    text1: error.response.data.message
+                });
+            }
 
     }
     

@@ -23,15 +23,18 @@ declare global {
     }
 
     type User = {
-        id: number,
-        password: string,
-        username: string,
-        email: string,
-        phone_number: string
-        saved: {
-            newsletter_ids: number[],
-            posts_ids: number[],
-            projects_ids: number[]
+        id: number;
+        avatar: string;
+        email: string;
+        password: string;
+        phone_number: string;
+        saved_newsletter_ids: number[];
+        saved_posts_ids: number[];
+        saved_projects_ids: number[];
+        username: string;
+        area: {
+            name: string,
+            id:number
         }
     }
 
