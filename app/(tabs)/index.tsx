@@ -1,9 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import {
-  Animated,
-  Text,
-  View,
-} from "react-native";
+import { Animated, RefreshControl, Text, View } from "react-native";
 import Header from "@/components/header";
 import { Tabs, TabsList, TabsTrigger } from "@/components/Tabs";
 import PostCard from "@/components/post-card";
@@ -17,49 +13,69 @@ import { usePosts } from "@/hooks/use-posts";
 import Loading from "@/components/loading";
 import { useLayoutContext } from "@/context/layout-context";
 
-
 const Home = () => {
   const [currentScreen, setCurrentScreen] = useState<HomeScreen>("for-you");
   const uiTranslateY = useRef(new Animated.Value(0)).current;
-  const {handleScroll,uiOpacity} = useScrollAnimation({translateValue: uiTranslateY});
-  const {currentUser} = useLayoutContext();
+  const { handleScroll, uiOpacity } = useScrollAnimation({
+    translateValue: uiTranslateY,
+  });
+  const { currentUser } = useLayoutContext();
 
-  const {posts,isLoading} = usePosts();
+  const { posts, isLoading, refetch } = usePosts();
 
-  const currentUserFollowings = currentUser?.followed_areas.map((area) => area.id);
+  const currentUserFollowings = currentUser?.followed_areas?.map(
+    (area) => area.id
+  );
 
   const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
 
-  useEffect(()=> {
-
+  useEffect(() => {
     const filtered = posts.filter((post) => {
-      return currentUserFollowings?.includes(post.area_id)
+      return currentUserFollowings?.includes(post.area_id);
     });
 
     setFilteredPosts(filtered);
-    
-  },[posts]);
+  }, [posts]);
 
-  if(isLoading){
-    return <Loading/>
+  if (isLoading) {
+    return <Loading />;
   }
-
 
   return (
     <TabsContainer>
       <AnimatedView
-        style={{ opacity: uiOpacity, transform: [{ translateY: uiTranslateY }] }}
+        style={{
+          opacity: uiOpacity,
+          transform: [{ translateY: uiTranslateY }],
+        }}
       >
-        <Tabs value={currentScreen} onValueChange={(e) => setCurrentScreen(e as HomeScreen)}>
-        <Header />
+        <Tabs
+          value={currentScreen}
+          onValueChange={(e) => setCurrentScreen(e as HomeScreen)}
+        >
+          <Header />
           <TabsList className="flex-row w-full my-2">
             <TabsTrigger value="for-you" className="flex-1">
-              <Text className={cn("text-xl font-semibold", currentScreen === "for-you" ? "text-blue-500" : "dark:text-white")}>
+              <Text
+                className={cn(
+                  "text-xl font-semibold",
+                  currentScreen === "for-you"
+                    ? "text-blue-500"
+                    : "dark:text-white"
+                )}
+              >
                 Para você
               </Text>
             </TabsTrigger>
             <TabsTrigger value="following" className="flex-1">
-              <Text className={cn("text-xl font-semibold", currentScreen === "following" ? "text-blue-500" : "dark:text-white")}>
+              <Text
+                className={cn(
+                  "text-xl font-semibold",
+                  currentScreen === "following"
+                    ? "text-blue-500"
+                    : "dark:text-white"
+                )}
+              >
                 Seguindo
               </Text>
             </TabsTrigger>
@@ -73,16 +89,22 @@ const Home = () => {
         {currentScreen === "for-you" && (
           <ScrollableList
             data={posts}
-            renderItem={({item}) => <PostCard post={item} />}
+            renderItem={({ item }) => (
+              <PostCard refetch={refetch} post={item} />
+            )}
             handleScroll={handleScroll}
+            refreshControl={<RefreshControl onRefresh={refetch} refreshing={isLoading} />}
           />
         )}
 
         {currentScreen === "following" && (
           <ScrollableList
             data={filteredPosts}
-            renderItem={({item}) => <PostCard post={item} />}
+            renderItem={({ item }) => (
+              <PostCard refetch={refetch} post={item} />
+            )}
             handleScroll={handleScroll}
+            refreshControl={<RefreshControl onRefresh={refetch} refreshing={isLoading} />}
           />
         )}
       </View>

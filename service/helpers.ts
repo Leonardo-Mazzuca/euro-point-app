@@ -39,12 +39,14 @@ const get = async (url: string) => {
 const post = async (url: string, data: object) => {
   const token = await getToken();
 
-  return await api.post(url, data, {
+  const req =  await api.post(url, data, {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
   });
+
+  return req.data;
 };
 
 const put = async (url: string, data: object) => {

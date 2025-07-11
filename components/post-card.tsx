@@ -9,23 +9,29 @@ import Feather from "@expo/vector-icons/Feather";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { TouchableOpacity, View } from "react-native";
 import { useLayoutContext } from "@/context/layout-context";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { convertToAvatar, getNameInitials } from "@/util";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/pt-br";
+import { post as api_post } from "@/service/helpers";
+import Toast from "react-native-toast-message";
+import { useAreas } from "@/hooks/use-areas";
 
 dayjs.extend(relativeTime);
 dayjs.locale("pt-br");
 
 type PostCardProps = {
   post: Post;
+  refetch: () => void
 };
 
-const PostCard = ({ post }: PostCardProps) => {
+const PostCard = ({ post, refetch }: PostCardProps) => {
   const { theme } = useLayoutContext();
 
   const [isSaved, setIsSaved] = useState(false);
+  const [isFollowing, setIsFollowing] = useState(false);
+  const {currentUser,getCurrentUser} = useLayoutContext();
 
   const handleSave = () => setIsSaved(!isSaved);
 
@@ -36,7 +42,46 @@ const PostCard = ({ post }: PostCardProps) => {
     content,
     total_likes,
     total_views,
+    area_id
   } = post;
+  
+  useEffect(()=> {
+
+    if(currentUser?.followed_areas?.some((area) => area.id === area_id)) setIsFollowing(true);
+
+  },[]);
+  
+  const handleFollow = async () => {
+    try {
+
+      await api_post("/areas/follow",{area_id});
+      setIsFollowing(true);
+      refetch();
+      await getCurrentUser();
+      
+    } catch (error:any) {
+      Toast.show({
+        type: "error",
+        text1: error.response.data.message,
+      })
+    }
+  }
+
+  const handleUnFollow = async () => {
+    try {
+
+      await api_post("/areas/unfollow",{area_id});
+      setIsFollowing(false);
+      refetch();
+      await getCurrentUser();
+      
+    } catch (error:any) {
+      Toast.show({
+        type: "error",
+        text1: error.response.data.message,
+      })
+    }
+  }
   
   return (
     <Card className="mt-4">
@@ -56,7 +101,9 @@ const PostCard = ({ post }: PostCardProps) => {
         <Text className="font-normal text-sm text-gray-400">
           {dayjs(created_at).fromNow()} 
         </Text>
-        <Button className="flex-row ms-auto w-[100px] gap-2 items-center" size={"icon"} variant="ghost">
+        <Button 
+        onPress={isFollowing ? handleUnFollow : handleFollow}
+        className="flex-row ms-auto w-[100px] gap-2 items-center" size={"icon"} variant="ghost">
           <AntDesign
             name="plus"
             size={20}
@@ -75,7 +122,7 @@ const PostCard = ({ post }: PostCardProps) => {
             }}
             className="font-normal text-xl"
           >
-            Seguir
+            {isFollowing ? "Seguindo" : "Seguir"}
           </Text>
         </Button>
 

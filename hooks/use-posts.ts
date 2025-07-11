@@ -5,7 +5,7 @@ import Toast from "react-native-toast-message";
 export const usePosts = () => {
   const [posts, setPosts] = useState<Post[]>([]);
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, refetch } = useQuery({
     queryKey: ["posts"],
     queryFn: async () => {
       try {
@@ -27,6 +27,7 @@ export const usePosts = () => {
 
   return {
     posts,
-    isLoading
+    isLoading,
+    refetch
   };
 };

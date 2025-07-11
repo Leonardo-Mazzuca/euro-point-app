@@ -23,6 +23,7 @@ type LayoutState = {
     isLogged: boolean,
     currentUser:User,
     setCurrentUser: (value: User) => void
+    getCurrentUser: () => void
 }
 
 const LayoutContext = createContext<LayoutState | undefined>(undefined);
@@ -44,28 +45,25 @@ const LayoutProvider = ({children}:PropsWithChildren) => {
         await AsyncStorage.setItem('theme', newTheme); 
 
     };
+    const getCurrentUser = async () => {
+
+        try {
+
+            const req = await get('/users') as User
+            setCurrentUser({
+                ...req,
+                avatar: convertToAvatar(req.avatar)
+            })
+            
+        } catch (error) {
+            Toast.show({
+                type: 'error',
+                text1: 'Não foi possível carregar o usuário'
+            })
+        }
+    }
 
     useEffect(()=> {
-        const getCurrentUser = async () => {
-
-            const avatar_default_url = process.env.EXPO_PUBLIC_EUROPOINT_IMAGE_STORAGE_URL;
-
-            try {
-
-                const req = await get('/users') as User
-                setCurrentUser({
-                    ...req,
-                    avatar: convertToAvatar(req.avatar)
-                })
-                
-            } catch (error) {
-                Toast.show({
-                    type: 'error',
-                    text1: 'Não foi possível carregar o usuário'
-                })
-            }
-        }
-
         getCurrentUser()
     },[])
 
@@ -109,7 +107,8 @@ const LayoutProvider = ({children}:PropsWithChildren) => {
         setHideTabs,
         isLogged,
         currentUser,
-        setCurrentUser
+        setCurrentUser,
+        getCurrentUser
     }
 
     return (
