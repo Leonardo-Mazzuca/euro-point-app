@@ -6,6 +6,7 @@ import { View } from "react-native";
 import { themes } from "@/util/color-theme";
 import { get } from "@/service/helpers";
 import Toast from "react-native-toast-message";
+import { convertToAvatar } from "@/util";
 
 type Theme = 'dark' | 'light' | undefined
 type LayoutState = {
@@ -54,7 +55,7 @@ const LayoutProvider = ({children}:PropsWithChildren) => {
                 const req = await get('/users') as User
                 setCurrentUser({
                     ...req,
-                    avatar: `${avatar_default_url}/profile/${req.avatar}`
+                    avatar: convertToAvatar(req.avatar)
                 })
                 
             } catch (error) {

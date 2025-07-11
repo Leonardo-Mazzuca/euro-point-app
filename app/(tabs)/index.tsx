@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Animated,
   Text,
@@ -13,11 +13,37 @@ import AnimatedView from "@/components/animated-view";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import SearchInput from "@/components/search-input";
 import ScrollableList from "@/components/scrollable-list";
+import { usePosts } from "@/hooks/use-posts";
+import Loading from "@/components/loading";
+import { useLayoutContext } from "@/context/layout-context";
+
 
 const Home = () => {
   const [currentScreen, setCurrentScreen] = useState<HomeScreen>("for-you");
   const uiTranslateY = useRef(new Animated.Value(0)).current;
   const {handleScroll,uiOpacity} = useScrollAnimation({translateValue: uiTranslateY});
+  const {currentUser} = useLayoutContext();
+
+  const {posts,isLoading} = usePosts();
+
+  const currentUserFollowings = currentUser?.followed_areas.map((area) => area.id);
+
+  const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
+
+  useEffect(()=> {
+
+    const filtered = posts.filter((post) => {
+      return currentUserFollowings?.includes(post.area_id)
+    });
+
+    setFilteredPosts(filtered);
+    
+  },[posts]);
+
+  if(isLoading){
+    return <Loading/>
+  }
+
 
   return (
     <TabsContainer>
@@ -46,17 +72,16 @@ const Home = () => {
       <View className="mt-16 flex-1 px-6">
         {currentScreen === "for-you" && (
           <ScrollableList
-            data={Array.from({ length: 5 })}
-            renderItem={() => <PostCard />}
+            data={posts}
+            renderItem={({item}) => <PostCard post={item} />}
             handleScroll={handleScroll}
-            
           />
         )}
 
         {currentScreen === "following" && (
           <ScrollableList
-            data={Array.from({ length: 3 })}
-            renderItem={() => <PostCard />}
+            data={filteredPosts}
+            renderItem={({item}) => <PostCard post={item} />}
             handleScroll={handleScroll}
           />
         )}

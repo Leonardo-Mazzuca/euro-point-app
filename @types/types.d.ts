@@ -36,6 +36,10 @@ declare global {
             name: string,
             id:number
         }
+        followed_areas: {
+            name: string,
+            id: number
+        }[]
     }
 
     type Channel = {
@@ -46,15 +50,25 @@ declare global {
     }
 
     type Post = {
-        id: number,
-        user_id: number,
-        total_likes: number,
-        total_views: number,
-        created_at: string,
-        content: string, 
-        channel_id: number,
-        images: string[]
-        is_saved: boolean
+        id: number;
+        title: string;
+        content: string;
+        user_id: number;
+        area_id: number;
+        total_likes: number;
+        total_views: number;
+        images: string[];
+        user: {
+          id: number;
+          username: string;
+          avatar: string | null;
+        };
+        area: {
+          id: number;
+          name: string;
+          contact_email: string;
+        };
+        created_at: string
     }
 
     type Newsletter = {

@@ -11,7 +11,7 @@ const UserButton = () => {
   if(!currentUser){
     return <></>
   }
-  
+
   //@ts-ignore
   const onPress = () => router.push("/(profile)");
   return (
@@ -24,7 +24,7 @@ const UserButton = () => {
         />
         <AvatarFallback>
           <Text className="dark:text-white font-semibold text-xl">
-            {getNameInitials(currentUser?.username)}
+            {currentUser.username && getNameInitials(currentUser?.username)}
           </Text>
         </AvatarFallback>
       </Avatar>

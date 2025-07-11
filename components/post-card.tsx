@@ -10,46 +10,63 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { TouchableOpacity, View } from "react-native";
 import { useLayoutContext } from "@/context/layout-context";
 import { useState } from "react";
+import { convertToAvatar, getNameInitials } from "@/util";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import "dayjs/locale/pt-br";
 
-type PostCardProps = {};
+dayjs.extend(relativeTime);
+dayjs.locale("pt-br");
 
-const PostCard = ({}: PostCardProps) => {
-  
+type PostCardProps = {
+  post: Post;
+};
+
+const PostCard = ({ post }: PostCardProps) => {
   const { theme } = useLayoutContext();
 
   const [isSaved, setIsSaved] = useState(false);
 
   const handleSave = () => setIsSaved(!isSaved);
 
+  const {
+    created_at,
+    user,
+    area: { contact_email },
+    content,
+    total_likes,
+    total_views,
+  } = post;
+  
   return (
     <Card className="mt-4">
       <CardHeader className="flex-row p-4 items-center gap-3">
         <Avatar className="w-10 h-10" alt="User image">
           <AvatarImage
             source={{
-              uri: "https://avatars.githubusercontent.com/u/66306912?v=4",
+              uri: user.avatar && convertToAvatar(user?.avatar) || "",
             }}
           />
           <AvatarFallback>
-            <Text>LM</Text>
+            <Text>{getNameInitials(user?.username || "")}</Text>
           </AvatarFallback>
         </Avatar>
-        <Text className="font-semibold text-xl">Macoco</Text>
+        <Text className="font-semibold text-xl">{user?.username}</Text>
         <Entypo name="dot-single" size={18} color="grey" />
-        <Text className="font-normal text-lg text-gray-400">1 hora atrás</Text>
-        <Button size={"icon"} variant="ghost">
+        <Text className="font-normal text-sm text-gray-400">
+          {dayjs(created_at).fromNow()} 
+        </Text>
+        <Button className="flex-row ms-auto w-[100px] gap-2 items-center" size={"icon"} variant="ghost">
           <AntDesign
             name="plus"
-            size={28}
+            size={20}
             color={
               theme === "dark"
                 ? Colors.dark.primaryBlue
                 : Colors.light.primaryBlue
             }
           />
-        </Button>
-        <Button variant="ghost">
-          <Text
+           <Text
             style={{
               color:
                 theme === "dark"
@@ -61,16 +78,17 @@ const PostCard = ({}: PostCardProps) => {
             Seguir
           </Text>
         </Button>
+
       </CardHeader>
       <CardContent>
-        <TextSample />
+        <PostText contact_email={contact_email} text={content} />
       </CardContent>
       <CardFooter className="gap-6">
         <FooterItem
           icon={
             <AntDesign name="heart" size={20} color={Colors.dark.hearthRed} />
           }
-          text="48.8k"
+          text={String(total_likes)}
         />
         <FooterItem
           icon={
@@ -80,7 +98,7 @@ const PostCard = ({}: PostCardProps) => {
               color={theme === "dark" ? Colors.dark.icon : Colors.light.icon}
             />
           }
-          text="12M"
+          text={String(total_views)}
         />
         <TouchableOpacity onPress={handleSave}>
           {isSaved ? (
@@ -130,20 +148,20 @@ export const FooterItem = ({ icon, text }: FooterItemProps) => {
   );
 };
 
-const TextSample = () => {
+const PostText = ({
+  text,
+  contact_email,
+}: {
+  text: string;
+  contact_email: string;
+}) => {
   return (
     <>
-      <Text className="text-gray-600 dark:text-gray-200 my-2">
-        Colaboradores(as),
-      </Text>
-      <Text className="text-gray-600 dark:text-gray-200">
-        Atualizem seus dados no sistema interno até 30/04 (endereço, telefone,
-        etc.). É essencial para mantermos tudo regularizado.
-      </Text>
+      <Text className="text-gray-600 dark:text-gray-200">{text}</Text>
       <Text className="text-gray-500 dark:text-gray-200 my-2">
         Duvidas:{" "}
         <Text className="font-bold text-gray-600 dark:text-gray-200">
-          rh@empresa.com.br
+          {contact_email}
         </Text>
       </Text>
     </>
