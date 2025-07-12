@@ -16,7 +16,6 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/pt-br";
 import { post as api_post } from "@/service/helpers";
 import Toast from "react-native-toast-message";
-import { useAreas } from "@/hooks/use-areas";
 
 dayjs.extend(relativeTime);
 dayjs.locale("pt-br");
