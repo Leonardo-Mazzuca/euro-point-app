@@ -1,4 +1,5 @@
 import { get } from "@/service/helpers";
+import { convertToProjectImage } from "@/util";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 
@@ -19,8 +20,11 @@ export const useProjects = () => {
     })
 
     useEffect(() => {
-        if(data) setProjects(data);
-    }, [data])
+        if(data) setProjects(data.map(d => ({
+            ...d,
+            image: convertToProjectImage(d.image)
+        })));
+    }, [data]);
 
     return {
         projects,

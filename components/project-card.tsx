@@ -7,7 +7,6 @@ import { Image, Text, TouchableOpacity, View } from 'react-native'
 import Entypo from '@expo/vector-icons/Entypo'
 import { router } from 'expo-router'
 import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/pt-br";
 
 type Props = {
@@ -27,7 +26,7 @@ const ProjectCard = ({project}: Props) => {
       <View className="items-center flex-1 flex-row gap-5">
         {project.image ? (
           <Image
-            className="w-[150px] h-[150px] rounded-2xl"
+            className="w-[150px] h-[150px] aspect-square object-cover rounded-2xl"
             source={{uri: project.image } }
           />
         ) : (

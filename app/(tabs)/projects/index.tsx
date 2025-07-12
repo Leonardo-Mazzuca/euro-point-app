@@ -23,9 +23,6 @@ const Projects = () => {
     return <Loading />
   }
 
-
-  console.log(projects);
-  
   return (
     <TabsContainer>
       <AnimatedView

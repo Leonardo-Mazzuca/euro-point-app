@@ -14,7 +14,21 @@ const convertToAvatar = (fileName:string) => {
   return `${avatar_default_url}/profile/${fileName}`
 }
 
+const convertToProjectImage = (fileName:string) => {
+  const avatar_default_url = process.env.EXPO_PUBLIC_EUROPOINT_IMAGE_STORAGE_URL;
+  if(!avatar_default_url) throw new Error("avatar_default_url is not defined");
+  return `${avatar_default_url}/project/${fileName}`
+}
+
+const convertToNewsletterImage = (fileName:string) => {
+  const avatar_default_url = process.env.EXPO_PUBLIC_EUROPOINT_IMAGE_STORAGE_URL;
+  if(!avatar_default_url) throw new Error("avatar_default_url is not defined");
+  return `${avatar_default_url}/newsletter/${fileName}`
+}
+
 export {
     getNameInitials,
-    convertToAvatar
+    convertToAvatar,
+    convertToProjectImage,
+    convertToNewsletterImage
 }

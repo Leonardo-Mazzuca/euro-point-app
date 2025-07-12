@@ -4,12 +4,21 @@ import { Card } from "@/components/Card";
 import { Text } from "./Text";
 import Entypo from "@expo/vector-icons/Entypo";
 import { router } from "expo-router";
+import dayjs from "dayjs";
+import "dayjs/locale/pt-br";
+import { convertToNewsletterImage } from "@/util";
 
-const NewsLetterCard = () => {
+
+type Props ={
+  newsletter: Newsletter
+}
+const NewsLetterCard = ({newsletter}:Props) => {
 
   const handleNavigate = () => {
-    router.push('/newsletter/1')
+    router.push(`/newsletter/${newsletter.id}`);
   }
+
+  const firstImage = newsletter.images[0];
 
   return (
     <Card className="mt-4">
@@ -20,24 +29,23 @@ const NewsLetterCard = () => {
         <View className="items-center flex-row gap-5">
           <Image
             className="w-[150px] h-[150px] rounded-2xl"
-            source={{uri: "https://marcaspelomundo.com.br/wp-content/uploads/2025/01/IMG_7660-e1738353337221-875x1024.jpeg"}}
+            source={{uri: convertToNewsletterImage(firstImage)}}
           />
           <View>
             <View className="gap-2">
-              <Text className="font-bold text-2xl">Compilado do mês</Text>
+              <Text className="font-bold text-2xl">{newsletter.title}</Text>
               <Text className="font-normal dark:text-gray-300 text-gray-500">
-                Por Leonardo Mazzuca
+                Por {newsletter?.user?.username}
               </Text>
             </View>
 
             <View className="mt-3 gap-2 justify-between flex-row">
                 <View className="flex-row">
-                    <Text className="font-semibold text-blue-primary">TI</Text>
+                    <Text className="font-semibold text-blue-primary">{newsletter?.area?.name}</Text>
                     <Entypo name="dot-single" size={18} color="grey" />
                     <Text className="text-gray-500 dark:text-gray-400">
-                        9 dias atrás
+                      {dayjs(newsletter.created_at).fromNow()} 
                     </Text>
-            
                 </View>
                 <TouchableOpacity>
                      <Entypo name="dots-three-horizontal" size={20} color="grey" />

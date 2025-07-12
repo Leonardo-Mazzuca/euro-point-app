@@ -72,13 +72,20 @@ declare global {
   type Newsletter = {
     id: number;
     title: string;
-    owner_id: number;
-    image: string;
-    channel_id: number;
-    created_at: string;
+    content: string;
+    area_id: number;
+    created_at: string; 
+    images: string[];
     total_likes: number;
     total_views: number;
-    content: string;
+    user: {
+      username: string,
+      id: number
+    }
+    area: {
+      name: string,
+      id: number
+    }
   };
 
   type Team = {
