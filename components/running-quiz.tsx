@@ -7,18 +7,27 @@ import React from 'react'
 import { AntDesign, FontAwesome6, Feather } from '@expo/vector-icons'
 import { Button } from '@/components/Button'
 import { Colors } from '@/constants/Colors'
+import { router } from 'expo-router'
 
-const RunningQuiz = () => {
+type Props = {
+  runningQuiz: Quiz
+}
+const RunningQuiz = ({runningQuiz}:Props) => {
+
+  const handleQuizClick = () => {
+    router.push(`/trainings/${runningQuiz.id}`);
+  };
+
   return (
     <View className='flex-row gap-3 items-center'>
       <Image 
         className='w-[120px] h-[120px] rounded-lg'
-        source={{uri: "https://images.unsplash.com/photo-1511485977113-f34c92461ad9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",}}
+        source={{uri: runningQuiz.image,}}
       />
       <View className='flex-1'>
         <View className='flex-row items-center justify-between'>
           <Text className='text-blue-primary dark:text-blue-secondary font-semibold text-2xl'>
-            CLIC DESAFIOS
+            {runningQuiz.title}
           </Text>
           <Button
             variant={"ghost"}
@@ -31,16 +40,18 @@ const RunningQuiz = () => {
           <View className='flex-row gap-2 items-center'>
             <AntDesign name="profile" size={12} color="gray" />
             <Text className='font-normal gap-2 flex-row text-gray-400'>
-              <Text className='text-blue-primary dark:text-blue-secondary'>8</Text>/10 Questões
+              <Text className='text-blue-primary dark:text-blue-secondary'>{runningQuiz.total_answered || 0}</Text>/{runningQuiz.questions.length} Questões
             </Text>
           </View>
           <View className='flex-row gap-2 items-center'>
             <FontAwesome6  name="clock" size={12} color="grey" /> 
             <Text className='text-gray-400 gap-2 font-normal'>
-              <Text className='text-blue-primary dark:text-blue-secondary'>10</Text> min
+              <Text className='text-blue-primary dark:text-blue-secondary'>{runningQuiz.duration}</Text>
             </Text>
           </View>
-          <Button className='my-2 bg-dark-gray  h-[60px]' >
+          <Button
+           onPress={handleQuizClick}
+           className='my-2 bg-dark-gray  h-[60px]' >
             <Text className='text-white font-medium dark:text-gray-300'>
               Continue o quiz
             </Text>

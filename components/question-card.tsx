@@ -13,7 +13,7 @@ type QuestionCardProps = {
   isSubmitted: boolean;
 };
 const QuestionCard = ({
-  question: { correctAnswer, options, title },
+  question: { correct_answer, options, title },
   selectedAnswer,
   setSelectedAnswer,
   isWrong,
@@ -46,14 +46,14 @@ const QuestionCard = ({
           data={options}
           contentContainerStyle={{ gap: 25 }}
           keyExtractor={(item, index) => index.toString()}
-          renderItem={({ item }) => (
+          renderItem={({ item,index }) => (
             <TouchableOpacity
               className={cn(
                 "flex-row p-2 rounded-3xl items-center gap-2",
-                isWrong && item.answer === correctAnswer && "bg-green-500",
+                isWrong && item.answer === correct_answer && "bg-green-500",
                 isWrong && item.answer === selectedAnswer && "bg-red-500",
                 isSubmitted && "pointer-events-none",
-                isSubmitted && item.answer === correctAnswer && "bg-green-500"
+                isSubmitted && item.answer === correct_answer && "bg-green-500"
               )}
               onPress={() => setSelectedAnswer(item.answer)}
             >
@@ -68,7 +68,7 @@ const QuestionCard = ({
                     : notSelectedColors
                 }
               >
-                {item.answer}
+                {index+1}
               </Badge>
               <Text className={"text-xl dark:text-gray-300 font-normal"}>
                 {item.title}

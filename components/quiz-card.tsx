@@ -9,8 +9,8 @@ import { answeredQuizzes } from "@/constants/data";
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 type QuizCardProps = {
-  selected: string;
-  setSelected: (value: string) => void;
+  selected: number | null;
+  setSelected: (value: number) => void;
   quiz: Quiz
   showAnswered?: boolean
 };
@@ -21,19 +21,20 @@ const QuizCard = ({ selected, setSelected, quiz, showAnswered}: QuizCardProps) =
 
   const {theme} = useLayoutContext();
 
-  const quizAnswers = answeredQuizzes.find((q) => q.id === quiz.id);
+  const quizAnswers = answeredQuizzes.find((q) => parseInt(q.id) === quiz.id);
 
   const colors = theme === "dark" ? ["#1E1E2D", "#1E1E2D"] : ["#dedede", "#dedede"];
+  const totalQuestions = quiz.questions.length;
 
   const AnswerText = () => {
     return (
       showAnswered && quizAnswers ? (
         <Text className="text-gray-400 text-sm flex-row items-center">
-          <AntDesign name="profile" size={12} color="gray" /> {quizAnswers.answeredQuestions} / {quiz.totalQuestions}
+          <AntDesign name="profile" size={12} color="gray" /> {quizAnswers.answeredQuestions} / {totalQuestions}
         </Text>
       ) : (
         <Text className="text-gray-400 text-sm flex-row items-center">
-          <AntDesign name="profile" size={12} color="gray" /> {quiz.totalQuestions} Questões
+          <AntDesign name="profile" size={12} color="gray" /> {totalQuestions} Questões
         </Text>
       )
     )
@@ -47,7 +48,7 @@ const QuizCard = ({ selected, setSelected, quiz, showAnswered}: QuizCardProps) =
         </Text>
       ) : (
         <Text className="text-gray-400 text-sm flex-row items-center">
-            <FontAwesome6 name="clock" size={12} color="grey" /> 20 min
+            <FontAwesome6 name="clock" size={12} color="grey" /> {quiz.duration}
         </Text>
       )
     );
@@ -75,11 +76,11 @@ const QuizCard = ({ selected, setSelected, quiz, showAnswered}: QuizCardProps) =
         <Image
           className="w-[70px] h-[70px] rounded-xl"
           source={{
-            uri: "https://marcaspelomundo.com.br/wp-content/uploads/2025/01/IMG_7660-e1738353337221-875x1024.jpeg",
+            uri:quiz.image
           }}
         />
         <View>
-          <Text className="text-blue-primary dark:text-blue-secondary font-semibold text-xl">CLIC</Text>
+          <Text className="text-blue-primary dark:text-blue-secondary font-semibold text-xl">{quiz.title}</Text>
           <AnswerText />
           <AnswerFooterText />
         </View>

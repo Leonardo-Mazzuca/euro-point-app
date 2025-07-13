@@ -122,27 +122,33 @@ declare global {
   };
 
   type Quiz = {
-    id: string;
-    totalQuestions: number;
-    image: string;
+    id: number;
     title: string;
-    duration: string;
+    description: string;
     total_points: number;
+    image: string;
+    duration: string; 
+    questions: Question[];
+    is_running: boolean;
+    updated_at: string;
+    created_at: string;
+    total_answered: number;
+    current_question_id: number
   };
-
+  
   type Question = {
-    quizId: string;
-    id: string;
+    id: number;
     title: string;
+    correct_answer: string;
+    quiz_id: number;
     options: QuestionOption[];
-    correctAnswer: string;
   };
-
-  type QuestionOptions = {
-    questionId: string;
-    id: string;
+  
+  type QuestionOption = {
+    id: number;
     title: string;
     answer: string;
+    question_id: number;
   };
 
   type Achieviment = {

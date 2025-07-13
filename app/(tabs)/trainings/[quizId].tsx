@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { router, useLocalSearchParams } from "expo-router";
 import TabsContainer from "@/components/tabs-container";
 import Header from "@/components/header";
@@ -13,6 +13,8 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { Colors } from "@/constants/Colors";
 import { AntDesign } from "@expo/vector-icons";
 import ConfettiCannon from 'react-native-confetti-cannon';
+import { useQuizzes } from "@/hooks/use-quizzes";
+import Loading from "@/components/loading";
 const SingleQuiz = () => {
 
   const { quizId } = useLocalSearchParams();
@@ -22,10 +24,12 @@ const SingleQuiz = () => {
   const [isFinished, setIsFinished] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState("");
   const {setPostButtonProps} = useLayoutContext();
-
+  const {quizzes} = useQuizzes();
+  const [currentQuiz, setCurrentQuiz] = useState<Quiz | null>(null);
+  const [quizQuestions, setQuizQuestions] = useState<Question[]>([]);
+  const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
+  
   const isFocused = useIsFocused();
-
-  const quizQuestions = questions.find((question)=>question.quizId === quizId);
 
   useEffect(()=> {
     if(isFocused){
@@ -41,12 +45,32 @@ const SingleQuiz = () => {
       })
     }
   },[isFocused])
+
+  useEffect(()=> {
+    const current = quizzes.find((quiz) => quiz.id === Number(quizId));
+    if(current){
+      setCurrentQuiz(current);
+    }
+  },[quizzes]);
+
+  const currentQuizMemo = useMemo(()=> currentQuiz,[currentQuiz]);
+
+  useEffect(()=> {
+    const questions = currentQuizMemo?.questions || [];
+    if(questions){
+      setQuizQuestions(questions);
+    }
+  },[currentQuizMemo])
+
+  useEffect(()=> {
+    setCurrentQuestion(quizQuestions[currentStep])
+  },[])
   
   const handleFinishButton = () => {
     
     setIsSubmitted(true)
 
-    if(selectedAnswer !== quizQuestions?.correctAnswer){
+    if(selectedAnswer !== currentQuestion?.correct_answer){
       setIsWrong(true);
       setTimeout(()=>{
         setIsWrong(false);
@@ -54,21 +78,20 @@ const SingleQuiz = () => {
       ,1000)
     } 
 
-    if(currentStep === 10){
+    if(currentStep === currentQuizMemo?.questions.length){
       setIsFinished(true);
       return
     }
 
     setTimeout(()=>{
       setCurrentStep((prev) => prev + 1);
+      setCurrentQuestion(quizQuestions[currentStep])
       setIsSubmitted(false)
       setSelectedAnswer("");
     }
     ,1000)
 
   }
-
-
 
   const FinishButton = () => (
     <TouchableOpacity
@@ -79,6 +102,10 @@ const SingleQuiz = () => {
     </TouchableOpacity>
   );
 
+  if(!currentQuiz){
+    return <Loading />
+  }
+
   return (
     <TabsContainer>
       <Header />
@@ -87,20 +114,21 @@ const SingleQuiz = () => {
           Quiz {quizId}
         </Text>
         <Stepper
-          steps={10}
+          steps={currentQuiz?.questions.length}
           currentStep={currentStep}
           setCurrentStep={setCurrentStep}
         />
       </View>
-   
-        <QuestionCard 
-          question={quizQuestions!}
-          selectedAnswer={selectedAnswer}
-          setSelectedAnswer={setSelectedAnswer}
-          isWrong={isWrong}
-          isSubmitted={isSubmitted}
-
-        />
+    
+        {currentQuestion && (
+          <QuestionCard 
+            question={currentQuestion}
+            selectedAnswer={selectedAnswer}
+            setSelectedAnswer={setSelectedAnswer}
+            isWrong={isWrong}
+            isSubmitted={isSubmitted}
+          />
+        )}
 
       <View className="my-3 px-5 flex-row justify-center gap-4">
         {/* <ArrowButton

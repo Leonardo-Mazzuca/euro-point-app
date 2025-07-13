@@ -3,10 +3,10 @@ import React from "react";
 import { Card } from "@/components/Card";
 
 type ProgramCardProps = {
-  // program:Program
+  program:Program
 };
 
-const ProgramCard = ({}: ProgramCardProps) => {
+const ProgramCard = ({program}: ProgramCardProps) => {
   return (
     <Card
     >
@@ -14,14 +14,14 @@ const ProgramCard = ({}: ProgramCardProps) => {
         <Image
           className="w-[150px] h-[150px] rounded-2xl"
           source={{
-            uri: "https://marcaspelomundo.com.br/wp-content/uploads/2025/01/IMG_7660-e1738353337221-875x1024.jpeg",
+            uri: program.image,
           }}
         />
         <View>
           <View className="gap-2">
-            <Text className="font-bold dark:text-gray-400 text-2xl">CLIC</Text>
+            <Text className="font-bold dark:text-gray-400 text-2xl">{program.title.toUpperCase()}</Text>
             <Text className="font-normal dark:text-gray-300 text-gray-500">
-              Descrição do programa
+              {program.description}
             </Text>
           </View>
         </View>
