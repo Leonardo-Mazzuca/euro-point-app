@@ -43,9 +43,11 @@ export const useAuth = () => {
                 router.push('/(tabs)');
                 
             } catch (error:any) {
+                console.log('Error in login', error);
+                
                 Toast.show({
                     type: 'error',
-                    text1: error.response.data.message
+                    text1: error.response.data.message || "Error on login" 
                 });
             }
 

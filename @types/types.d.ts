@@ -125,7 +125,6 @@ declare global {
     id: number;
     title: string;
     description: string;
-    total_points: number;
     image: string;
     duration: string; 
     questions: Question[];
@@ -142,6 +141,7 @@ declare global {
     correct_answer: string;
     quiz_id: number;
     options: QuestionOption[];
+    total_points: number
   };
   
   type QuestionOption = {

@@ -46,8 +46,6 @@ const Trainings = () => {
   const handleQuizClick = () => {
     router.push(`/trainings/${selectedQuiz}`);
   };
-
-  console.log(quizzes);
   
   const hasRunningQuiz = quizzes.some(quiz => quiz.is_running);
 
