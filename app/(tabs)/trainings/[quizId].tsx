@@ -14,17 +14,19 @@ import { AntDesign } from "@expo/vector-icons";
 import ConfettiCannon from "react-native-confetti-cannon";
 import { useQuizzes } from "@/hooks/use-quizzes";
 import Loading from "@/components/loading";
-import ModalScreen from "@/components/modal-screen";
+import QuizFinishModal from "@/components/quiz-finish-modal";
 import { Button } from "@/components/Button";
+import QuizConfirmModal from "@/components/quiz-confirm-modal";
+
 const SingleQuiz = () => {
   const { quizId } = useLocalSearchParams();
   const [currentStep, setCurrentStep] = useState(1);
   const [isWrong, setIsWrong] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isFinished, setIsFinished] = useState(true);
+  const [isFinished, setIsFinished] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState<string>("");
   const { setPostButtonProps } = useLayoutContext();
-  const { quizzes } = useQuizzes();
+  const { quizzes, onQuizFinish, onNextQuestion } = useQuizzes();
   const [currentQuiz, setCurrentQuiz] = useState<Quiz | null>(null);
   const [quizQuestions, setQuizQuestions] = useState<Question[]>([]);
   const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
@@ -36,6 +38,7 @@ const SingleQuiz = () => {
     totalErrors: 0,
     totalPoints: 0,
   });
+  const [openAdviceModal, setOpenAdviceModal] = useState(false);
 
   const isFocused = useIsFocused();
 
@@ -113,7 +116,7 @@ const SingleQuiz = () => {
     }
   };
 
-  const handleFinishButton = () => {
+  const handleFinishButton = async () => {
     setIsSubmitted(true);
 
     if (selectedAnswer !== currentQuestion?.correct_answer) {
@@ -125,11 +128,15 @@ const SingleQuiz = () => {
 
     if (currentStep === currentQuizMemo?.questions.length) {
       setIsFinished(true);
-      console.log("Quiz data: ", quizData);
+      console.log(quizData);
+      
+      await onQuizFinish(quizData.totalPoints);
       return;
     }
 
-    setTimeout(() => {
+    setTimeout(async () => {
+      // if(!currentQuiz) return;
+      // await onNextQuestion(currentQuiz?.id);
       setCurrentStep((prev) => prev + 1);
       setCurrentQuestion(quizQuestions[currentStep]);
       setIsSubmitted(false);
@@ -137,6 +144,10 @@ const SingleQuiz = () => {
       setSelectedAnswer("");
     }, 1000);
   };
+
+  const handleQuizExit = () => {
+    setOpenAdviceModal(true);
+  }
 
   const FinishButton = () => (
     <TouchableOpacity
@@ -162,9 +173,14 @@ const SingleQuiz = () => {
     <TabsContainer>
       <Header />
       <View className="px-4 mt-3 gap-3">
-        <Text className="dark:text-white text-2xl font-semibold">
-          {currentQuiz.title}
-        </Text>
+        <View className="flex-row justify-between items-center">
+          <Text className="dark:text-white text-2xl font-semibold">
+            {currentQuiz.title}
+          </Text>
+          <Button onPress={handleQuizExit} variant={"link"}>
+            <AntDesign name="back" size={24} color="white" />
+          </Button>
+        </View>
         <Stepper
           steps={currentQuiz?.questions.length}
           currentStep={currentStep}
@@ -187,30 +203,20 @@ const SingleQuiz = () => {
         <FinishButton />
       </View>
       {isFinished && <ConfettiCannon count={200} origin={{ x: -10, y: 0 }} />}
-      <ModalScreen
+      <QuizFinishModal
+        quizData={quizData}
         visible={isFinished}
-        header={
-          <Text className="dark:text-white text-zinc-600 text-2xl">
-            Quiz finalizado!
-          </Text>
-        }
-      >
-        <Text className="font-semibold my-2 dark:text-gray-200 text-gray-600 text-xl">
-          Dados:
-        </Text>
-        <Text className="dark:text-gray-400 text-gray-500 my-2">
-          Pontos: {quizData.totalPoints}
-        </Text>
-        <Text className="dark:text-gray-400 text-gray-500 my-2">
-          Erros: {quizData.totalErrors}
-        </Text>
-        <Text className="dark:text-gray-400 text-gray-500 my-2">
-          Acertos: {quizData.totalRights}
-        </Text>
-        <Button className="bg-blue-primary my-2">
-          <Text className="text-yeallow-primary">Voltar para a tela de quizzes</Text>
-        </Button>
-      </ModalScreen>
+      />
+      <QuizConfirmModal 
+        visible={openAdviceModal}
+        onContinue={()=>router.push('/(tabs)/trainings')}
+        onCancel={()=>setOpenAdviceModal(false)}
+        title="Opa!"
+        subtitle="Você tem certeza que deseja sair?"
+        description="Você poderá acessar o quiz novamente na aba de treinamentos"
+        cancelButtonText="Nãoo, cancela!"
+        confirmButtonText="Sim, sair!"
+      />
     </TabsContainer>
   );
 };

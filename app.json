@@ -1,8 +1,10 @@
 {
   "expo": {
-    "updates": {
-      "enabled": false
-    },
+  "updates": {
+  "enabled": false,
+  "checkAutomatically": "never",
+  "fallbackToCacheTimeout": 0
+},
     "name": "eurofarma_project",
     "slug": "eurofarma_project",
     "version": "1.0.0",

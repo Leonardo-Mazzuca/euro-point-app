@@ -9,8 +9,8 @@ import { answeredQuizzes } from "@/constants/data";
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 type QuizCardProps = {
-  selected: number | null;
-  setSelected: (value: number) => void;
+  selected: Quiz | null;
+  setSelected: (value: Quiz) => void;
   quiz: Quiz
   showAnswered?: boolean
 };
@@ -67,7 +67,7 @@ const QuizCard = ({ selected, setSelected, quiz, showAnswered}: QuizCardProps) =
       end={{x:1,y:0}}
     >
       <TouchableOpacity
-        onPress={() => setSelected(quiz.id)}
+        onPress={() => setSelected(quiz)}
         className={"flex-1 dark:bg-dark-primary bg-white flex-row px-4 gap-3 py-2"}
         style={{
           borderRadius: RADIUS

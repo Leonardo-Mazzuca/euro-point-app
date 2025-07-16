@@ -52,23 +52,27 @@ const post = async (url: string, data: object) => {
 const put = async (url: string, data: object) => {
   const token = await getToken();
 
-  return await api.put(url, data, {
+  const req =  await api.put(url, data, {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
   });
+
+  return req.data
 };
 
 const del = async (url: string) => {
   const token = await getToken();
 
-  return await api.delete(url, {
+  const req = await api.delete(url, {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
   });
+
+  return req.data;
 };
 
 export { get, post, put, del, getNoAuth, postNoAuth };
