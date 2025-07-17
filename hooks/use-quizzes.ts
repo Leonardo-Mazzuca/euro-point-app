@@ -1,6 +1,7 @@
 import { get, put } from "@/service/helpers";
 import { convertToQuizImage } from "@/util";
 import { useQuery } from "@tanstack/react-query";
+import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import Toast from "react-native-toast-message";
 
@@ -29,15 +30,13 @@ export const useQuizzes = () => {
         })));
     },[data])
 
-    const onQuizFinish = async (points: number) => {
+    const onQuizFinish = async (points: number, quiz_id: number) => {
 
         try {
 
             await put('/users',{total_points: points});
-            Toast.show({
-                type: 'success',
-                text1: 'Quiz finalizado com sucesso'
-            })
+            await put (`/quiz/end/${quiz_id}`,{});
+            refetch();
             
         } catch (error:any) {
             Toast.show({
@@ -52,10 +51,6 @@ export const useQuizzes = () => {
         try {
 
             await put(`/quiz/start/${quiz_id}`,{});
-            Toast.show({
-                type: 'success',
-                text1: 'Quiz iniciado com sucesso'
-            })
             
         } catch (error:any) {
             Toast.show({
@@ -69,11 +64,13 @@ export const useQuizzes = () => {
         try {
 
             await put(`/quiz/discard/${quiz_id}`,{});
-            refetch();
+  
             Toast.show({
                 type: 'success',
                 text1: 'Quiz descartado com sucesso'
             })
+
+            await refetch();
             
         } catch (error:any) {
             Toast.show({
@@ -87,6 +84,8 @@ export const useQuizzes = () => {
         try {
             await put(`/quiz/next/${quiz_id}`,{});
         } catch (error: any) {
+            console.log('Erro passando para a próxima questão');
+            
             Toast.show({
                 type: 'error',
                 text1: error.message || "Erro ao avançar para a próxima questão"

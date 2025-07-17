@@ -64,8 +64,8 @@ const LayoutProvider = ({children}:PropsWithChildren) => {
     }
 
     useEffect(()=> {
-        getCurrentUser()
-    },[])
+        if(isLogged) getCurrentUser()
+    },[isLogged])
 
     useEffect(() => {
         const getTheme = async () => {

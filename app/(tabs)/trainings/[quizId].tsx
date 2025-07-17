@@ -83,9 +83,6 @@ const SingleQuiz = () => {
     }
   }, [currentQuizMemo]);
 
-  useEffect(() => {
-    setCurrentQuestion(quizQuestions[currentStep - 1]);
-  }, [quizQuestions, currentStep]);
 
   const handleQuestionStatus = () => {
     if (selectedAnswer) {
@@ -128,17 +125,15 @@ const SingleQuiz = () => {
 
     if (currentStep === currentQuizMemo?.questions.length) {
       setIsFinished(true);
-      console.log(quizData);
-      
-      await onQuizFinish(quizData.totalPoints);
+      if(!currentQuiz) return;
+      await onQuizFinish(quizData.totalPoints, currentQuiz?.id);
       return;
     }
 
     setTimeout(async () => {
-      // if(!currentQuiz) return;
-      // await onNextQuestion(currentQuiz?.id);
+      if(!currentQuiz) return;
+      await onNextQuestion(currentQuiz?.id);
       setCurrentStep((prev) => prev + 1);
-      setCurrentQuestion(quizQuestions[currentStep]);
       setIsSubmitted(false);
       handleQuestionStatus();
       setSelectedAnswer("");
@@ -164,6 +159,21 @@ const SingleQuiz = () => {
       />
     </TouchableOpacity>
   );
+
+  
+  useEffect(() => {
+    if (!currentQuiz || !currentQuiz.questions || currentQuiz.current_question_index === null || currentQuiz.current_question_index === undefined) {
+      return;
+    }
+    
+    setCurrentStep(currentQuiz.current_question_index + 1);
+    
+  }, [quizQuestions, currentQuiz]);
+
+  useEffect(()=> {
+    setCurrentQuestion(quizQuestions[currentStep - 1]);
+  },[quizQuestions,currentStep])
+
 
   if (!currentQuiz) {
     return <Loading />;

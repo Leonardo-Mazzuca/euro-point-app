@@ -34,6 +34,7 @@ const Stepper = ({
     });
   }, [currentStep]);
 
+
   return (
     <View className="px-4">
       <FlatList
@@ -42,6 +43,11 @@ const Stepper = ({
         keyExtractor={(_, index) => index.toString()}
         horizontal
         showsHorizontalScrollIndicator={false}
+        getItemLayout={(data, index) => ({
+          length: 64,
+          offset: 64 * index,
+          index,
+        })}
         renderItem={({ item, index }) => {
           const status = badgeStatus ? badgeStatus[index] : null;
 

@@ -119,7 +119,7 @@ const Trainings = () => {
               }
             />
 
-            {hasRunningQuiz && (
+            {hasRunningQuiz.length > 0 && (
               <>
                 <Text className="font-semibold dark:text-white my-3 text-xl">
                   Continue

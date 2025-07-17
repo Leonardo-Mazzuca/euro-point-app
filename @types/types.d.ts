@@ -132,7 +132,7 @@ declare global {
     updated_at: string;
     created_at: string;
     total_answered: number;
-    current_question_id: number
+    current_question_index: number
   };
   
   type Question = {
@@ -142,6 +142,7 @@ declare global {
     quiz_id: number;
     options: QuestionOption[];
     total_points: number
+    is_answered: boolean
   };
   
   type QuestionOption = {
