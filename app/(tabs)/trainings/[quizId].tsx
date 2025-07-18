@@ -123,21 +123,24 @@ const SingleQuiz = () => {
       }, 1000);
     }
 
-    if (currentStep === currentQuizMemo?.questions.length) {
-      setIsFinished(true);
-      if(!currentQuiz) return;
-      await onQuizFinish(quizData.totalPoints, currentQuiz?.id);
-      return;
+    if(currentQuizMemo) {
+      if (currentStep >= (currentQuizMemo?.questions.length)) {
+        setIsFinished(true);
+        if(!currentQuiz) return;
+        await onQuizFinish(quizData.totalPoints, currentQuiz?.id);
+        return;
+      }
+  
+      setTimeout(async () => {
+        if(!currentQuiz) return;
+        await onNextQuestion(currentQuiz?.id);
+        setCurrentStep((prev) => prev + 1);
+        setIsSubmitted(false);
+        handleQuestionStatus();
+        setSelectedAnswer("");
+      }, 1000);
     }
 
-    setTimeout(async () => {
-      if(!currentQuiz) return;
-      await onNextQuestion(currentQuiz?.id);
-      setCurrentStep((prev) => prev + 1);
-      setIsSubmitted(false);
-      handleQuestionStatus();
-      setSelectedAnswer("");
-    }, 1000);
   };
 
   const handleQuizExit = () => {
@@ -173,6 +176,11 @@ const SingleQuiz = () => {
   useEffect(()=> {
     setCurrentQuestion(quizQuestions[currentStep - 1]);
   },[quizQuestions,currentStep])
+
+  //to update badge statuses
+  useEffect(()=> {
+
+  },[]);
 
 
   if (!currentQuiz) {

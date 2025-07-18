@@ -38,6 +38,7 @@ declare global {
       name: string;
       id: number;
     }[];
+    total_points: number
   };
 
   type Area = {

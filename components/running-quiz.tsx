@@ -27,7 +27,7 @@ const RunningQuiz = ({runningQuiz}:Props) => {
     await onQuizRunningDiscard(runningQuiz.id);
     setOpenConfirmModal(false);
   }
-
+  
   const onDeleteClick = () => setOpenConfirmModal(true);
 
   return (

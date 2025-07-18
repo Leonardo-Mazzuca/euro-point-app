@@ -22,7 +22,7 @@ const AchievimentCard = ({achieviment}: AchievimentCardProps) => {
             source={achievimentPreview}
         />
         <View className='gap-3'>
-            <Text className='font-semibold text-2xl dark:text-white'>
+            <Text numberOfLines={2} className='w-[250px] font-semibold text-2xl dark:text-white'>
                 {achieviment.title}
             </Text>
             <Progress.Bar 
@@ -34,7 +34,7 @@ const AchievimentCard = ({achieviment}: AchievimentCardProps) => {
                     backgroundColor: !hasProgress ? Colors.light.softGray : Colors.light.tertiaryYeallow,
                 }}
             />
-            <Text className='font-medium text-lg dark:text-gray-400 text-gray-500'>
+            <Text numberOfLines={2} className='font-medium w-[250px] text-lg dark:text-gray-400 text-gray-500'>
                 {achieviment.description}   
             </Text>
         </View>

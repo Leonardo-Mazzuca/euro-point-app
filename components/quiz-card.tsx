@@ -57,7 +57,7 @@ const QuizCard = ({ selected, setSelected, quiz, showAnswered}: QuizCardProps) =
   return (
     <LinearGradient
       //@ts-ignore
-      colors={selected === quiz.id ? [Colors.default.lightGradientBlue1, Colors.default.lightGradientBlue2] : colors}
+      colors={selected?.id === quiz.id ? [Colors.default.lightGradientBlue1, Colors.default.lightGradientBlue2] : colors}
       style={{ 
         borderRadius: RADIUS,
         width: "100%",
