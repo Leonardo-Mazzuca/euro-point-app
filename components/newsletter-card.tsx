@@ -29,11 +29,11 @@ const NewsLetterCard = ({newsletter}:Props) => {
         <View className="items-center flex-row gap-5">
           <Image
             className="w-[150px] h-[150px] rounded-2xl"
-            source={{uri: convertToNewsletterImage(firstImage)}}
+            source={{uri: firstImage}}
           />
           <View>
             <View className="gap-2">
-              <Text className="font-bold text-2xl">{newsletter.title}</Text>
+              <Text numberOfLines={2} className="font-bold w-[150px] text-2xl">{newsletter.title}</Text>
               <Text className="font-normal dark:text-gray-300 text-gray-500">
                 Por {newsletter?.user?.username}
               </Text>

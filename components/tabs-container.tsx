@@ -35,7 +35,7 @@ const TabsContainer = ({className,children,...rest}:TabsContainerProps) => {
           <Animated.View
           style={{
             position: 'absolute',
-            bottom: 90,
+            bottom: 120,
             right: 10,
             transform: [{ translateY }],
           }}

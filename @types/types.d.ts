@@ -174,6 +174,22 @@ declare global {
     area_id: number
     images: string[]
   }
+
+  type NewsletterCreate = { 
+    title: string,
+    content: string
+    area_id: number
+    images: string[]
+  }
+
+  type ProjectCreate = {
+    area_id: number,
+    content: string,
+    title: string
+    team_id: number
+    members_id: number[]
+    image: string
+  }
 }
 
 export {};

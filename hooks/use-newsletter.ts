@@ -1,6 +1,7 @@
-import { get } from "@/service/helpers";
+import { get, post } from "@/service/helpers";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
+import Toast from "react-native-toast-message";
 
 
 export const useNewsletter = () => {
@@ -22,10 +23,28 @@ export const useNewsletter = () => {
         if(data) setNewsletters(data);
     }, [data]);
 
+    const newNewsletter = async (data:NewsletterCreate) => {
+        try {
+
+            await post('/newsletter', data)
+            Toast.show({
+                type: 'success',
+                text1: "Newsletter criada com sucesso!"
+            })
+            
+        } catch (error:any) {
+           Toast.show({
+               type: 'error',
+               text1: "Erro ao criar newsletter"
+           }) 
+        }
+    }
+
     return {
         newsletters,
         refetch,
         isRefetching,
-        isLoading
+        isLoading,
+        newNewsletter
     }
 }

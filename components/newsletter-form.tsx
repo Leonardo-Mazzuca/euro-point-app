@@ -1,23 +1,35 @@
 import { Text, View } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ImageUploader from "@/components/image-uploader";
-import Quill from "@/components/quill";
-import { Controller, useFormContext } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import FormInputField from "./form-input-field";
 import { PostCreateType } from "@/schemas/post";
-import { Label } from "./Label";
+
 
 const NewsletterForm = () => {
-  const [image, setImage] = useState<string | null>(null);
+  const [images, setImages] = useState<string[] | null>(null);
   const {
     control,
-    formState: { errors },
+    formState: { errors, isSubmitSuccessful },
     setValue
   } = useFormContext<PostCreateType>();
 
+  useEffect(()=> {
+    if(images){
+      setValue("newsletter.images", images);
+    }
+  },[images])
+  
+  useEffect(()=> {
+    if(isSubmitSuccessful){
+      setImages(null);
+      setValue("newsletter.images", []);
+    }
+  },[isSubmitSuccessful])
+
   return (
     <View className="flex-1 gap-5">
-      <ImageUploader setValue={()=>{}} image={image} setImage={setImage as any} />
+      <ImageUploader image={images} allowMultipleSelection setImage={setImages as any} />
       <FormInputField
         control={control}
         error={errors.newsletter?.title?.message}
@@ -25,13 +37,11 @@ const NewsletterForm = () => {
         label="Título"
       />
       <View className="flex-1">
-        <Label>Conteúdo</Label>
-        <Controller
+        <FormInputField
           control={control}
+          error={errors.newsletter?.content?.message}
           name="newsletter.content"
-          render={({ field }) => (
-            <></>
-          )}
+          label="Conteúdo"
         />
         <Text className="text-red-500">
             {errors.newsletter?.content?.message}

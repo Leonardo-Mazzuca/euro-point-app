@@ -2,6 +2,7 @@ import { get } from "@/service/helpers";
 import { convertToProjectImage } from "@/util";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
+import Toast from "react-native-toast-message";
 
 
 export const useProjects = () => {
@@ -26,10 +27,22 @@ export const useProjects = () => {
         })));
     }, [data]);
 
+    const newProject = async (data:ProjectCreate) => {
+        try {
+            
+        } catch (error) {
+            Toast.show({
+                type: 'error',
+                text1: "Error ao criar projeto"
+            })
+        }
+    }
+
     return {
         projects,
         isLoading,
         refetch,
-        isRefetching
+        isRefetching,
+        newProject
     }
 }

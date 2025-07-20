@@ -10,7 +10,6 @@ type ImageUploaderProps = {
   innerText?: string;
   className?: string;
   allowMultipleSelection?: boolean;
-  setValue: ()=> void;
 };
 
 const ImageUploader = ({

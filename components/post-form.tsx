@@ -9,17 +9,21 @@ import ImageUploader from './image-uploader';
 
 const PostForm = () => {
 
-  const {control,formState:{errors},setValue} = useFormContext<PostCreateType>();
+  const {control,formState:{errors, isSubmitSuccessful},setValue} = useFormContext<PostCreateType>();
   const [images, setImages] = useState<string[] | null>(null);
 
-  console.log(errors);
-  console.log(images);
-  
   useEffect(()=> {
     if(images){
       setValue("post.images", images);
     }
   },[images])
+  
+  useEffect(()=> {
+    if(isSubmitSuccessful){
+      setImages(null);
+      setValue("post.images", []);
+    }
+  },[isSubmitSuccessful])
 
   return (
     <View className='flex-1'>
@@ -36,7 +40,7 @@ const PostForm = () => {
         error={errors.post?.content?.message}
       />
       <View className='mt-5'>
-        <ImageUploader setValue={()=>setValue("post.images", images as string[])} innerText='Imagens' allowMultipleSelection image={images} setImage={setImages as any} />
+        <ImageUploader innerText='Imagens' allowMultipleSelection image={images} setImage={setImages as any} />
       </View>
     </View>
   )

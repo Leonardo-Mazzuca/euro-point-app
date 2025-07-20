@@ -9,8 +9,6 @@ import { PostFormEnum, postSchema } from "@/schemas/post";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { router } from "expo-router";
 import {
-  KeyboardAvoidingView,
-  Platform,
   ScrollView,
   Text,
   View,
@@ -22,10 +20,20 @@ import { Colors } from "@/constants/Colors";
 import { useState } from "react";
 import Sheet from "@/components/sheet";
 import CloseButton from "@/components/close-button";
+import { usePosts } from "@/hooks/use-posts";
+import { useLayoutContext } from "@/context/layout-context";
+import { useNewsletter } from "@/hooks/use-newsletter";
+import { useProjects } from "@/hooks/use-projects";
 
 const PostScreen = () => {
   const handleClose = () => router.back();
   const [openPublicChanger, setOpenPublicChanger] = useState(false);
+  const {newPost} = usePosts();
+  const {newNewsletter} = useNewsletter();
+  const {newProject} = useProjects();
+  const {currentUser} = useLayoutContext();
+
+  const {area: {id}} = currentUser;
 
   const formMethods = useForm({
     resolver: zodResolver(postSchema),
@@ -34,7 +42,7 @@ const PostScreen = () => {
     },
   });
 
-  const { handleSubmit, getValues, setValue, watch } = formMethods;
+  const { handleSubmit, getValues, setValue, watch, reset, formState: {isSubmitting} } = formMethods;
 
   const postType = watch("formType");
 
@@ -42,9 +50,22 @@ const PostScreen = () => {
     setValue("formType", value);
   };
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     const data = getValues();
-    console.log(data);
+    switch(data.formType){
+      case PostFormEnum.newsletter:
+        await newNewsletter({...data.newsletter, area_id: id});
+        reset();
+        return;
+      case PostFormEnum.project:
+        // await newProject({...data.project, area_id: id})
+        return;
+      case PostFormEnum.post:
+        await newPost({...data.post, area_id: id})
+        reset();
+        return;
+    }
+
   };
 
   const SaveArea = () => {
@@ -69,6 +90,7 @@ const PostScreen = () => {
           />
         </Button>
         <Button
+          disabled={isSubmitting}
           className="w-[100px] bg-blue-primary"
           onPress={handleSubmit(onSubmit)}
         >
@@ -79,11 +101,6 @@ const PostScreen = () => {
   };
 
   return (
-    <KeyboardAvoidingView
-      style={{ flex: 1 }}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      keyboardVerticalOffset={100}
-    >
       <ScrollView className=" dark:bg-dark-primary">
         <Container className="flex-col">
           <View className="flex-row w-full items-center justify-between">
@@ -116,7 +133,6 @@ const PostScreen = () => {
           )}
         </Container>
       </ScrollView>
-    </KeyboardAvoidingView>
   );
 };
 

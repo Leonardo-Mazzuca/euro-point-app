@@ -13,7 +13,7 @@ const singlePostSchema = z.object({
 })
 
 const newsletterSchema = z.object({
-    image: z.string({ required_error: 'Insira uma imagem!' }),
+    images: z.array(z.any(), { required_error: 'Insira ao menos 1 imagem!' }),
     title: z.string({ required_error: 'O título é necessário!' }),
     content: z.string({ required_error: 'O conteúdo é necessário!' })
 })
