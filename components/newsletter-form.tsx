@@ -12,12 +12,12 @@ const NewsletterForm = () => {
   const {
     control,
     formState: { errors },
-    setError
+    setValue
   } = useFormContext<PostCreateType>();
 
   return (
     <View className="flex-1 gap-5">
-      <ImageUploader image={image} setImage={setImage} />
+      <ImageUploader setValue={()=>{}} image={image} setImage={setImage as any} />
       <FormInputField
         control={control}
         error={errors.newsletter?.title?.message}
