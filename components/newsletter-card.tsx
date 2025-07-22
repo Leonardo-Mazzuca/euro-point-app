@@ -6,8 +6,6 @@ import Entypo from "@expo/vector-icons/Entypo";
 import { router } from "expo-router";
 import dayjs from "dayjs";
 import "dayjs/locale/pt-br";
-import { convertToNewsletterImage } from "@/util";
-
 
 type Props ={
   newsletter: Newsletter
