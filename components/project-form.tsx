@@ -1,26 +1,27 @@
 import { View } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { PostCreateType } from "@/schemas/post";
-import FormInputField from "./form-input-field";
+import FormInputField, { ErrorField } from "./form-input-field";
 import ImageUploader from "./image-uploader";
 import { Label } from "./Label";
 import { useUsers } from "@/hooks/use-users";
 import Loading from "./loading";
 import { MultiSelect, Select } from "./select";
-import { useProjects } from "@/hooks/use-projects";
 import { useTeams } from "@/hooks/use-teams";
 
 const ProjectForm = () => {
   const {
     control,
     formState: { errors },
+    setValue,
+    setError,
+    clearErrors
   } = useFormContext<PostCreateType>();
 
   const [image, setImage] = useState<string | null>(null);
   const [usersIds, setUsersIds] = useState<string[]>([]);
-  const [teamId, setTeamId] = useState(0);
-  const { newProject } = useProjects();
+  const [teamId, setTeamId] = useState<string | null>("");
   const { teams } = useTeams();
   const { users, isLoading } = useUsers();
 
@@ -31,13 +32,39 @@ const ProjectForm = () => {
 
   const teamsOptions = teams?.map((t) => ({
     label: t.name,
-    value: t.id,
+    value: String(t.id),
   }));
 
-  const submit = async () => {
+
+  useEffect(()=> {
+    if(usersIds){
+      //@ts-ignore
+      setValue('project.members_ids', usersIds.map(item => parseInt(item)));
+    }
+  },[usersIds]);
+
+  useEffect(()=> {
+    if(teamId){
+      setValue('project.team_id', Number(teamId));
+    }
+  },[teamId]);
+
+  useEffect(()=> {
+    if(image){
+      setValue('project.image', image);
+    }
+  },[image]);
+
+  useEffect(() => {
+    console.log(image);
     
-  }
-  
+    if (!image) {
+      setError('project', { message: 'Imagem obrigatória' });
+    } else {
+      clearErrors('project');
+    }
+  }, [image]);
+
   if (isLoading) {
     return <Loading />;
   }
@@ -45,6 +72,7 @@ const ProjectForm = () => {
   return (
     <View>
       <ImageUploader image={image} setImage={setImage as any} />
+      <ErrorField error={errors.project?.image?.message} />
       <FormInputField
         control={control}
         name={"project.title"}
@@ -58,6 +86,7 @@ const ProjectForm = () => {
         error={errors.project?.content?.message}
       />
       <Controller
+        control={control}
         name="project.team_id"
         render={({ field }) => (
           <View className="mt-5">
@@ -67,25 +96,33 @@ const ProjectForm = () => {
                 setTeamId(item.value);
                 field.onChange(item.value);
               }}
-              value={teamId.toString()}
               data={teamsOptions!}
+              value={teamId}
               labelField={"label"}
               valueField={"value"}
             />
+            <ErrorField error={errors.project?.team_id?.message} />
           </View>
         )}
       />
       <Controller
+        control={control}
         name="project.members_ids"
         render={({ field }) => (
           <View className="mt-5">
             <Label>Membros</Label>
             <MultiSelect
-              onChange={(item) => setUsersIds(item)}
+              onChange={(item) => {
+                setUsersIds(item);
+                field.onChange(item);
+              }}
               value={usersIds}
               data={usersOptions!}
               labelField={"label"}
               valueField={"value"}
+            />
+            <ErrorField 
+              error={errors.project?.members_ids?.message}
             />
           </View>
         )}

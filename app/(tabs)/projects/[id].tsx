@@ -1,24 +1,45 @@
 
 
-
 import { View, Text, Image } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { router, useLocalSearchParams } from 'expo-router';
-import Feather from '@expo/vector-icons/Feather';
 import Header from '@/components/header';
 import { Card } from '@/components/Card';
 import Entypo from '@expo/vector-icons/Entypo';
-import { FooterItem } from '@/components/post-card';
-import AntDesign from '@expo/vector-icons/AntDesign';
-import { Colors } from '@/constants/Colors';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import BackButton from '@/components/back-button';
+import { useProjects } from '@/hooks/use-projects';
+import Loading from '@/components/loading';
+import { getHoursSinceCreatedAt } from '@/util';
+import ItemImage from '@/components/item-image';
 
 const SingleProject = () => {
+
     const { id } = useLocalSearchParams();
     const handleBack = () => router.back();
-  
+
+    const [currentProject, setCurrentProject] = useState<Project | null >(null);
+
+    const {isLoading, getSingleProject} = useProjects();
+
+    useEffect(()=> {
+
+      const getProject = async () => {
+        const current = await getSingleProject(Number(id));
+        console.log(current);
+        
+        if(current){
+          setCurrentProject(current);
+        }
+      }
+
+      getProject();
+
+    },[])
+
+    if(isLoading){
+      return <Loading />
+    }
   
     return (
       <SafeAreaView className="flex-1 dark:bg-dark-primary">
@@ -26,37 +47,24 @@ const SingleProject = () => {
   
         <View className="p-5">
           <Card className="p-3 border border-gray-200">
-            <Image
-              source={{
-                uri: "https://marcaspelomundo.com.br/wp-content/uploads/2025/01/IMG_7660-e1738353337221-875x1024.jpeg",
-              }}
-              className="w-full h-[200px] rounded-2xl"
+            <ItemImage 
+              url={currentProject?.image as string}
+              type="item"
             />
   
             <View className="flex-row items-center my-3">
               <Text className="font-semibold dark:text-white text-xl">
-                Projeto X
+                {currentProject?.title}
               </Text>
               <Entypo name="dot-single" size={20} color="grey" />
-              <Text className="text-gray-500 dark:text-gray-300">6 horas atrás</Text>
+              <Text className="text-gray-500 dark:text-gray-300">
+                {getHoursSinceCreatedAt(currentProject?.created_at as string)}
+              </Text>
             </View>
+            <Text className='dark:text-white text-gray-600'>
+              {currentProject?.content}
+            </Text>
   
-            <View className="gap-6 flex-row">
-              <FooterItem
-                icon={
-                  <AntDesign name="heart" size={20} color={Colors.dark.hearthRed} />
-                }
-                text="48.8k"
-              />
-              <FooterItem
-                icon={<Feather name="eye" size={22} color="grey" />}
-                text="12M"
-              />
-              <FooterItem
-                icon={<FontAwesome name="bookmark-o" size={22} color="grey" />}
-                text="82K"
-              />
-            </View>
           </Card>
         </View>
       </SafeAreaView>

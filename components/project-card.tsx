@@ -8,6 +8,9 @@ import Entypo from '@expo/vector-icons/Entypo'
 import { router } from 'expo-router'
 import dayjs from "dayjs";
 import "dayjs/locale/pt-br";
+import { getHoursSinceCreatedAt } from '@/util'
+import ItemImage from './item-image'
+import { projectFallBack } from '@/util/images'
 
 type Props = {
   project:Project
@@ -24,14 +27,13 @@ const ProjectCard = ({project}: Props) => {
       className="p-2"
     >
       <View className="items-center flex-1 flex-row gap-5">
-        {project.image ? (
-          <Image
-            className="w-[150px] h-[150px] aspect-square object-cover rounded-2xl"
-            source={{uri: project.image } }
+
+          <ItemImage 
+            url={project.image}
+            type="card"
+            fallback={projectFallBack}
           />
-        ) : (
-          <View className="w-[150px] h-[150px] bg-gray-200 rounded-2xl" />
-        )}
+         
         <View className='flex-1'>
           <View className="gap-2">
             <Text className="font-bold dark:text-white text-2xl">{project.title}</Text>
@@ -45,7 +47,7 @@ const ProjectCard = ({project}: Props) => {
                   <Text className="font-semibold text-blue-primary dark:text-blue-600">{project?.area?.name}</Text>
                   <Entypo name="dot-single" size={18} color="grey" />
                   <Text className="text-gray-500 dark:text-gray-400">
-                    {dayjs(project.created_at).fromNow()} 
+                    {getHoursSinceCreatedAt(project.created_at)}
                   </Text>
               </View>
                 <TouchableOpacity className='me-2'>

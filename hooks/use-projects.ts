@@ -1,5 +1,4 @@
-import { get } from "@/service/helpers";
-import { convertToProjectImage } from "@/util";
+import { get, post } from "@/service/helpers";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import Toast from "react-native-toast-message";
@@ -21,20 +20,48 @@ export const useProjects = () => {
     })
 
     useEffect(() => {
-        if(data) setProjects(data.map(d => ({
-            ...d,
-            image: convertToProjectImage(d.image)
-        })));
+        if(data) setProjects(data);
     }, [data]);
 
     const newProject = async (data:ProjectCreate) => {
         try {
+
+            await post('/projects', data)
+            Toast.show({
+                type: 'success',
+                text1: "Projeto criado com sucesso!"
+            })
+            return {
+                success: true
+            }
             
         } catch (error) {
+            console.log(error);
+            
             Toast.show({
                 type: 'error',
                 text1: "Error ao criar projeto"
             })
+            return {
+                success: false
+            }
+        }
+    }
+
+    const getSingleProject = async (id:number):Promise<Project | null> => {
+        try {
+
+            const req = await get(`/projects/${id}`)
+            console.log('Projeto sozinho: ', req);
+            
+            return req as Project
+            
+        } catch (error) {
+            Toast.show({
+                type: 'error',
+                text1: "Error ao buscar projeto"
+            })
+            return null;
         }
     }
 
@@ -43,6 +70,7 @@ export const useProjects = () => {
         isLoading,
         refetch,
         isRefetching,
-        newProject
+        newProject,
+        getSingleProject
     }
 }

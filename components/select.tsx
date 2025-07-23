@@ -10,7 +10,7 @@ type Props<T> = {
 
 } & DropdownProps<T>
 
-export const Select = <T,> ({value,...rest}:Props<T>) => {
+export const Select = <T,> ({...rest}:Props<T>) => {
   const [isFocus, setIsFocus] = useState(false);
 
   const {theme} = useLayoutContext();
@@ -42,6 +42,7 @@ export const Select = <T,> ({value,...rest}:Props<T>) => {
     },
     selectedTextStyle: {
       fontSize: 16,
+      color: isDark ? 'white' : 'black'
     },
     iconStyle: {
       width: 20,
@@ -51,12 +52,15 @@ export const Select = <T,> ({value,...rest}:Props<T>) => {
       height: 40,
       fontSize: 16,
     },
+    containerStyle: {
+
+    }
   });
 
   const iconColor = isDark ? 'white': 'black';
 
   return (
-    <View className='p-4 relative'>
+    <View className='my-3 relative w-full'>
       <Dropdown
         {...rest}
         style={styles.dropdown}
@@ -64,11 +68,11 @@ export const Select = <T,> ({value,...rest}:Props<T>) => {
         selectedTextStyle={styles.selectedTextStyle}
         inputSearchStyle={styles.inputSearchStyle}
         iconStyle={styles.iconStyle}
+        containerStyle={styles.containerStyle}
         search
         onFocus={() => setIsFocus(true)}
         maxHeight={300}
         mode='modal'
-        value={value}
         placeholder={!isFocus ? 'Selecionar..' : '...'}
         searchPlaceholder="Procurar..."
         renderLeftIcon={() => (
@@ -79,6 +83,8 @@ export const Select = <T,> ({value,...rest}:Props<T>) => {
             size={20}
           />
         )}
+        //@ts-ignore
+        selectedTextProps={styles.selectedTextStyle}
       />
     </View>
   );

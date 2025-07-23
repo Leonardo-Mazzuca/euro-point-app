@@ -10,12 +10,13 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { TouchableOpacity, View } from "react-native";
 import { useLayoutContext } from "@/context/layout-context";
 import { useEffect, useState } from "react";
-import { convertToAvatar, getNameInitials } from "@/util";
+import { convertToAvatar, getNameInitials, isValidUrl } from "@/util";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/pt-br";
 import { post as api_post } from "@/service/helpers";
 import Toast from "react-native-toast-message";
+import ItemImage from "./item-image";
 
 dayjs.extend(relativeTime);
 dayjs.locale("pt-br");
@@ -127,6 +128,13 @@ const PostCard = ({ post, refetch }: PostCardProps) => {
 
       </CardHeader>
       <CardContent>
+        {isValidUrl(post.images[0]) && (
+          <ItemImage 
+            fallback=""
+            type="item"
+            url={post.images[0]}
+          />
+        )}
         <PostText contact_email={contact_email} text={content} />
       </CardContent>
       <CardFooter className="gap-6">
@@ -202,7 +210,7 @@ const PostText = ({
   contact_email: string;
 }) => {
   return (
-    <>
+    <View className="my-2">
       <Text className="text-gray-600 dark:text-gray-200">{text}</Text>
       <Text className="text-gray-500 dark:text-gray-200 my-2">
         Duvidas:{" "}
@@ -210,7 +218,7 @@ const PostText = ({
           {contact_email}
         </Text>
       </Text>
-    </>
+    </View>
   );
 };
 

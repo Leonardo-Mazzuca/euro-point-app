@@ -6,6 +6,9 @@ import Entypo from "@expo/vector-icons/Entypo";
 import { router } from "expo-router";
 import dayjs from "dayjs";
 import "dayjs/locale/pt-br";
+import { isValidUrl } from "@/util";
+import ItemImage from "./item-image";
+import { newsletterFallback } from "@/util/images";
 
 type Props ={
   newsletter: Newsletter
@@ -25,9 +28,11 @@ const NewsLetterCard = ({newsletter}:Props) => {
         className="p-2"
       >
         <View className="items-center flex-row gap-5">
-          <Image
-            className="w-[150px] h-[150px] rounded-2xl"
-            source={{uri: firstImage}}
+          
+          <ItemImage
+            type="card"
+            url={firstImage}
+            fallback={newsletterFallback}
           />
           <View>
             <View className="gap-2">

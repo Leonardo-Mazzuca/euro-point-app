@@ -54,15 +54,22 @@ const PostScreen = () => {
     const data = getValues();
     switch(data.formType){
       case PostFormEnum.newsletter:
-        await newNewsletter({...data.newsletter, area_id: id});
-        reset();
+        const newNewsletterStatus = await newNewsletter({...data.newsletter, area_id: id});
+        if(newNewsletterStatus.success){
+          reset();
+        }
         return;
       case PostFormEnum.project:
-        // await newProject({...data.project, area_id: id})
+        const newPorjectStatus = await newProject({...data.project, area_id: id})
+        if(newPorjectStatus.success){
+          reset();
+        }
         return;
       case PostFormEnum.post:
-        await newPost({...data.post, area_id: id})
-        reset();
+        const newPostStatus = await newPost({...data.post, area_id: id})
+        if(newPostStatus.success){
+          reset();
+        }
         return;
     }
 

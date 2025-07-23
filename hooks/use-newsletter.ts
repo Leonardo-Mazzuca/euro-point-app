@@ -26,17 +26,36 @@ export const useNewsletter = () => {
     const newNewsletter = async (data:NewsletterCreate) => {
         try {
 
-            await post('/newsletter', data)
+            const req = await post('/newsletter', data)
             Toast.show({
                 type: 'success',
                 text1: "Newsletter criada com sucesso!"
             })
+            return {
+                success: true
+            }
             
         } catch (error:any) {
            Toast.show({
                type: 'error',
                text1: "Erro ao criar newsletter"
            }) 
+           return {
+               success: false
+           }
+        }
+    }
+
+    const getSingleNewsletter = async (id:number):Promise<Newsletter | null> => {
+        try {
+            const req = await get(`/newsletter/${id}`)
+            return req as Newsletter
+        } catch (error) {
+            Toast.show({
+                type: 'error',
+                text1: "Erro ao buscar newsletter"
+            })
+            return null;
         }
     }
 
@@ -45,6 +64,7 @@ export const useNewsletter = () => {
         refetch,
         isRefetching,
         isLoading,
-        newNewsletter
+        newNewsletter,
+        getSingleNewsletter
     }
 }

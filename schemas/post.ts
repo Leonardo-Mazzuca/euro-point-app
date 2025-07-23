@@ -19,10 +19,11 @@ const newsletterSchema = z.object({
 })
 
 const projectSchema = z.object({
+    image: z.string({ required_error: 'A imagem é indispensável!' }),
     title: z.string({ required_error: 'O título é indispensável!' }),
     content: z.string({ required_error: 'O conteúdo é indispensável!' }),
     team_id: z.number({ required_error: 'O time é indispensável!' }),
-    members_ids: z.array(z.number(), { required_error: 'Insira ao menos 1 membro!' })
+    members_ids: z.array(z.number(), { required_error: 'Insira ao menos 1 membro!' }).nonempty({ message: 'Insira ao menos 1 membro!' }),
 })
 
 const postSchema = z.discriminatedUnion('formType', [

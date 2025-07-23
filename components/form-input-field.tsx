@@ -35,9 +35,15 @@ const FormInputField = ({
             )}
         />
 
-      {error && <Text className="text-red-500 text-sm mt-1">{error}</Text>}
+      <ErrorField error={error}/> 
     </View>
   );
 };
+
+export const ErrorField = ({error}:{error:string | undefined}) => {
+  return (
+   error && <Text className="text-red-500 text-sm mt-1">{error}</Text>
+  )
+}
 
 export default FormInputField;

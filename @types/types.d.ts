@@ -187,7 +187,7 @@ declare global {
     content: string,
     title: string
     team_id: number
-    members_id: number[]
+    members_ids: number[]
     image: string
   }
 }

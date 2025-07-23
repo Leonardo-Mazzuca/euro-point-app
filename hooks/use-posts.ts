@@ -33,11 +33,17 @@ export const usePosts = () => {
         type: "success",
         text1: "Post criado com sucesso!",
       })
+      return {
+        success: true
+      }
     } catch (error: any) {
       Toast.show({
         type: "error",
         text1: error.response.data.message,
       })
+      return {
+        success: false
+      }
     }
   }
 
