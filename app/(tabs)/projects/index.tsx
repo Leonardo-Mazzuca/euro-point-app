@@ -2,7 +2,6 @@
 import { Animated, RefreshControl, View } from "react-native";
 import React, { useRef, useState } from "react";
 import TabsContainer from "@/components/tabs-container";
-import AnimatedView from "@/components/animated-view";
 import Header from "@/components/header";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import SearchInput from "@/components/search-input";
@@ -25,22 +24,21 @@ const Projects = () => {
 
   return (
     <TabsContainer>
-      <AnimatedView
-        style={{
-          opacity: uiOpacity,
-          transform: [{ translateY: uiTranslateY }],
-        }}
+      <View
+       className="px-3"
       >
         <Header />
-        <SearchInput placeholder="Busque um projeto..." />
-        <CategoriesScroll
-          categories={categories}
-          selected={selectedCategory}
-          setSelected={setSelectedCategory}
-        />
+        <View className="gap-4">
+          <SearchInput placeholder="Busque um projeto..." />
+          <CategoriesScroll
+            categories={categories}
+            selected={selectedCategory}
+            setSelected={setSelectedCategory}
+          />
+        </View>
 
-      </AnimatedView>
-      <View className="mt-10 flex-1 px-6">
+      </View>
+      <View className="flex-1 px-6">
         <ScrollableList 
             data={projects}
             renderItem={({item}) => 

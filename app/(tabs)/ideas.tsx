@@ -16,7 +16,6 @@ const Ideas = () => {
   const { setPostButtonProps, setHideTabs } = useLayoutContext();
   const [openAlertModal, setOpenAlertModal] = useState(false);
 
-
   const handlePost = () => {
     setHideTabs(true);
     setEnablePost(!enablePost);
@@ -64,19 +63,8 @@ const Ideas = () => {
 
   return (
     <TabsContainer>
-      <View className="px-6 pt-4">
-        <Header />
-        <SearchInput placeholder="Procure uma ideia" />
-        <Button
-          onPress={handlePost}
-          className="bg-blue-primary dark:bg-dark-card mx-auto rounded-full py-2 px-5"
-        >
-          <Text className="text-white font-semibold text-lg">
-            {!enablePost ? "Publicar ideia" : "Cancelar"}
-          </Text>
-        </Button>
-      </View>
-      <View className="px-10">
+
+      <View className="flex-1 px-10">
         <FlatList
           data={Array.from({ length: 5 })}
           keyExtractor={(item, index) => index.toString()}
@@ -87,7 +75,24 @@ const Ideas = () => {
             justifyContent: "center",
             marginTop: 20,
           }}
+          ListHeaderComponent={()=> (
+          <View className="pt-4">
+            <Header />
+            <SearchInput placeholder="Procure uma ideia" />
+            <Button
+              onPress={handlePost}
+              className="bg-blue-primary dark:bg-dark-card mx-auto rounded-full my-3 py-2 px-5"
+            >
+              <Text className="text-white font-semibold text-lg">
+                {!enablePost ? "Publicar ideia" : "Cancelar"}
+              </Text>
+            </Button>
+          </View>
+          )}
           renderItem={({ item }) => <IdeaCard enablePost={enablePost} />}
+          contentContainerStyle={{
+            paddingBottom: 150,
+          }}
         />
       </View>
       <ModalScreen 

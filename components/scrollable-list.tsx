@@ -15,7 +15,7 @@ const ScrollableList = <T,>({
   return (
     <FlatList 
       keyExtractor={(item, index) => index.toString()}
-      contentContainerStyle={{ paddingTop:180, paddingBottom: 100, gap: 8, ...(rest.contentContainerStyle as object) }}
+      contentContainerStyle={{ paddingBottom: 100, gap: 8, ...(rest.contentContainerStyle as object) }}
       onScroll={handleScroll}
       {...rest}
     />

@@ -15,7 +15,6 @@ const CategoriesScroll = ({categories,selected, setSelected}: CategoriesScrollPr
   
   return (
     <FlatList
-      className='my-2'
       data={categories}
       renderItem={({item}) => (
         <TouchableOpacity className={cn(selected === item ? 'bg-blue-primary' : 'bg-gray-300 dark:bg-zinc-800' ,'px-4 py-2 text-center rounded-3xl mr-2')} onPress={() => setSelected(item)}>

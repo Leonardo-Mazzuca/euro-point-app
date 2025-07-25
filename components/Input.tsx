@@ -6,10 +6,11 @@ export type InputProps = {
   prefixIcon?: ReactNode;
   suffixIcon?: ReactNode;
   variant?: "default" | "line" | "outline"
+  wrapperClasses? : string
 } & ComponentPropsWithoutRef<typeof TextInput>;
 
 const Input = forwardRef<ElementRef<typeof TextInput>, InputProps>(
-  ({ className, placeholderClassName, prefixIcon, suffixIcon, variant = "default",...props }, ref) => {
+  ({ className, placeholderClassName, prefixIcon, suffixIcon, variant = "default", wrapperClasses,...props }, ref) => {
 
     const classes = cn(
       variant === "line" && "border-b border-gray-400",
@@ -18,7 +19,7 @@ const Input = forwardRef<ElementRef<typeof TextInput>, InputProps>(
     )
 
     return (
-      <View className="relative w-full justify-center">
+      <View className={cn("relative w-full justify-center", wrapperClasses)}>
         {prefixIcon && (
           <View className="absolute right-3 z-10">{prefixIcon}</View>
         )}

@@ -78,14 +78,13 @@ const Trainings = () => {
         <SearchInput placeholder={placeholder} />
       </View>
 
-      <View className="flex-1 px-6">
+      <View className="flex-1 mt-4 px-6">
         {category === "Programas" && (
           <ScrollableList
             data={programs}
             handleScroll={() => {}}
             renderItem={({ item }) => <ProgramCard program={item} />}
             contentContainerStyle={{
-              paddingTop: 0,
               paddingBottom: 80,
               gap: 15,
             }}

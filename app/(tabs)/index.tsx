@@ -5,7 +5,6 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/Tabs";
 import PostCard from "@/components/post-card";
 import { cn } from "@/lib/utils";
 import TabsContainer from "@/components/tabs-container";
-import AnimatedView from "@/components/animated-view";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import SearchInput from "@/components/search-input";
 import ScrollableList from "@/components/scrollable-list";
@@ -16,7 +15,7 @@ import { useLayoutContext } from "@/context/layout-context";
 const Home = () => {
   const [currentScreen, setCurrentScreen] = useState<HomeScreen>("for-you");
   const uiTranslateY = useRef(new Animated.Value(0)).current;
-  const { handleScroll, uiOpacity } = useScrollAnimation({
+  const { handleScroll } = useScrollAnimation({
     translateValue: uiTranslateY,
   });
   const { currentUser } = useLayoutContext();
@@ -43,11 +42,8 @@ const Home = () => {
 
   return (
     <TabsContainer>
-      <AnimatedView
-        style={{
-          opacity: uiOpacity,
-          transform: [{ translateY: uiTranslateY }],
-        }}
+      <View
+       className="px-3"
       >
         <Tabs
           value={currentScreen}
@@ -83,9 +79,9 @@ const Home = () => {
         </Tabs>
 
         <SearchInput />
-      </AnimatedView>
+      </View>
 
-      <View className="mt-16 flex-1 px-6">
+      <View className="mt-4 flex-1 px-6">
         {currentScreen === "for-you" && (
           <ScrollableList
             data={posts}
