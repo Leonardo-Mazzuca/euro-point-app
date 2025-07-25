@@ -28,13 +28,15 @@ const Projects = () => {
        className="px-3"
       >
         <Header />
-        <View className="gap-4">
-          <SearchInput placeholder="Busque um projeto..." />
+        <View className="my-2">
           <CategoriesScroll
+            className="mt-4"
             categories={categories}
             selected={selectedCategory}
             setSelected={setSelectedCategory}
           />
+          <SearchInput placeholder="Busque um projeto..." />
+
         </View>
 
       </View>

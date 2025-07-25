@@ -8,13 +8,15 @@ type CategoriesScrollProps = {
     categories: string[]
     selected: string
     setSelected: (selected: string) => void
+    className?: string
 }
 
-const CategoriesScroll = ({categories,selected, setSelected}: CategoriesScrollProps) => {
+const CategoriesScroll = ({categories,selected, setSelected, className}: CategoriesScrollProps) => {
 
   
   return (
     <FlatList
+      className={className}
       data={categories}
       renderItem={({item}) => (
         <TouchableOpacity className={cn(selected === item ? 'bg-blue-primary' : 'bg-gray-300 dark:bg-zinc-800' ,'px-4 py-2 text-center rounded-3xl mr-2')} onPress={() => setSelected(item)}>
