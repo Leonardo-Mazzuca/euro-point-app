@@ -34,7 +34,7 @@ const PostCard = ({ post, refetch }: PostCardProps) => {
   const { currentUser, getCurrentUser } =
     useLayoutContext();
 
-  const {handleSave, handleUnSave} = usePosts();
+  const {handleSave, handleUnSave, likePost, updateViews} = usePosts();
 
   const {
     created_at,
@@ -44,6 +44,7 @@ const PostCard = ({ post, refetch }: PostCardProps) => {
     total_likes,
     total_views,
     area_id,
+    total_saved
   } = post;
 
   useEffect(() => {
@@ -55,6 +56,10 @@ const PostCard = ({ post, refetch }: PostCardProps) => {
     const itemIsSaved = currentUser?.saved_posts_ids?.includes(post.id);
     setIsSaved(!!itemIsSaved);
   }, [currentUser, post.id]);
+
+  useEffect(()=> {
+    updateViews(post.id);
+  },[])
 
   const handleFollow = async () => {
     try {
@@ -116,6 +121,53 @@ const PostCard = ({ post, refetch }: PostCardProps) => {
     );
   };
 
+  const SaveButton = () => (
+    <TouchableOpacity onPress={isSaved ? () => handleUnSave(post.id) : () => handleSave(post.id)}>
+          {isSaved ? (
+            <FooterItem
+              icon={
+                <FontAwesome
+                  name="bookmark"
+                  size={22}
+                  color={
+                    theme === "dark" ? Colors.dark.icon : Colors.light.icon
+                  }
+                />
+              }
+              text={String(total_saved)}
+            />
+          ) : (
+            <FooterItem
+              icon={
+                <FontAwesome
+                  name="bookmark-o"
+                  size={22}
+                  color={
+                    theme === "dark" ? Colors.dark.icon : Colors.light.icon
+                  }
+                />
+              }
+              text={String(total_saved)}
+            />
+          )}
+        </TouchableOpacity>
+  );
+
+  const LikeButton = () => (
+    <TouchableOpacity onPress={() => likePost(post.id)}>
+      <FooterItem
+        icon={
+          <AntDesign
+            name="heart"
+            size={20}
+            color={Colors.dark.hearthRed}
+          />
+        }
+        text={String(total_likes)}
+      />
+    </TouchableOpacity>
+  );
+
   return (
     <Card className="mt-4">
       <CardHeader className="flex-row p-4 items-center gap-3">
@@ -139,12 +191,9 @@ const PostCard = ({ post, refetch }: PostCardProps) => {
         <PostText contact_email={contact_email} text={content} />
       </CardContent>
       <CardFooter className="gap-6">
-        <FooterItem
-          icon={
-            <AntDesign name="heart" size={20} color={Colors.dark.hearthRed} />
-          }
-          text={String(total_likes)}
-        />
+
+        <LikeButton />
+
         <FooterItem
           icon={
             <Feather
@@ -155,35 +204,7 @@ const PostCard = ({ post, refetch }: PostCardProps) => {
           }
           text={String(total_views)}
         />
-        <TouchableOpacity onPress={isSaved ? () => handleUnSave(post.id) : () => handleSave(post.id)}>
-          {isSaved ? (
-            <FooterItem
-              icon={
-                <FontAwesome
-                  name="bookmark"
-                  size={22}
-                  color={
-                    theme === "dark" ? Colors.dark.icon : Colors.light.icon
-                  }
-                />
-              }
-              text={String(post.total_saved)}
-            />
-          ) : (
-            <FooterItem
-              icon={
-                <FontAwesome
-                  name="bookmark-o"
-                  size={22}
-                  color={
-                    theme === "dark" ? Colors.dark.icon : Colors.light.icon
-                  }
-                />
-              }
-              text={String(post.total_saved)}
-            />
-          )}
-        </TouchableOpacity>
+        <SaveButton />
         <Text className="ms-auto font-normal text-sm text-gray-400">
           {dayjs(created_at).fromNow()}
         </Text>

@@ -88,6 +88,8 @@ const Home = () => {
             renderItem={({ item }) => (
               <PostCard refetch={refetch} post={item} />
             )}
+            viewabilityConfig={{ viewAreaCoveragePercentThreshold: 50 }}
+            onViewableItemsChanged={()=>{}}
             handleScroll={handleScroll}
             refreshControl={<RefreshControl onRefresh={refetch} refreshing={isLoading} />}
           />

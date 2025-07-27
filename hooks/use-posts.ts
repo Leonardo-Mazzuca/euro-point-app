@@ -1,4 +1,4 @@
-import { get, post } from "@/service/helpers";
+import { get, post, put } from "@/service/helpers";
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import Toast from "react-native-toast-message";
@@ -70,6 +70,31 @@ export const usePosts = () => {
     refetch();
   }
 
+  const likePost = async (id: number) => {
+    try {
+
+      await put(`/posts/like/${id}`,{});
+      refetch();
+      
+    } catch (error: any) {
+      Toast.show({
+        type: "error",
+        text1: error.response.data.message,
+      })
+    }
+  }
+
+  const updateViews = async (id: number) => {
+    try {
+      await put(`/posts/views/${id}`,{});
+    } catch (error: any) {
+      Toast.show({
+        type: "error",
+        text1: error.response.data.message,
+      })
+    }
+  }
+
   return {
     posts,
     isLoading,
@@ -77,6 +102,8 @@ export const usePosts = () => {
     newPost,
     handleSave,
     handleUnSave,
-    savedPosts
+    savedPosts,
+    likePost,
+    updateViews
   };
 };
