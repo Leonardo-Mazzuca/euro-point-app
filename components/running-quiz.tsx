@@ -53,7 +53,7 @@ const RunningQuiz = ({runningQuiz}:Props) => {
           <View className='flex-row gap-2 items-center'>
             <AntDesign name="profile" size={12} color="gray" />
             <Text className='font-normal gap-2 flex-row text-gray-400'>
-              <Text className='text-blue-primary dark:text-blue-secondary'>{runningQuiz.total_answered || 0}</Text>/{runningQuiz.questions.length} Questões
+              <Text className='text-blue-primary dark:text-blue-secondary'>{runningQuiz.current_question_index+1 || 0}</Text>/{runningQuiz.questions.length} Questões
             </Text>
           </View>
           <View className='flex-row gap-2 items-center'>

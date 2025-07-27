@@ -83,6 +83,7 @@ export const useQuizzes = () => {
     const onNextQuestion = async (quiz_id: number) => {
         try {
             await put(`/quiz/next/${quiz_id}`,{});
+            refetch()
         } catch (error: any) {
             console.log('Erro passando para a próxima questão');
             
