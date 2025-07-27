@@ -56,6 +56,7 @@ declare global {
     area_id: number;
     total_likes: number;
     total_views: number;
+    total_saved: number;
     images: string[];
     user: {
       id: number;
@@ -190,6 +191,8 @@ declare global {
     members_ids: number[]
     image: string
   }
+
+  type ItemType = 'post' | 'project' | 'newsletter'
 }
 
 export {};

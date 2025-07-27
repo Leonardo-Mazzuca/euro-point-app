@@ -1,3 +1,4 @@
+import { useLayoutContext } from "@/context/layout-context";
 import { get, post } from "@/service/helpers";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
@@ -6,6 +7,8 @@ import Toast from "react-native-toast-message";
 
 export const useNewsletter = () => {
     const [newsletters, setNewsletters] = useState<Newsletter[]>([]);
+    const [savedNewsletters, setSavedNewsletters] = useState<Newsletter[]>([]);
+    const {currentUser} = useLayoutContext();
 
     const {data,isLoading,refetch, isRefetching} = useQuery({
         queryKey: ["newsletters"],
@@ -59,12 +62,18 @@ export const useNewsletter = () => {
         }
     }
 
+    useEffect(()=> {
+        const savedNewslettersIds = currentUser.saved_newsletter_ids
+        if(savedNewslettersIds) setSavedNewsletters(newsletters.filter(newsletter => savedNewslettersIds.includes(newsletter.id)));
+    },[currentUser, newsletters])
+
     return {
         newsletters,
         refetch,
         isRefetching,
         isLoading,
         newNewsletter,
-        getSingleNewsletter
+        getSingleNewsletter,
+        savedNewsletters
     }
 }

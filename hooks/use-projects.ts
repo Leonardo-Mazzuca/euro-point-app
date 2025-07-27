@@ -1,3 +1,4 @@
+import { useLayoutContext } from "@/context/layout-context";
 import { get, post } from "@/service/helpers";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
@@ -6,6 +7,8 @@ import Toast from "react-native-toast-message";
 
 export const useProjects = () => {
     const [projects, setProjects] = useState<Project[]>([]);
+    const [savedProjects, setSavedProjects] = useState<Project[]>([]);
+    const {currentUser} = useLayoutContext();
 
     const {data,isLoading, refetch,isRefetching} = useQuery({
         queryKey: ["projects"],
@@ -65,12 +68,18 @@ export const useProjects = () => {
         }
     }
 
+    useEffect(()=> {
+        const savedProjectsIds = currentUser.saved_projects_ids
+        if(savedProjectsIds) setSavedProjects(projects.filter(project => savedProjectsIds.includes(project.id)));
+    },[currentUser, projects])
+
     return {
         projects,
         isLoading,
         refetch,
         isRefetching,
         newProject,
-        getSingleProject
+        getSingleProject,
+        savedProjects
     }
 }

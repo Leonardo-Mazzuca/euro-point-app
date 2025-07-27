@@ -1,7 +1,6 @@
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/Card";
 import { Avatar, AvatarFallback, AvatarImage } from "./Avatar";
 import { Text } from "@/components/Text";
-import Entypo from "@expo/vector-icons/Entypo";
 import { Button } from "@/components/Button";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { Colors } from "@/constants/Colors";
@@ -17,13 +16,14 @@ import "dayjs/locale/pt-br";
 import { post as api_post } from "@/service/helpers";
 import Toast from "react-native-toast-message";
 import ItemImage from "./item-image";
+import { usePosts } from "@/hooks/use-posts";
 
 dayjs.extend(relativeTime);
 dayjs.locale("pt-br");
 
 type PostCardProps = {
   post: Post;
-  refetch: () => void
+  refetch: () => void;
 };
 
 const PostCard = ({ post, refetch }: PostCardProps) => {
@@ -31,9 +31,10 @@ const PostCard = ({ post, refetch }: PostCardProps) => {
 
   const [isSaved, setIsSaved] = useState(false);
   const [isFollowing, setIsFollowing] = useState(false);
-  const {currentUser,getCurrentUser} = useLayoutContext();
+  const { currentUser, getCurrentUser } =
+    useLayoutContext();
 
-  const handleSave = () => setIsSaved(!isSaved);
+  const {handleSave, handleUnSave} = usePosts();
 
   const {
     created_at,
@@ -42,54 +43,86 @@ const PostCard = ({ post, refetch }: PostCardProps) => {
     content,
     total_likes,
     total_views,
-    area_id
+    area_id,
   } = post;
-  
-  useEffect(()=> {
 
-    if(currentUser?.followed_areas?.some((area) => area.id === area_id)) setIsFollowing(true);
+  useEffect(() => {
+    if (currentUser?.followed_areas?.some((area) => area.id === area_id))
+      setIsFollowing(true);
+  }, []);
 
-  },[]);
-  
+  useEffect(() => {
+    const itemIsSaved = currentUser?.saved_posts_ids?.includes(post.id);
+    setIsSaved(!!itemIsSaved);
+  }, [currentUser, post.id]);
+
   const handleFollow = async () => {
     try {
-
-      await api_post("/areas/follow",{area_id});
+      await api_post("/areas/follow", { area_id });
       setIsFollowing(true);
       refetch();
       await getCurrentUser();
-      
-    } catch (error:any) {
+    } catch (error: any) {
       Toast.show({
         type: "error",
         text1: error.response.data.message,
-      })
+      });
     }
-  }
+  };
 
   const handleUnFollow = async () => {
     try {
-
-      await api_post("/areas/unfollow",{area_id});
+      await api_post("/areas/unfollow", { area_id });
       setIsFollowing(false);
       refetch();
       await getCurrentUser();
-      
-    } catch (error:any) {
+    } catch (error: any) {
       Toast.show({
         type: "error",
         text1: error.response.data.message,
-      })
+      });
     }
-  }
-  
+  };
+
+  const FollowButton = () => {
+    return (
+      <Button
+        onPress={isFollowing ? handleUnFollow : handleFollow}
+        className="flex-row ms-auto w-[100px] gap-2 items-center"
+        size={"icon"}
+        variant="ghost"
+      >
+        <AntDesign
+          name="plus"
+          size={20}
+          color={
+            theme === "dark"
+              ? Colors.dark.primaryBlue
+              : Colors.light.primaryBlue
+          }
+        />
+        <Text
+          style={{
+            color:
+              theme === "dark"
+                ? Colors.dark.primaryBlue
+                : Colors.light.primaryBlue,
+          }}
+          className="font-normal text-xl"
+        >
+          {isFollowing ? "Seguindo" : "Seguir"}
+        </Text>
+      </Button>
+    );
+  };
+
   return (
     <Card className="mt-4">
       <CardHeader className="flex-row p-4 items-center gap-3">
         <Avatar className="w-10 h-10" alt="User image">
           <AvatarImage
             source={{
-              uri: user.avatar && convertToAvatar(user?.avatar) || "",
+              uri: (user.avatar && convertToAvatar(user?.avatar)) || "",
             }}
           />
           <AvatarFallback>
@@ -97,43 +130,11 @@ const PostCard = ({ post, refetch }: PostCardProps) => {
           </AvatarFallback>
         </Avatar>
         <Text className="font-semibold text-xl">{user?.username}</Text>
-        <Entypo name="dot-single" size={18} color="grey" />
-        <Text className="font-normal text-sm text-gray-400">
-          {dayjs(created_at).fromNow()} 
-        </Text>
-        <Button 
-        onPress={isFollowing ? handleUnFollow : handleFollow}
-        className="flex-row ms-auto w-[100px] gap-2 items-center" size={"icon"} variant="ghost">
-          <AntDesign
-            name="plus"
-            size={20}
-            color={
-              theme === "dark"
-                ? Colors.dark.primaryBlue
-                : Colors.light.primaryBlue
-            }
-          />
-           <Text
-            style={{
-              color:
-                theme === "dark"
-                  ? Colors.dark.primaryBlue
-                  : Colors.light.primaryBlue,
-            }}
-            className="font-normal text-xl"
-          >
-            {isFollowing ? "Seguindo" : "Seguir"}
-          </Text>
-        </Button>
-
+        <FollowButton />
       </CardHeader>
       <CardContent>
         {isValidUrl(post.images[0]) && (
-          <ItemImage 
-            fallback=""
-            type="item"
-            url={post.images[0]}
-          />
+          <ItemImage fallback="" type="item" url={post.images[0]} />
         )}
         <PostText contact_email={contact_email} text={content} />
       </CardContent>
@@ -154,7 +155,7 @@ const PostCard = ({ post, refetch }: PostCardProps) => {
           }
           text={String(total_views)}
         />
-        <TouchableOpacity onPress={handleSave}>
+        <TouchableOpacity onPress={isSaved ? () => handleUnSave(post.id) : () => handleSave(post.id)}>
           {isSaved ? (
             <FooterItem
               icon={
@@ -166,7 +167,7 @@ const PostCard = ({ post, refetch }: PostCardProps) => {
                   }
                 />
               }
-              text="82K"
+              text={String(post.total_saved)}
             />
           ) : (
             <FooterItem
@@ -179,10 +180,13 @@ const PostCard = ({ post, refetch }: PostCardProps) => {
                   }
                 />
               }
-              text="82K"
+              text={String(post.total_saved)}
             />
           )}
         </TouchableOpacity>
+        <Text className="ms-auto font-normal text-sm text-gray-400">
+          {dayjs(created_at).fromNow()}
+        </Text>
       </CardFooter>
     </Card>
   );

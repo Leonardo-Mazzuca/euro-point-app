@@ -4,7 +4,7 @@ import { createContext, PropsWithChildren, useContext, useEffect, useState } fro
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { View } from "react-native";
 import { themes } from "@/util/color-theme";
-import { get } from "@/service/helpers";
+import { get, post } from "@/service/helpers";
 import Toast from "react-native-toast-message";
 import { convertToAvatar } from "@/util";
 
@@ -24,6 +24,8 @@ type LayoutState = {
     currentUser:User,
     setCurrentUser: (value: User) => void
     getCurrentUser: () => void
+    saveItem : (item: 'post' | 'project' | 'newsletter', id: number ) => void
+    unSaveItem: (item: 'post' | 'project' | 'newsletter', id: number ) => void
 }
 
 const LayoutContext = createContext<LayoutState | undefined>(undefined);
@@ -94,6 +96,75 @@ const LayoutProvider = ({children}:PropsWithChildren) => {
 
     },[])
 
+    const saveItem = async (item: ItemType, id: number ) => {
+
+        try {
+
+            switch(item){
+                case 'post':
+                    await post('/users/save', {
+                        post_type: 'post',
+                        id
+                    })
+                    break;
+                case 'project':
+                    await post('/users/save', {
+                        post_type: 'project',
+                        id
+                    })
+                    break;
+                case 'newsletter':
+                    await post('/users/save', {
+                        post_type: 'newsletter',
+                        id
+                    })
+                  
+                    break;
+            }
+        } catch (error) {
+            Toast.show({
+                type: 'error',
+                text1: 'Não foi possível salvar o item'
+            })
+        }
+
+    }
+
+    const unSaveItem = async (item: 'post' | 'project' | 'newsletter', id: number ) => {
+
+        try {
+
+            switch(item){
+                case 'post':
+                    await post('/users/un-save', {
+                        post_type: 'post',
+                        id
+                    })
+                    break;
+                case 'project':
+                    await post('/users/un-save', {
+                        post_type: 'project',
+                        id
+                    })
+                    break;
+                case 'newsletter':
+                    await post('/users/un-save', {
+                        post_type: 'newsletter',
+                        id
+                    })
+                  
+                    break;
+            }
+        } catch (error) {
+            Toast.show({
+                type: 'error',
+                text1: 'Não foi possível desalvar o item'
+            })
+        }
+
+    }
+    
+
     const value = {
         hidePostButton,
         setHidePostButton,
@@ -108,7 +179,9 @@ const LayoutProvider = ({children}:PropsWithChildren) => {
         isLogged,
         currentUser,
         setCurrentUser,
-        getCurrentUser
+        getCurrentUser,
+        saveItem,
+        unSaveItem
     }
 
     return (
