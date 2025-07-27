@@ -17,6 +17,7 @@ import Loading from "@/components/loading";
 import QuizFinishModal from "@/components/quiz-finish-modal";
 import { Button } from "@/components/Button";
 import QuizConfirmModal from "@/components/quiz-confirm-modal";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const SingleQuiz = () => {
   const { quizId } = useLocalSearchParams();
@@ -84,7 +85,7 @@ const SingleQuiz = () => {
   }, [currentQuizMemo]);
 
 
-  const handleQuestionStatus = () => {
+  const handleQuestionStatus = async () => {
     if (selectedAnswer) {
       const currentCorrectAnswer = currentQuestion?.correct_answer;
       const isRight =
@@ -98,12 +99,15 @@ const SingleQuiz = () => {
 
       if (currentQuestion) {
         if (isRight) {
+          await AsyncStorage.setItem("totalRights", String(quizData.totalRights + 1));
+          await AsyncStorage.setItem("totalPoints", String(quizData.totalPoints + currentQuestion?.total_points));
           setQuizData((prev) => ({
             ...prev,
             totalRights: prev.totalRights + 1,
             totalPoints: prev.totalPoints + currentQuestion?.total_points,
           }));
         } else {
+          await AsyncStorage.setItem("totalErrors", String(quizData.totalErrors + 1));
           setQuizData((prev) => ({
             ...prev,
             totalErrors: prev.totalErrors + 1,
@@ -121,13 +125,13 @@ const SingleQuiz = () => {
       setTimeout(() => {
         setIsWrong(false);
       }, 1000);
-    }
+    } 
 
     if(currentQuizMemo) {
       if (currentStep >= (currentQuizMemo?.questions.length)) {
         setIsFinished(true);
         if(!currentQuiz) return;
-        await onQuizFinish(quizData.totalPoints, currentQuiz?.id);
+        await onQuizFinish(quizData.totalPoints,currentQuiz?.id);
         return;
       }
   
@@ -136,7 +140,7 @@ const SingleQuiz = () => {
         await onNextQuestion(currentQuiz?.id);
         setCurrentStep((prev) => prev + 1);
         setIsSubmitted(false);
-        handleQuestionStatus();
+        await handleQuestionStatus();
         setSelectedAnswer("");
       }, 1000);
     }
@@ -176,6 +180,23 @@ const SingleQuiz = () => {
   useEffect(()=> {
     setCurrentQuestion(quizQuestions[currentStep - 1]);
   },[quizQuestions,currentStep])
+
+  useEffect(()=> {
+    const updateQuizData = async () => {
+      const storagedPoints = await AsyncStorage.getItem("totalPoints");
+      const storagedRights = await AsyncStorage.getItem("totalRights");
+      const storagedErrors = await AsyncStorage.getItem("totalErrors");
+
+        setQuizData({
+          totalPoints: Number(storagedPoints) || 0,
+          totalRights: Number(storagedRights) || 0,
+          totalErrors: Number(storagedErrors) || 0
+        })
+ 
+    }
+
+    updateQuizData()
+  },[])
 
   //to update badge statuses
   useEffect(()=> {

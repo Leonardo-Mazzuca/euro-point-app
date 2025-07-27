@@ -34,6 +34,7 @@ export const useQuizzes = () => {
 
         try {
 
+            
             await put('/users',{total_points: points});
             await put (`/quiz/end/${quiz_id}`,{});
             refetch();
