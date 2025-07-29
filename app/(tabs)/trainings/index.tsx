@@ -1,5 +1,5 @@
 import { FlatList, RefreshControl, Text, View } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import TabsContainer from "@/components/tabs-container";
 import Header from "@/components/header";
 import CategoriesScroll from "@/components/categories-scroll";
@@ -10,7 +10,6 @@ import QuizCard from "@/components/quiz-card";
 import { Button } from "@/components/Button";
 import RunningQuiz from "@/components/running-quiz";
 import { useLayoutContext } from "@/context/layout-context";
-import { useIsFocused } from "@react-navigation/native";
 import { router } from "expo-router";
 import { usePrograms } from "@/hooks/use-programs";
 import { useQuizzes } from "@/hooks/use-quizzes";
@@ -37,15 +36,6 @@ const Trainings = () => {
     onQuizStart,
   } = useQuizzes();
 
-  const isFocused = useIsFocused();
-
-  useEffect(() => {
-    if (isFocused) {
-      setHidePostButton(true);
-    } else {
-      setHidePostButton(false);
-    }
-  }, [isFocused]);
 
   const placeholder =
     category === "Programas" ? "Busque um programa..." : "Busque um quiz...";

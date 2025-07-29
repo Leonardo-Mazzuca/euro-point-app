@@ -18,6 +18,7 @@ import QuizFinishModal from "@/components/quiz-finish-modal";
 import { Button } from "@/components/Button";
 import QuizConfirmModal from "@/components/quiz-confirm-modal";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useQuizContext } from "@/context/quiz-context";
 
 const SingleQuiz = () => {
   const { quizId } = useLocalSearchParams();
@@ -26,7 +27,7 @@ const SingleQuiz = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState<string>("");
-  const { setPostButtonProps } = useLayoutContext();
+  const { setPostButtonProps, setHidePostButton, hidePostButton } = useLayoutContext();
   const { quizzes, onQuizFinish, onNextQuestion } = useQuizzes();
   const [currentQuiz, setCurrentQuiz] = useState<Quiz | null>(null);
   const [quizQuestions, setQuizQuestions] = useState<Question[]>([]);
@@ -40,6 +41,7 @@ const SingleQuiz = () => {
     totalPoints: 0,
   });
   const [openAdviceModal, setOpenAdviceModal] = useState(false);
+  const {setQuizCurrentQuestion} = useQuizContext();
 
   const isFocused = useIsFocused();
 
@@ -67,6 +69,12 @@ const SingleQuiz = () => {
       });
     }
   }, [isFocused]);
+
+  useEffect(()=> {
+    if(hidePostButton){
+      setHidePostButton(false);
+    }
+  },[hidePostButton])
 
   useEffect(() => {
     const current = quizzes.find((quiz) => quiz.id === Number(quizId));
@@ -151,6 +159,12 @@ const SingleQuiz = () => {
     setOpenAdviceModal(true);
   }
 
+  useEffect(()=> {
+    if(currentQuestion){
+      setQuizCurrentQuestion(currentQuestion);
+    }
+  },[currentQuestion])
+
   const FinishButton = () => (
     <TouchableOpacity
       disabled={!selectedAnswer || isFinished}
@@ -179,7 +193,7 @@ const SingleQuiz = () => {
 
   useEffect(()=> {
     setCurrentQuestion(quizQuestions[currentStep - 1]);
-  },[quizQuestions,currentStep])
+  },[quizQuestions,currentStep]);
 
   useEffect(()=> {
     const updateQuizData = async () => {

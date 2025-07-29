@@ -20,8 +20,8 @@ const DefaultLayout = () => {
 
   useEffect(()=> {
     if(isLogged) 
-      router.push('/(tabs)/trainings/quiz-help')
-      // router.push("/(tabs)");
+      // router.push('/(tabs)/trainings/quiz-help')
+      router.push("/(tabs)");
   },[isLogged])
 
   return (

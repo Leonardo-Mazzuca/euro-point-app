@@ -14,6 +14,7 @@ import UserButton from "@/components/user-button";
 import { cn } from "@/lib/utils";
 import ChatInput from "@/components/chat-input";
 import { getOpenAICredentials, openai } from "@/service/openai";
+import { useQuizContext } from "@/context/quiz-context";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -65,6 +66,8 @@ const QuizHelp = () => {
   const [isGenerating, setIsGenerating] = useState(false);
   const [prompt, setPrompt] = useState("");
   const [output, setOutput] = useState("");
+  const {quizCurrentQuestion} = useQuizContext();
+  const [times, setTimes] = useState(0);
 
   const isFocused = useIsFocused();
   
@@ -85,11 +88,7 @@ const QuizHelp = () => {
   }
 
   const utilData = `
-   Questão atual: 
-   Alternativas: 
-   ...
-   ...
-   ...
+   Questão atual: ${JSON.stringify(quizCurrentQuestion)}
   `;
 
   useEffect(()=>{
