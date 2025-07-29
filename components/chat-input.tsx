@@ -1,5 +1,5 @@
 import { View, Text, Pressable, TextInput } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Voice, {
   SpeechResultsEvent,
@@ -50,19 +50,41 @@ const AudioButton = ({}: AudioButtonProps) => {
   );
 };
 
-type ChatInputProps = {};
+type ChatInputProps = {
+  prompt: string
+  setPrompt: (prompt: string) => void
+  disabled: boolean
+};
 
-const ChatInput = ({}: ChatInputProps) => {
+const ChatInput = ({prompt, setPrompt, disabled}: ChatInputProps) => {
+
+  const [initialPrompt, setInitialPrompt] = useState("");
+
+  useEffect(()=> {
+    setInitialPrompt(prompt);
+  },[]);
+
+
+
+  const handlePrompt = () => {
+    setPrompt(initialPrompt);
+    setInitialPrompt("");
+  }
+
   return (
     <View className="flex-row justify-center items-center gap-2 px-6">
       <View className="relative flex-row items-center gap-2">
         <TextInput
+          onChangeText={(e)=>setInitialPrompt(e)}
+          value={initialPrompt}
           placeholder="Digite sua mensagem..."
-          className="border border-gray-400 dark:border-zinc-800 dark:placeholder:text-white h-[40px] w-[250px] rounded-full px-4 py-2"
+          className="border pe-10 dark:text-white border-gray-400 dark:border-zinc-800 dark:placeholder:text-white h-[40px] w-[250px] rounded-full px-4 py-2"
         />
         <AudioButton />
       </View>
       <Button
+        disabled={disabled}
+        onPress={handlePrompt}
         size={"icon"}
         className={"bg-blue-primary rounded-full w-[40px] h-[40px]"}
       >
