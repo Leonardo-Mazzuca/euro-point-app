@@ -9,7 +9,6 @@ import ScrollableList from "@/components/scrollable-list";
 import QuizCard from "@/components/quiz-card";
 import { Button } from "@/components/Button";
 import RunningQuiz from "@/components/running-quiz";
-import { useLayoutContext } from "@/context/layout-context";
 import { router } from "expo-router";
 import { usePrograms } from "@/hooks/use-programs";
 import { useQuizzes } from "@/hooks/use-quizzes";
@@ -20,7 +19,6 @@ const Trainings = () => {
   const categories = ["Programas", "Quizzes"];
   const [category, setCategory] = useState(categories[0]);
   const [selectedQuiz, setSelectedQuiz] = useState<Quiz | null>(null);
-  const { setHidePostButton } = useLayoutContext();
 
   const {
     programs,

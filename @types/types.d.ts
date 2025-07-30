@@ -193,6 +193,20 @@ declare global {
   }
 
   type ItemType = 'post' | 'project' | 'newsletter'
+
+  type Message = {
+    prompt:string
+    time: string,
+    subject: string
+    avatar: string,
+    userId:number
+    createdAt: string
+  }
+
+  type GroupedMessages = {
+    title: string,
+    data:Message[]
+  }
 }
 
 export {};

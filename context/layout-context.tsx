@@ -163,6 +163,9 @@ const LayoutProvider = ({children}:PropsWithChildren) => {
         }
 
     }
+
+    console.log('Post button is hided? ', hidePostButton);
+    
     
 
     const value = {

@@ -70,11 +70,6 @@ const SingleQuiz = () => {
     }
   }, [isFocused]);
 
-  useEffect(()=> {
-    if(hidePostButton){
-      setHidePostButton(false);
-    }
-  },[hidePostButton])
 
   useEffect(() => {
     const current = quizzes.find((quiz) => quiz.id === Number(quizId));
