@@ -12,7 +12,7 @@ const DeleteButton = ({ handleDelete, ...rest }: DeleteButtonProps) => {
   const { theme } = useLayoutContext();
 
   return (
-    <Button {...rest} onPress={handleDelete} variant={"ghost"}>
+    <Button {...rest} onPress={handleDelete} variant={"destructive"}>
       <FontAwesome5
         name="trash"
         size={16}

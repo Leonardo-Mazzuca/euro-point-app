@@ -10,9 +10,10 @@ type IdeaModalProps = {
   idea?: Idea;
   header?: React.ReactNode
   wrapperClassNames?:string
+  enableCloseButton?: boolean
 } & ModalProps;
 
-const ModalScreen = ({ header, children,onRequestClose,wrapperClassNames, ...rest }: IdeaModalProps) => {
+const ModalScreen = ({ header, children,onRequestClose,wrapperClassNames,enableCloseButton=true, ...rest }: IdeaModalProps) => {
 
   const {theme} = useLayoutContext();
 
@@ -25,17 +26,18 @@ const ModalScreen = ({ header, children,onRequestClose,wrapperClassNames, ...res
             intensity={100}
           >
             <View className="bg-white dark:bg-dark-card px-3 py-2 mx-auto my-auto rounded-xl min-w-[250px]">
-              {header ? (
-                header
-              ) : (
-                <Button
-                  className="ms-auto"
-                  onPress={onRequestClose}
-                  variant={"ghost"}
-                >
-                  <AntDesign name="close" color={theme === "dark" ? Colors.dark.icon : Colors.light.icon} size={24} />
-                </Button>
-              )}
+              <View className="flex-row items-center justify-between">
+                {header}
+                {enableCloseButton && (
+                  <Button
+                    className="ms-auto"
+                    onPress={onRequestClose}
+                    variant={"ghost"}
+                  >
+                    <AntDesign name="close" color={theme === "dark" ? Colors.dark.icon : Colors.light.icon} size={24} />
+                  </Button>
+                )}
+              </View>
               <View className={cn("min-w-[250px]",wrapperClassNames)}>
                 {children}
               </View>

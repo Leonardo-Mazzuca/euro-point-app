@@ -163,11 +163,6 @@ declare global {
 
   type IdeaStatus = "in-progress" | "recused" | "approved";
 
-  type Idea = {
-    id: string;
-    title: string;
-    content: string;
-  };
 
   type PostCreate = {
     title: string
@@ -206,6 +201,13 @@ declare global {
   type GroupedMessages = {
     title: string,
     data:Message[]
+  }
+
+  type Idea = {
+    user_id: number,
+    id: number,
+    title: string,
+    description: string
   }
 }
 

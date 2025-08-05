@@ -8,9 +8,9 @@ import { useLayoutContext } from '@/context/layout-context'
 import { Animated,Easing } from 'react-native'
 
 type TabsContainerProps = {
-
+  postButton? : React.ReactNode
 } & SafeAreaViewProps
-const TabsContainer = ({className,children,...rest}:TabsContainerProps) => {
+const TabsContainer = ({postButton,className,children,...rest}:TabsContainerProps) => {
 
   const {hidePostButton, hideUI} = useLayoutContext();
   const translateY =  useRef(new Animated.Value(0)).current;
@@ -41,7 +41,7 @@ const TabsContainer = ({className,children,...rest}:TabsContainerProps) => {
           }}
         >
           {!hidePostButton && (
-            <PostButton />
+            postButton ?? <PostButton />
           )}
         </Animated.View>
       

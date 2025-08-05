@@ -6,19 +6,33 @@ import { Button } from "@/components/Button";
 import { BackHandler, FlatList, Text, View } from "react-native";
 import IdeaCard from "@/components/idea-card";
 import { useLayoutContext } from "@/context/layout-context";
-import AntDesign from "@expo/vector-icons/AntDesign";
 import { Colors } from "@/constants/Colors";
 import { useFocusEffect } from "expo-router";
-import ModalScreen from "@/components/modal-screen";
+import { useIsFocused } from "@react-navigation/native";
+import PlusIcon from "@/components/icons/plus";
+import CheckIcon from "@/components/icons/check";
+import PostButton from "@/components/post-button";
+import { cn } from "@/lib/utils";
+import IdeaAlertModal from "@/components/idea-alert-modal";
+import IdeaCreateModal from "@/components/idea-create-modal";
+import { useIdeasContext } from "@/context/idea-context";
+import Toast from "react-native-toast-message";
 
 const Ideas = () => {
   const [enablePost, setEnablePost] = useState(false);
-  const { setPostButtonProps, setHideTabs } = useLayoutContext();
+  const { setHideTabs } = useLayoutContext();
   const [openAlertModal, setOpenAlertModal] = useState(false);
+  const [openCreateModal, setOpenCreateModal] = useState(false);
+  const {ideas, setIdeas} = useIdeasContext();
+
+  const isFocused = useIsFocused();
 
   const handlePost = () => {
-    setHideTabs(true);
     setEnablePost(!enablePost);
+  }
+
+  const openIdeaModal = () => {
+    setOpenCreateModal(true);
   }
 
   useFocusEffect(
@@ -39,42 +53,51 @@ const Ideas = () => {
       return () => subscription.remove();
     }, [enablePost])
   );
-  
 
+
+  const PostButtonItem = () => {
+    if (!isFocused) return null;
+
+    return (
+      <PostButton
+        className={cn("dark:bg-yeallow-primary",)}
+        onPress={enablePost ? handlePost : openIdeaModal}
+      >
+        {enablePost ? (
+          <CheckIcon color={Colors.light.primaryBlue}  />
+        ) : (
+          <PlusIcon color={Colors.light.primaryBlue}/>
+        )}
+      </PostButton>
+    );
+  };
+  
   useEffect(() => {
     if (enablePost) {
-      setPostButtonProps({
-        className: "bg-yeallow-primary",
-        children: (
-          <AntDesign size={24} color={Colors.light.primaryBlue} name="check" />
-        ),
-      });
+      setHideTabs(true);
     } else {
-      setHideTabs(false)
-      setPostButtonProps({
-        className: "bg-blue-primary",
-        children: (
-          <AntDesign size={24} color={Colors.light.primaryYeallow} name="plus" />
-        ),
-      });
+      setHideTabs(false);
     }
-
   }, [enablePost]);
 
-  return (
-    <TabsContainer>
+  const submit = (idea: Idea) => {
+    setIdeas(prev => [...prev, idea]);
+    Toast.show({
+      type: 'success',
+      text1: 'Ideia criada com sucesso',
+    })
+  };
 
+  return (
+    <TabsContainer
+      postButton={
+        <PostButtonItem />
+      }
+    >
       <View className="flex-1 px-10">
         <FlatList
-          data={Array.from({ length: 5 })}
+          data={ideas}
           keyExtractor={(item, index) => index.toString()}
-          numColumns={2}
-          columnWrapperStyle={{
-            gap: 20,
-            alignItems: "center",
-            justifyContent: "center",
-            marginTop: 20,
-          }}
           ListHeaderComponent={()=> (
           <View className="pt-4">
             <Header />
@@ -89,24 +112,22 @@ const Ideas = () => {
             </Button>
           </View>
           )}
-          renderItem={({ item }) => <IdeaCard enablePost={enablePost} />}
+          renderItem={({ item }) => <IdeaCard idea={item} enablePost={enablePost} />}
           contentContainerStyle={{
             paddingBottom: 150,
+            gap: 10
           }}
         />
       </View>
-      <ModalScreen 
-        visible={openAlertModal}
-        onRequestClose={() => setOpenAlertModal(false)}
-        wrapperClassNames="w-[300px] h-[100px]"
-      >
-        <Text className="dark:text-white font-semibold text-xl">
-          Ops!
-        </Text>
-        <Text className="dark:text-gray-200 font-medium text-lg">
-          Você não pode sair dessa tela enquanto estiver publicando uma ideia!
-        </Text>
-      </ModalScreen>
+        <IdeaAlertModal  
+          open={openAlertModal}
+          setIsOpen={setOpenAlertModal}
+        />
+        <IdeaCreateModal 
+          open={openCreateModal}
+          setIsOpen={setOpenCreateModal}
+          submit={submit}
+        />
     </TabsContainer>
   );
 };

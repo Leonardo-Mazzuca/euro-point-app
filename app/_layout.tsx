@@ -10,6 +10,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Colors } from "@/constants/Colors";
 import Toast from 'react-native-toast-message';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { IdeaProvider } from "@/context/idea-context";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -93,9 +94,11 @@ export default function RootLayout() {
     <GestureHandlerRootView className="flex-1">
        <QueryClientProvider client={client}>
           <LayoutProvider>
-            <DefaultLayout />
-            <InnerBar />
-            <Toast />
+            <IdeaProvider>
+              <DefaultLayout />
+              <InnerBar />
+              <Toast />
+            </IdeaProvider>
           </LayoutProvider>
        </QueryClientProvider>
 
