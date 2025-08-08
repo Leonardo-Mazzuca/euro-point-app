@@ -40,16 +40,17 @@ export const usePosts = () => {
     formData.append('area_id', String(data.area_id));
     formData.append('title', data.title);
     formData.append('content', data.content);
-    data.images.forEach((image, index) => {
-      formData.append('images', {
-          uri: image.uri,
-          type: image.mimeType,
-          name: image.fileName || `image_${index}_${Date.now()}.jpg`, 
-      } as any);
-    });
 
-    console.log(data.images);
-    
+    if(data.images){
+      data.images.forEach((image, index) => {
+        formData.append('images', {
+            uri: image.uri,
+            type: image.mimeType,
+            name: image.fileName || `image_${index}_${Date.now()}.jpg`, 
+        } as any);
+      });
+    }
+
     try {
       
       const token = await getToken();

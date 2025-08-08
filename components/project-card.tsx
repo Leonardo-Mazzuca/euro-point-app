@@ -19,6 +19,10 @@ type Props = {
 const ProjectCard = ({project}: Props) => {
 
   const handleNavigate = () => {router.push(`/projects/${project.id}`)}
+
+  const firstImage = project.image?.[0]?.path ? `${process.env.EXPO_PUBLIC_EUROPOINT_API_URL}/images/project/${project.image?.[0]?.path }` : ""
+
+  console.log(project);
   
   return (
     <Card className="mt-4">
@@ -29,7 +33,7 @@ const ProjectCard = ({project}: Props) => {
       <View className="items-center flex-1 flex-row gap-5">
 
           <ItemImage 
-            url={project.image}
+            url={firstImage}
             type="card"
             fallback={projectFallBack}
           />

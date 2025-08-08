@@ -77,7 +77,7 @@ declare global {
     content: string;
     area_id: number;
     created_at: string; 
-    images: string[];
+    images: {path: string}[];
     total_likes: number;
     total_views: number;
     user: {
@@ -100,7 +100,7 @@ declare global {
     id: number;
     title: string;
     content: string;
-    image: string;
+    image: {path: string}[];
     area_id: number;
     team_id: number;
     owner_id: number;
@@ -180,7 +180,7 @@ declare global {
     title: string,
     content: string
     area_id: number
-    images: string[]
+    images: ExpoImageType[]
   }
 
   type ProjectCreate = {
@@ -189,7 +189,7 @@ declare global {
     title: string
     team_id: number
     members_ids: number[]
-    image: string
+    image: ExpoImageType
   }
 
   type ItemType = 'post' | 'project' | 'newsletter'

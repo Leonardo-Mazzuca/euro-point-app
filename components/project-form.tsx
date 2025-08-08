@@ -19,7 +19,7 @@ const ProjectForm = () => {
     clearErrors
   } = useFormContext<PostCreateType>();
 
-  const [image, setImage] = useState<string | null>(null);
+  const [image, setImage] = useState<ExpoImageType | null>(null);
   const [usersIds, setUsersIds] = useState<string[]>([]);
   const [teamId, setTeamId] = useState<string | null>("");
   const { teams } = useTeams();
@@ -72,7 +72,7 @@ const ProjectForm = () => {
   return (
     <View>
       <ImageUploader image={image} setImage={setImage as any} />
-      <ErrorField error={errors.project?.image?.message} />
+      {/* <ErrorField error={errors.project?.image?.message} /> */}
       <FormInputField
         control={control}
         name={"project.title"}

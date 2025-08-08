@@ -9,7 +9,7 @@ enum PostFormEnum {
 const singlePostSchema = z.object({
     title: z.string({ required_error: 'O título é indispensável!' }),
     content: z.string({ required_error: 'O conteúdo é necessário!' }),
-    images: z.array(z.any(), { required_error: 'Insira ao menos 1 imagem!' })
+    images: z.array(z.any()).optional()
 })
 
 const newsletterSchema = z.object({
@@ -19,7 +19,7 @@ const newsletterSchema = z.object({
 })
 
 const projectSchema = z.object({
-    image: z.string({ required_error: 'A imagem é indispensável!' }),
+    image: z.any({ required_error: 'A imagem é indispensável!' }),
     title: z.string({ required_error: 'O título é indispensável!' }),
     content: z.string({ required_error: 'O conteúdo é indispensável!' }),
     team_id: z.number({ required_error: 'O time é indispensável!' }),

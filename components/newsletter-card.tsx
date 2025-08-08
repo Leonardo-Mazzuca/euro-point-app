@@ -19,7 +19,8 @@ const NewsLetterCard = ({newsletter}:Props) => {
     router.push(`/newsletter/${newsletter.id}`);
   }
 
-  const firstImage = newsletter.images[0];
+  const firstImage = newsletter.images?.[0]?.path ?
+   `${process.env.EXPO_PUBLIC_EUROPOINT_API_URL}/images/newsletter/${newsletter.images?.[0]?.path }` : ""
 
   return (
     <Card className="mt-4">

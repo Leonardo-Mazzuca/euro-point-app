@@ -33,7 +33,6 @@ const PostScreen = () => {
   const {newProject} = useProjects();
   const {currentUser} = useLayoutContext();
 
-  const {area: {id}} = currentUser;
 
   const formMethods = useForm({
     resolver: zodResolver(postSchema),
@@ -51,6 +50,9 @@ const PostScreen = () => {
   };
 
   const onSubmit = async () => {
+
+    const {area: {id}} = currentUser;
+
     const data = getValues();
     switch(data.formType){
       case PostFormEnum.newsletter:
