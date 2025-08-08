@@ -17,9 +17,12 @@ import { Button } from "@/components/Button";
 import QuizConfirmModal from "@/components/quiz-confirm-modal";
 import PostButton from "@/components/post-button";
 import { useRunningQuiz } from "@/hooks/use-running-quiz";
+import { useLayoutContext } from "@/context/layout-context";
 
 const SingleQuiz = () => {
   const { quizId } = useLocalSearchParams();
+  const {theme} = useLayoutContext();
+  const isDark = theme === "dark";
   
   const {
     answeredQuestionsStatus,
@@ -57,7 +60,7 @@ const SingleQuiz = () => {
         <Ionicons
           name="sparkles"
           size={24}
-          color={Colors.light.primaryYeallow}
+          color={isDark ? Colors.dark.primaryYeallow : Colors.light.primaryBlue}
         />
       </PostButton>
     )

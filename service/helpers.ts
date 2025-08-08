@@ -49,6 +49,19 @@ const post = async (url: string, data: object) => {
   return req.data;
 };
 
+const postFormData = async (url: string, data:FormData) => {
+  const token = await getToken();
+
+  const req =  await api.post(url, data, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return req.data;
+}
+
 const put = async (url: string, data: object) => {
   const token = await getToken();
 
@@ -75,4 +88,4 @@ const del = async (url: string) => {
   return req.data;
 };
 
-export { get, post, put, del, getNoAuth, postNoAuth };
+export { get, post, put, del, getNoAuth, postNoAuth, postFormData, getToken };

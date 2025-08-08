@@ -1,8 +1,9 @@
-import { get, post, put } from "@/service/helpers";
+import { get, getToken, postFormData, put } from "@/service/helpers";
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import Toast from "react-native-toast-message";
 import { useLayoutContext } from "@/context/layout-context";
+import api from "@/service/api";
 export const usePosts = () => {
   const [posts, setPosts] = useState<Post[]>([]);
   const [savedPosts, setSavedPosts] = useState<Post[]>([]);
@@ -33,9 +34,33 @@ export const usePosts = () => {
   },[currentUser, posts])
 
   const newPost = async (data: PostCreate) => {
+
+    const formData = new FormData();
+
+    formData.append('area_id', String(data.area_id));
+    formData.append('title', data.title);
+    formData.append('content', data.content);
+    data.images.forEach((image, index) => {
+      formData.append('images', {
+          uri: image.uri,
+          type: image.mimeType,
+          name: image.fileName || `image_${index}_${Date.now()}.jpg`, 
+      } as any);
+    });
+
+    console.log(data.images);
+    
     try {
       
-      const req = await post("/posts",data)
+      const token = await getToken();
+      
+      const req =  await api.post("/posts", formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
       Toast.show({
         type: "success",
         text1: "Post criado com sucesso!",
@@ -44,9 +69,11 @@ export const usePosts = () => {
         success: true
       }
     } catch (error: any) {
+      console.log('Error:', error);
+      
       Toast.show({
         type: "error",
-        text1: error.response.data.message,
+        text1: error.response.data.message || "Erro ao criar post!",
       })
       return {
         success: false

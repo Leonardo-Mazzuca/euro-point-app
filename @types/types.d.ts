@@ -57,7 +57,7 @@ declare global {
     total_likes: number;
     total_views: number;
     total_saved: number;
-    images: string[];
+    images: {post_id: number, path: string}[];
     user: {
       id: number;
       username: string;
@@ -163,12 +163,17 @@ declare global {
 
   type IdeaStatus = "in-progress" | "recused" | "approved";
 
+  type ExpoImageType = {
+    uri: string;
+    mimeType: string;
+    fileName: string;
+  }
 
   type PostCreate = {
     title: string
     content: string
     area_id: number
-    images: string[]
+    images: ExpoImageType[]
   }
 
   type NewsletterCreate = { 

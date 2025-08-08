@@ -29,12 +29,13 @@ const Home = () => {
   const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
 
   useEffect(() => {
-    const filtered = posts.filter((post) => {
+    const filtered = posts?.filter((post) => {
       return currentUserFollowings?.includes(post.area_id);
     });
 
     setFilteredPosts(filtered);
   }, [posts]);
+
 
   if (isLoading) {
     return <Loading />;
@@ -87,6 +88,11 @@ const Home = () => {
             data={posts}
             renderItem={({ item }) => (
               <PostCard refetch={refetch} post={item} />
+            )}
+            ListEmptyComponent={()=> (
+              <Text>
+                Sem posts
+              </Text>
             )}
             viewabilityConfig={{ viewAreaCoveragePercentThreshold: 50 }}
             onViewableItemsChanged={()=>{}}

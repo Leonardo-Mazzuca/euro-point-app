@@ -4,8 +4,8 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import { cn } from "@/lib/utils";
 
 type ImageUploaderProps = {
-  image: string[] | string | null;
-  setImage: (image: string[] | string | null) => void;
+  image: ExpoImageType[] | ExpoImageType | null;
+  setImage: (image: ExpoImageType[] | ExpoImageType | null) => void;
   onImageSet?: () => void;
   innerText?: string;
   className?: string;
@@ -15,7 +15,6 @@ type ImageUploaderProps = {
 const ImageUploader = ({
   image,
   setImage,
-  onImageSet,
   innerText = "Capa",
   className,
   allowMultipleSelection,
@@ -30,19 +29,18 @@ const ImageUploader = ({
     });
   
     if (!result.canceled) {
-      const uri = result.assets[0].uri;
-  
+
       if (allowMultipleSelection) {
         //@ts-ignore
-        setImage((prev) => {
-          const current = Array.isArray(prev) ? prev : prev ? [prev] : [];
-          return [...current, uri];
-        });
+        setImage((prevImages) => (prevImages ? [...prevImages, result.assets[0]] : [result.assets[0]]));
       } else {
-        setImage(uri);
+        setImage({
+           fileName: result.assets[0].fileName,
+           mimeType: result.assets[0].mimeType,
+           uri: result.assets[0].uri
+        } as ExpoImageType);
       }
   
-      if (onImageSet) onImageSet();
     }
   };
 
@@ -62,17 +60,17 @@ const ImageUploader = ({
       {/* Imagens renderizadas abaixo do botão */}
       {Array.isArray(image) ? (
         <View className="flex-row flex-wrap gap-3 mt-2">
-          {image.map((uri, index) => (
+          {image.map((item, index) => (
             <Image
               key={index}
-              source={{ uri }}
+              source={{ uri: item.uri }}
               style={{ width: 100, height: 100, borderRadius: 8 }}
             />
           ))}
         </View>
       ) : image ? (
         <Image
-          source={{ uri: image }}
+          source={{ uri: image.uri }}
           style={{ width: 100, height: 100, borderRadius: 8, marginTop: 8 }}
         />
       ) : null}

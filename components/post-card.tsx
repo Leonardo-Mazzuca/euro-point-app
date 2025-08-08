@@ -153,6 +153,7 @@ const PostCard = ({ post, refetch }: PostCardProps) => {
         </TouchableOpacity>
   );
 
+
   const LikeButton = () => (
     <TouchableOpacity onPress={() => likePost(post.id)}>
       <FooterItem
@@ -185,9 +186,13 @@ const PostCard = ({ post, refetch }: PostCardProps) => {
         <FollowButton />
       </CardHeader>
       <CardContent>
-        {isValidUrl(post.images[0]) && (
-          <ItemImage fallback="" type="item" url={post.images[0]} />
+            
+        {post.images[0] ? (
+          <ItemImage fallback="" type="item" url={`${process.env.EXPO_PUBLIC_EUROPOINT_API_URL}/images/post/${post?.images[0].path}`} />
+        ) : (
+          <></>
         )}
+     
         <PostText contact_email={contact_email} text={content} />
       </CardContent>
       <CardFooter className="gap-6">

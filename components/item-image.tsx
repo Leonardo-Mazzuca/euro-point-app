@@ -12,11 +12,13 @@ const ItemImage = ({url, type, fallback}:{url:string, type: "card" | "item", fal
     item: "w-full h-[200px] rounded-2xl"
   }
 
+  console.log(url);
+
   return (
     <Image
       className={className[type]}
       //@ts-ignore
-      source={isValidUrl(url) ? {uri: url} : fallback}
+      source={{uri: url}}
     />
   )
 }

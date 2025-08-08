@@ -10,7 +10,7 @@ import ImageUploader from './image-uploader';
 const PostForm = () => {
 
   const {control,formState:{errors, isSubmitSuccessful},setValue} = useFormContext<PostCreateType>();
-  const [images, setImages] = useState<string[] | null>(null);
+  const [images, setImages] = useState<ExpoImageType[] | null>(null);
 
   useEffect(()=> {
     if(images){
