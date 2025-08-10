@@ -39,6 +39,8 @@ declare global {
       id: number;
     }[];
     total_points: number
+    liked_posts: LikedPost[]
+    liked_newsletters: LikedNewsletter[]
   };
 
   type Area = {
@@ -69,7 +71,20 @@ declare global {
       contact_email: string;
     };
     created_at: string;
+
   };
+
+  type LikedPost = {
+    id: number;
+    post_id: number;
+    user_id: number;
+  }
+
+  type LikedNewsletter = {
+    id: number;
+    newsletter_id: number;
+    user_id: number;
+  }
 
   type Newsletter = {
     id: number;
@@ -88,6 +103,7 @@ declare global {
       name: string,
       id: number
     }
+    total_saved: number
   };
 
   type Team = {
@@ -114,6 +130,7 @@ declare global {
       name: string;
       id: number;
     }
+    total_saved: number
   };
 
   type Program = {

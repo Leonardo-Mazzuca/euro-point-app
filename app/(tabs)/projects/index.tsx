@@ -13,7 +13,7 @@ import Loading from "@/components/loading";
 
 const Projects = () => {
   const uiTranslateY = useRef(new Animated.Value(0)).current;
-  const {handleScroll,uiOpacity} = useScrollAnimation({translateValue: uiTranslateY});
+  const {handleScroll} = useScrollAnimation({translateValue: uiTranslateY});
   const categories = ["Em andamento", "Concluidos"];
   const [selectedCategory, setSelectedCategory] = useState(categories[0]);
   const {isLoading,projects,refetch,isRefetching} = useProjects();

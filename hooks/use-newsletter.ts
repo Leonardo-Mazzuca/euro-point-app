@@ -1,6 +1,6 @@
 import { useLayoutContext } from "@/context/layout-context";
 import api from "@/service/api";
-import { get, getToken, post } from "@/service/helpers";
+import { get, getToken, post, put } from "@/service/helpers";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import Toast from "react-native-toast-message";
@@ -9,7 +9,7 @@ import Toast from "react-native-toast-message";
 export const useNewsletter = () => {
     const [newsletters, setNewsletters] = useState<Newsletter[]>([]);
     const [savedNewsletters, setSavedNewsletters] = useState<Newsletter[]>([]);
-    const {currentUser} = useLayoutContext();
+    const {currentUser,saveItem,unSaveItem, getCurrentUser} = useLayoutContext();
 
     const {data,isLoading,refetch, isRefetching} = useQuery({
         queryKey: ["newsletters"],
@@ -89,10 +89,41 @@ export const useNewsletter = () => {
         }
     }
 
+    const handleSave = async (id: number) => {
+        
+        await saveItem("newsletter", id);
+        await getCurrentUser();
+        refetch();
+      
+  
+    }
+  
+    const handleUnSave = async (id: number) => {
+  
+      await unSaveItem("newsletter", id);
+      await getCurrentUser();
+      refetch();
+    }
+
     useEffect(()=> {
         const savedNewslettersIds = currentUser.saved_newsletter_ids
         if(savedNewslettersIds) setSavedNewsletters(newsletters.filter(newsletter => savedNewslettersIds.includes(newsletter.id)));
     },[currentUser, newsletters])
+
+    const likeNewsletter = async (id:number) => {
+        try {
+            await put(`/newsletter/like/${id}`,{});
+            await getCurrentUser();
+            refetch();
+        } catch (error) {
+            console.log('erro ao curtir newsletter', error);
+            
+            Toast.show({
+                type: 'error',
+                text1: "Erro ao curtir newsletter"
+            })
+        }
+    }
 
     return {
         newsletters,
@@ -101,6 +132,9 @@ export const useNewsletter = () => {
         isLoading,
         newNewsletter,
         getSingleNewsletter,
-        savedNewsletters
+        savedNewsletters,
+        handleSave,
+        handleUnSave,
+        likeNewsletter
     }
 }

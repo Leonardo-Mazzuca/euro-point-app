@@ -6,29 +6,59 @@ import ScrollableList from '@/components/scrollable-list';
 import PostCard from '@/components/post-card';
 import CategoriesScroll from '@/components/categories-scroll';
 import { View } from 'react-native';
+import { useAllPublications } from '@/hooks/use-all-publications';
+import ProjectCard from '@/components/project-card';
+import NewsLetterCard from '@/components/newsletter-card';
 
 const MyPosts = () => {
 
   const categories = ["Avisos", "Projetos", "Newsletter"];
   const [selectedCategory, setSelectedCategory] = useState(categories[0]);
+  const {currentUserNewsletters,currentUserPosts,currentUserProjects} = useAllPublications();
+
+    const getItems = () => {
+      switch (selectedCategory) {
+        case "Avisos":
+          return currentUserPosts;
+        case "Projetos":
+          return currentUserProjects;
+        case "Newsletter":
+          return currentUserNewsletters;
+        default:
+          return [];
+      }
+    }
+
+    const renderItem = (item:any) => {
+      switch (selectedCategory) {
+        case "Avisos":
+          return <PostCard post={item} />;
+        case "Projetos":
+          return <ProjectCard project={item} />;
+        case "Newsletter":
+          return <NewsLetterCard newsletter={item} />;
+        default:
+          return null;
+      }
+    }
 
     return (
       <ProfileContainer>
         <ProfileHeader 
-          text='Items salvos'
+          text='Minhas publicações'
         />
         <View className='px-6 gap-5'>
           <CategoriesScroll
+            className='my-5'
             categories={categories}
             selected={selectedCategory}
             setSelected={setSelectedCategory}
           />
   
           <ScrollableList 
-            data={Array.from({ length: 2 })}
-            renderItem={() => (
-              <PostCard />
-            )}
+            //@ts-ignore
+            data={getItems()}
+            renderItem={({item,index})=>renderItem(item)}
             keyExtractor={(_, index) => index.toString()}
             handleScroll={()=>{}}
             contentContainerStyle={{paddingTop: 0, paddingBottom: 100}}

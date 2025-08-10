@@ -43,6 +43,20 @@ const isValidUrl = (url:string) => {
   return (url.startsWith('file://'));
 }
 
+const getNewsletterImage = (newsletter:Newsletter) => {
+  const image = newsletter?.images?.[0]?.path ?
+  `${process.env.EXPO_PUBLIC_EUROPOINT_API_URL}/images/newsletter/${newsletter?.images?.[0]?.path }` : "";
+
+  return image;
+}
+
+const getProjectImage = (project:Project) => {
+  const image = project?.image?.[0]?.path ?
+  `${process.env.EXPO_PUBLIC_EUROPOINT_API_URL}/images/project/${project?.image?.[0]?.path }` : "";
+
+  return image;
+}
+
 export {
     getNameInitials,
     convertToAvatar,
@@ -50,5 +64,7 @@ export {
     convertToProgramImage,
     convertToQuizImage,
     getHoursSinceCreatedAt,
-    isValidUrl
+    isValidUrl,
+    getProjectImage,
+    getNewsletterImage
 }

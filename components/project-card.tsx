@@ -3,12 +3,11 @@
 
 import React from 'react'
 import { Card } from '@/components/Card'
-import { Image, Text, TouchableOpacity, View } from 'react-native'
+import { Text, TouchableOpacity, View } from 'react-native'
 import Entypo from '@expo/vector-icons/Entypo'
 import { router } from 'expo-router'
-import dayjs from "dayjs";
 import "dayjs/locale/pt-br";
-import { getHoursSinceCreatedAt } from '@/util'
+import { getHoursSinceCreatedAt, getProjectImage } from '@/util'
 import ItemImage from './item-image'
 import { projectFallBack } from '@/util/images'
 
@@ -20,10 +19,9 @@ const ProjectCard = ({project}: Props) => {
 
   const handleNavigate = () => {router.push(`/projects/${project.id}`)}
 
-  const firstImage = project.image?.[0]?.path ? `${process.env.EXPO_PUBLIC_EUROPOINT_API_URL}/images/project/${project.image?.[0]?.path }` : ""
+  const firstImage = getProjectImage(project);
 
-  console.log(project);
-  
+
   return (
     <Card className="mt-4">
     <TouchableOpacity 

@@ -10,8 +10,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import BackButton from '@/components/back-button';
 import { useProjects } from '@/hooks/use-projects';
 import Loading from '@/components/loading';
-import { getHoursSinceCreatedAt } from '@/util';
+import { getHoursSinceCreatedAt, getProjectImage } from '@/util';
 import ItemImage from '@/components/item-image';
+import { projectFallBack } from '@/util/images';
 
 const SingleProject = () => {
 
@@ -19,23 +20,28 @@ const SingleProject = () => {
     const handleBack = () => router.back();
 
     const [currentProject, setCurrentProject] = useState<Project | null >(null);
+    const [image, setImage] = useState("");
 
     const {isLoading, getSingleProject} = useProjects();
 
     useEffect(()=> {
-
       const getProject = async () => {
         const current = await getSingleProject(Number(id));
-        console.log(current);
-        
         if(current){
           setCurrentProject(current);
         }
       }
-
       getProject();
+    },[]);
 
-    },[])
+    useEffect(()=> {
+      if(currentProject){
+        setImage(getProjectImage(currentProject as Project));
+      }
+    },[currentProject])
+
+    console.log('Image: ', image);
+    
 
     if(isLoading){
       return <Loading />
@@ -48,7 +54,8 @@ const SingleProject = () => {
         <View className="p-5">
           <Card className="p-3 border border-gray-200">
             <ItemImage 
-              url={currentProject?.image as string}
+              url={image}
+              fallback={projectFallBack}
               type="item"
             />
   

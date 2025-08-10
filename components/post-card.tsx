@@ -1,15 +1,12 @@
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/Card";
+import { CardContent, CardFooter, CardHeader } from "@/components/Card";
 import { Avatar, AvatarFallback, AvatarImage } from "./Avatar";
 import { Text } from "@/components/Text";
-import { Button } from "@/components/Button";
-import AntDesign from "@expo/vector-icons/AntDesign";
 import { Colors } from "@/constants/Colors";
 import Feather from "@expo/vector-icons/Feather";
-import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { TouchableOpacity, View } from "react-native";
 import { useLayoutContext } from "@/context/layout-context";
 import { useEffect, useState } from "react";
-import { convertToAvatar, getNameInitials, isValidUrl } from "@/util";
+import { convertToAvatar, getNameInitials } from "@/util";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/pt-br";
@@ -17,24 +14,38 @@ import { post as api_post } from "@/service/helpers";
 import Toast from "react-native-toast-message";
 import ItemImage from "./item-image";
 import { usePosts } from "@/hooks/use-posts";
+import SaveButton from "./save-button";
+import { FooterItem } from "./footer-item";
+import { FollowButton } from "./follow-button";
+import { LikeButton } from "./like-button";
+import { useSave } from "@/hooks/use-save";
+import { useDoubleTap } from "@/hooks/use-double-tap";
 
 dayjs.extend(relativeTime);
 dayjs.locale("pt-br");
 
 type PostCardProps = {
   post: Post;
-  refetch: () => void;
+  refetch?: () => void;
+  footerActions?: {
+    enableSave: boolean,
+    enableLike: boolean,
+  }
 };
 
-const PostCard = ({ post, refetch }: PostCardProps) => {
+const PostCard = ({ post, refetch, footerActions = {enableLike: true,enableSave: true} }: PostCardProps) => {
   const { theme } = useLayoutContext();
 
-  const [isSaved, setIsSaved] = useState(false);
   const [isFollowing, setIsFollowing] = useState(false);
   const { currentUser, getCurrentUser } =
     useLayoutContext();
 
   const {handleSave, handleUnSave, likePost, updateViews} = usePosts();
+  const [isLiked, setIsLiked] = useState(false);
+
+  const {onDoublePress} = useDoubleTap({
+    fn: () => likePost(post.id)
+  })
 
   const {
     created_at,
@@ -48,14 +59,21 @@ const PostCard = ({ post, refetch }: PostCardProps) => {
   } = post;
 
   useEffect(() => {
-    if (currentUser?.followed_areas?.some((area) => area.id === area_id))
-      setIsFollowing(true);
-  }, []);
+    const following = currentUser?.followed_areas?.some(
+      (area) => area.id === area_id
+    );
+    setIsFollowing(!!following);
+  }, [currentUser, area_id]);
 
-  useEffect(() => {
-    const itemIsSaved = currentUser?.saved_posts_ids?.includes(post.id);
-    setIsSaved(!!itemIsSaved);
-  }, [currentUser, post.id]);
+  const {isSaved} = useSave({
+    item: post,
+    item_id_array: "saved_posts_ids"
+  });
+
+  useEffect(()=> {
+      const liked = currentUser.liked_posts.some((item) => item.post_id === post.id);
+      setIsLiked(!!liked);
+  },[currentUser, post])
 
   useEffect(()=> {
     updateViews(post.id);
@@ -65,7 +83,7 @@ const PostCard = ({ post, refetch }: PostCardProps) => {
     try {
       await api_post("/areas/follow", { area_id });
       setIsFollowing(true);
-      refetch();
+      refetch && refetch();
       await getCurrentUser();
     } catch (error: any) {
       Toast.show({
@@ -78,8 +96,8 @@ const PostCard = ({ post, refetch }: PostCardProps) => {
   const handleUnFollow = async () => {
     try {
       await api_post("/areas/unfollow", { area_id });
+      refetch && refetch();
       setIsFollowing(false);
-      refetch();
       await getCurrentUser();
     } catch (error: any) {
       Toast.show({
@@ -89,88 +107,9 @@ const PostCard = ({ post, refetch }: PostCardProps) => {
     }
   };
 
-  const FollowButton = () => {
-    return (
-      <Button
-        onPress={isFollowing ? handleUnFollow : handleFollow}
-        className="flex-row ms-auto w-[100px] gap-2 items-center"
-        size={"icon"}
-        variant="ghost"
-      >
-        <AntDesign
-          name="plus"
-          size={20}
-          color={
-            theme === "dark"
-              ? Colors.dark.primaryBlue
-              : Colors.light.primaryBlue
-          }
-        />
-        <Text
-          style={{
-            color:
-              theme === "dark"
-                ? Colors.dark.primaryBlue
-                : Colors.light.primaryBlue,
-          }}
-          className="font-normal text-xl"
-        >
-          {isFollowing ? "Seguindo" : "Seguir"}
-        </Text>
-      </Button>
-    );
-  };
-
-  const SaveButton = () => (
-    <TouchableOpacity onPress={isSaved ? () => handleUnSave(post.id) : () => handleSave(post.id)}>
-          {isSaved ? (
-            <FooterItem
-              icon={
-                <FontAwesome
-                  name="bookmark"
-                  size={22}
-                  color={
-                    theme === "dark" ? Colors.dark.icon : Colors.light.icon
-                  }
-                />
-              }
-              text={String(total_saved)}
-            />
-          ) : (
-            <FooterItem
-              icon={
-                <FontAwesome
-                  name="bookmark-o"
-                  size={22}
-                  color={
-                    theme === "dark" ? Colors.dark.icon : Colors.light.icon
-                  }
-                />
-              }
-              text={String(total_saved)}
-            />
-          )}
-        </TouchableOpacity>
-  );
-
-
-  const LikeButton = () => (
-    <TouchableOpacity onPress={() => likePost(post.id)}>
-      <FooterItem
-        icon={
-          <AntDesign
-            name="heart"
-            size={20}
-            color={Colors.dark.hearthRed}
-          />
-        }
-        text={String(total_likes)}
-      />
-    </TouchableOpacity>
-  );
 
   return (
-    <Card className="mt-4">
+    <TouchableOpacity onPress={onDoublePress} className="mt-4 rounded-2xl border dark:bg-dark-card border-gray-200 dark:border-zinc-800">
       <CardHeader className="flex-row p-4 items-center gap-3">
         <Avatar className="w-10 h-10" alt="User image">
           <AvatarImage
@@ -182,8 +121,16 @@ const PostCard = ({ post, refetch }: PostCardProps) => {
             <Text>{getNameInitials(user?.username || "")}</Text>
           </AvatarFallback>
         </Avatar>
-        <Text className="font-semibold text-xl">{user?.username}</Text>
-        <FollowButton />
+        {currentUser.id === post.user_id ? <Text className="font-semibold text-xl">Você</Text> : (
+          <Text className="font-semibold text-xl">{user?.username}</Text>
+        )}
+        {post.user_id !== currentUser?.id &&
+          <FollowButton 
+          isFollowing={isFollowing} 
+          handleFollow={handleFollow} 
+          handleUnFollow={handleUnFollow} 
+          />
+         }
       </CardHeader>
       <CardContent>
             
@@ -197,7 +144,12 @@ const PostCard = ({ post, refetch }: PostCardProps) => {
       </CardContent>
       <CardFooter className="gap-6">
 
-        <LikeButton />
+        <LikeButton
+          disabled={!footerActions?.enableLike}
+          onPress={() => likePost(post.id)}
+          totalLikes={total_likes}
+          isLiked={isLiked}
+        />
 
         <FooterItem
           icon={
@@ -209,28 +161,20 @@ const PostCard = ({ post, refetch }: PostCardProps) => {
           }
           text={String(total_views)}
         />
-        <SaveButton />
+        <SaveButton
+          disabled={!footerActions?.enableSave} 
+          onPress={isSaved ? () => handleUnSave(post.id) : () => handleSave(post.id)}
+          isSaved={isSaved}
+          totalSaved={total_saved}
+        />
         <Text className="ms-auto font-normal text-sm text-gray-400">
           {dayjs(created_at).fromNow()}
         </Text>
       </CardFooter>
-    </Card>
+    </TouchableOpacity>
   );
 };
 
-type FooterItemProps = {
-  icon: React.ReactNode;
-  text: string;
-};
-
-export const FooterItem = ({ icon, text }: FooterItemProps) => {
-  return (
-    <View className="items-center flex-row gap-2">
-      {icon}
-      <Text className="text-gray-600 dark:text-gray-100">{text}</Text>
-    </View>
-  );
-};
 
 const PostText = ({
   text,

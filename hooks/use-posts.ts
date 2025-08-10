@@ -102,6 +102,7 @@ export const usePosts = () => {
     try {
 
       await put(`/posts/like/${id}`,{});
+      await getCurrentUser();
       refetch();
       
     } catch (error: any) {

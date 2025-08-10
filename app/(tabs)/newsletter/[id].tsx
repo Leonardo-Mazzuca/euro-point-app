@@ -6,35 +6,64 @@ import Feather from "@expo/vector-icons/Feather";
 import { Card } from "@/components/Card";
 import Entypo from "@expo/vector-icons/Entypo";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import { FooterItem } from "@/components/post-card";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import { SafeAreaView } from "react-native-safe-area-context";
 import BackButton from "@/components/back-button";
 import { useNewsletter } from "@/hooks/use-newsletter";
-import { getHoursSinceCreatedAt } from "@/util";
+import { getHoursSinceCreatedAt, getNewsletterImage } from "@/util";
 import Loading from "@/components/loading";
 import ItemImage from "@/components/item-image";
+import { newsletterFallback } from "@/util/images";
+import { useLayoutContext } from "@/context/layout-context";
+import { FooterItem } from "@/components/footer-item";
+import { LikeButton } from "@/components/like-button";
+import SaveButton from "@/components/save-button";
+
 
 const SingleNewsletter = () => {
   const { id } = useLocalSearchParams();
   const handleBack = () => router.back();
 
   const [currentNewsletter, setCurrentNewsletter] = useState<Newsletter | null>(null);
-  const {getSingleNewsletter, isLoading} = useNewsletter();
+  const [image, setImage] = useState("");
+  const {getSingleNewsletter, isLoading,handleSave,handleUnSave} = useNewsletter();
+  const [isSaved, setIsSaved] = useState(false);
+  const {currentUser} = useLayoutContext();
+  const [isLiked, setIsLiked] = useState(false);
+
+  const getNewsletter = async () => {
+    const current = await getSingleNewsletter(Number(id));
+    if(current){
+      setCurrentNewsletter(current);
+    }
+  }
+
+    useEffect(()=> {
+      if(currentNewsletter){
+        const liked = currentUser.liked_newsletters.some((item) => item.newsletter_id === currentNewsletter.id);
+        setIsLiked(!!liked);
+      }
+  },[currentUser, currentNewsletter])
+
+  useEffect(() => {
+    if(currentNewsletter){
+      const itemIsSaved = currentUser?.saved_newsletter_ids?.includes(currentNewsletter.id);
+      setIsSaved(!!itemIsSaved);
+      getNewsletter();
+    }
+  }, [currentUser, currentNewsletter]);
+
 
   useEffect(()=> {
-    const getNewsletter = async () => {
-      const current = await getSingleNewsletter(Number(id));
-      console.log(current);
-      
-      if(current){
-        setCurrentNewsletter(current);
-      }
-    }
-
     getNewsletter();
   },[]);
+  
+  useEffect(()=> {
+      if(currentNewsletter){
+        setImage(getNewsletterImage(currentNewsletter));
+      }
+  },[currentNewsletter])
 
   if(isLoading){
     return <Loading />
@@ -48,7 +77,8 @@ const SingleNewsletter = () => {
         <Card className="p-3 border border-gray-200">
           <ItemImage
             type="item"
-            url={currentNewsletter?.images[0] as string}
+            url={image}
+            fallback={newsletterFallback}
           />
 
           <View className="flex-row items-center mt-3">
@@ -65,19 +95,19 @@ const SingleNewsletter = () => {
           </Text>
 
           <View className="gap-6 flex-row">
-            <FooterItem
-              icon={
-                <AntDesign name="heart" size={20} color={Colors.dark.hearthRed} />
-              }
-              text={currentNewsletter?.total_likes.toString() as string}
+            <LikeButton
+              onPress={()=>{}}
+              totalLikes={currentNewsletter?.total_likes as number}
+              isLiked={isLiked}
             />
             <FooterItem
               icon={<Feather name="eye" size={22} color="grey" />}
               text={currentNewsletter?.total_views.toString() as string}
             />
-            <FooterItem
-              icon={<FontAwesome name="bookmark-o" size={22} color="grey" />}
-              text="82K"
+            <SaveButton
+              isSaved={isSaved}
+              onPress={isSaved ? () => handleUnSave(currentNewsletter?.id!) : () => handleSave(currentNewsletter?.id!)}
+              totalSaved={currentNewsletter?.total_saved as number}
             />
           </View>
         </Card>
