@@ -14,6 +14,8 @@ import { useLayoutContext } from "@/context/layout-context";
 
 const Home = () => {
   const [currentScreen, setCurrentScreen] = useState<HomeScreen>("for-you");
+  const [displayedPosts, setDisplayedPosts] = useState<Post[]>([]);
+  const [search, setSearch] = useState("");
   const uiTranslateY = useRef(new Animated.Value(0)).current;
   const { handleScroll } = useScrollAnimation({
     translateValue: uiTranslateY,
@@ -22,20 +24,29 @@ const Home = () => {
 
   const { posts, isLoading, refetch } = usePosts();
 
-  const currentUserFollowings = currentUser?.followed_areas?.map(
-    (area) => area.id
-  );
 
-  const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
 
   useEffect(() => {
-    const filtered = posts?.filter((post) => {
-      return currentUserFollowings?.includes(post.area_id);
-    });
+    let filtered = posts;
 
-    setFilteredPosts(filtered);
-  }, [posts]);
+    const currentUserFollowings = currentUser?.followed_areas?.map(
+      (area) => area.id
+    );
 
+    if (currentScreen === "following") {
+      filtered = filtered?.filter((post) =>
+        currentUserFollowings?.includes(post.area_id)
+      );
+    }
+
+    if (search.trim() !== "") {
+      filtered = filtered?.filter((post) =>
+        post.title.toLowerCase().includes(search.toLowerCase())
+      );
+    }
+  
+    setDisplayedPosts(filtered);
+  }, [posts, search, currentScreen]);
 
   if (isLoading) {
     return <Loading />;
@@ -79,13 +90,16 @@ const Home = () => {
           </TabsList>
         </Tabs>
 
-        <SearchInput />
+        <SearchInput 
+          value={search}
+          onChangeText={(e)=>setSearch(e)}
+        />
       </View>
 
       <View className="mt-4 flex-1 px-6">
         {currentScreen === "for-you" && (
           <ScrollableList
-            data={posts}
+            data={displayedPosts}
             renderItem={({ item }) => (
               <PostCard refetch={refetch} post={item} />
             )}
@@ -103,7 +117,7 @@ const Home = () => {
 
         {currentScreen === "following" && (
           <ScrollableList
-            data={filteredPosts}
+            data={displayedPosts}
             renderItem={({ item }) => (
               <PostCard refetch={refetch} post={item} />
             )}

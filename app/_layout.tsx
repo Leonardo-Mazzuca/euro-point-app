@@ -20,9 +20,9 @@ const DefaultLayout = () => {
   const {isLogged} = useLayoutContext();
 
   useEffect(()=> {
-    if(isLogged) 
-      // router.push('/(tabs)/trainings/quiz-help')
+    if(isLogged) {
       router.push("/(tabs)");
+    } 
   },[isLogged])
 
   return (

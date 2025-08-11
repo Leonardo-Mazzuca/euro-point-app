@@ -29,12 +29,12 @@ const Input = forwardRef<ElementRef<typeof TextInput>, InputProps>(
         <TextInput
           ref={ref}
           className={cn(
+            "dark:text-gray-300 dark:placeholder:text-gray-300 ps-3",
             classes,
             prefixIcon && "pr-12",
-            suffixIcon && "pl-12",
+            suffixIcon && "ps-12",
             props.editable === false && "opacity-50 web:cursor-not-allowed",
             className,
-            "dark:text-gray-300 dark:placeholder:text-gray-300"
           )}
           placeholderClassName={cn("text-muted-foreground", placeholderClassName)}
           {...props}

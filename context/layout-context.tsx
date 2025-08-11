@@ -7,6 +7,7 @@ import { themes } from "@/util/color-theme";
 import { get, post } from "@/service/helpers";
 import Toast from "react-native-toast-message";
 import { convertToAvatar } from "@/util";
+import { useAuth } from "@/hooks/useAuth";
 
 type Theme = 'dark' | 'light' | undefined
 type LayoutState = {
@@ -66,7 +67,9 @@ const LayoutProvider = ({children}:PropsWithChildren) => {
     }
 
     useEffect(()=> {
-        if(isLogged) getCurrentUser()
+        if(isLogged) {
+            getCurrentUser();
+        } 
     },[isLogged])
 
     useEffect(() => {
@@ -94,7 +97,7 @@ const LayoutProvider = ({children}:PropsWithChildren) => {
 
         verfifyAuthentication();
 
-    },[])
+    },[currentUser]);
 
     const saveItem = async (item: ItemType, id: number ) => {
 

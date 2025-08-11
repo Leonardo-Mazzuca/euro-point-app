@@ -7,10 +7,12 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import Toast from 'react-native-toast-message'
 import { useLayoutContext } from "@/context/layout-context";
+import { useState } from "react";
 
 export const useAuth = () => {
 
     const {setCurrentUser} = useLayoutContext();
+    const [userToken, setUserToken] = useState("");
     const formMethods = useForm<z.infer<typeof loginSchema>>({
         resolver: zodResolver(loginSchema),
         defaultValues: {
@@ -32,6 +34,7 @@ export const useAuth = () => {
 
                 if(res.token){
                     await AsyncStorage.setItem("token", res.token);
+                    setUserToken(res.token);
                 }
 
                 Toast.show({
@@ -55,7 +58,7 @@ export const useAuth = () => {
     
     const logout = async () => {
         await AsyncStorage.removeItem("token");
-        router.push("/(auth)/sign-in");
+        router.push("/(auth)");
         Toast.show({
             type: 'success',
             text1: 'Logout realizado com sucesso'
@@ -65,6 +68,7 @@ export const useAuth = () => {
     return {
         login,
         formMethods,
-        logout
+        logout,
+        userToken
     }
 }

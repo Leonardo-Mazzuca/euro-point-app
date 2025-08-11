@@ -59,10 +59,12 @@ const PostCard = ({ post, refetch, footerActions = {enableLike: true,enableSave:
   } = post;
 
   useEffect(() => {
-    const following = currentUser?.followed_areas?.some(
-      (area) => area.id === area_id
-    );
-    setIsFollowing(!!following);
+    if(currentUser){
+      const following = currentUser?.followed_areas?.some(
+        (area) => area.id === area_id
+      );
+      setIsFollowing(!!following);
+    }
   }, [currentUser, area_id]);
 
   const {isSaved} = useSave({
@@ -71,8 +73,10 @@ const PostCard = ({ post, refetch, footerActions = {enableLike: true,enableSave:
   });
 
   useEffect(()=> {
-      const liked = currentUser.liked_posts.some((item) => item.post_id === post.id);
+    if(currentUser){
+      const liked = currentUser?.liked_posts?.some((item) => item.post_id === post.id);
       setIsLiked(!!liked);
+    }
   },[currentUser, post])
 
   useEffect(()=> {
