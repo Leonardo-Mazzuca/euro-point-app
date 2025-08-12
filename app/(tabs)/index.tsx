@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Animated, RefreshControl, Text, View } from "react-native";
+import { Animated, Keyboard, RefreshControl, Text, View } from "react-native";
 import Header from "@/components/header";
 import { Tabs, TabsList, TabsTrigger } from "@/components/Tabs";
 import PostCard from "@/components/post-card";
@@ -44,9 +44,16 @@ const Home = () => {
         post.title.toLowerCase().includes(search.toLowerCase())
       );
     }
-  
+
     setDisplayedPosts(filtered);
   }, [posts, search, currentScreen]);
+
+  useEffect(()=> {
+    if (search.trim() === "") {
+      Keyboard.dismiss(); 
+      return;
+    }
+  },[search])
 
   if (isLoading) {
     return <Loading />;

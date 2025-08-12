@@ -28,7 +28,7 @@ const FormInputField = ({
             name={name!}
             render={({ field }) => (
             <Input
-                variant="line"
+                variant="default"
                 onChangeText={(e) => field.onChange(e)}
                 value={field.value}
             />

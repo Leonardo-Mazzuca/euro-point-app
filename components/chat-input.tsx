@@ -1,10 +1,6 @@
 import { View, Text, Pressable, TextInput } from "react-native";
 import React, { useEffect, useState } from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import Voice, {
-  SpeechResultsEvent,
-  SpeechStartEvent,
-} from "@react-native-voice/voice";
 import { Button } from "@/components/Button";
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { Colors } from "@/constants/Colors";
@@ -16,23 +12,6 @@ const AudioButton = ({}: AudioButtonProps) => {
   const [isListening, setIsListening] = useState(false);
   const {theme} = useLayoutContext();
 
-  const startSpeechToText = async () => {
-    try {
-      await Voice.start("pt-BR");
-      setIsListening(true);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const stopSpeechToText = async () => {
-    try {
-      await Voice.stop();
-      setIsListening(false);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   return (
     <Pressable
@@ -42,8 +21,8 @@ const AudioButton = ({}: AudioButtonProps) => {
         width: 50,
         height: 50,
       }}
-      onPressIn={startSpeechToText}
-      onPressOut={stopSpeechToText}
+      // onPressIn={startSpeechToText}
+      // onPressOut={stopSpeechToText}
     >
       <MaterialCommunityIcons size={24} color={theme === "dark" ? Colors.dark.primaryBlue : "#000"} name="microphone" />
     </Pressable>

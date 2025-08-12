@@ -3,7 +3,7 @@ import TabsContainer from "@/components/tabs-container";
 import Header from "@/components/header";
 import SearchInput from "@/components/search-input";
 import { Button } from "@/components/Button";
-import { BackHandler, FlatList, Text, View } from "react-native";
+import { BackHandler, FlatList, Keyboard, Text, View } from "react-native";
 import IdeaCard from "@/components/idea-card";
 import { useLayoutContext } from "@/context/layout-context";
 import { Colors } from "@/constants/Colors";
@@ -23,17 +23,37 @@ const Ideas = () => {
   const { setHideTabs } = useLayoutContext();
   const [openAlertModal, setOpenAlertModal] = useState(false);
   const [openCreateModal, setOpenCreateModal] = useState(false);
-  const {ideas, setIdeas} = useIdeasContext();
+  const { ideas, setIdeas } = useIdeasContext();
+  const [filteredIdeas, setFilteredIdeas] = useState<Idea[]>([]);
+  const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    if (ideas) {
+      setFilteredIdeas(ideas);
+    }
+  }, [ideas]);
+
+  useEffect(() => {
+    if (search.trim() === "") {
+      setFilteredIdeas(ideas); 
+      Keyboard.dismiss();
+      return;
+    }
+    const filtered = ideas?.filter((idea) =>
+      idea.title.toLowerCase().includes(search.toLowerCase())
+    );
+    setFilteredIdeas(filtered);
+  }, [search]);
 
   const isFocused = useIsFocused();
 
   const handlePost = () => {
     setEnablePost(!enablePost);
-  }
+  };
 
   const openIdeaModal = () => {
     setOpenCreateModal(true);
-  }
+  };
 
   useFocusEffect(
     useCallback(() => {
@@ -44,34 +64,33 @@ const Ideas = () => {
         }
         return false;
       };
-  
+
       const subscription = BackHandler.addEventListener(
         "hardwareBackPress",
         onBackPress
       );
-  
+
       return () => subscription.remove();
     }, [enablePost])
   );
-
 
   const PostButtonItem = () => {
     if (!isFocused) return null;
 
     return (
       <PostButton
-        className={cn("dark:bg-yeallow-primary",)}
+        className={cn("dark:bg-yeallow-primary")}
         onPress={enablePost ? handlePost : openIdeaModal}
       >
         {enablePost ? (
-          <CheckIcon color={Colors.light.primaryBlue}  />
+          <CheckIcon color={Colors.light.primaryBlue} />
         ) : (
-          <PlusIcon color={Colors.light.primaryBlue}/>
+          <PlusIcon color={Colors.light.primaryBlue} />
         )}
       </PostButton>
     );
   };
-  
+
   useEffect(() => {
     if (enablePost) {
       setHideTabs(true);
@@ -81,53 +100,51 @@ const Ideas = () => {
   }, [enablePost]);
 
   const submit = (idea: Idea) => {
-    setIdeas(prev => [...prev, idea]);
+    setIdeas((prev) => [...prev, idea]);
     Toast.show({
-      type: 'success',
-      text1: 'Ideia criada com sucesso',
-    })
+      type: "success",
+      text1: "Ideia criada com sucesso",
+    });
   };
 
   return (
-    <TabsContainer
-      postButton={
-        <PostButtonItem />
-      }
-    >
+    <TabsContainer postButton={<PostButtonItem />}>
       <View className="flex-1 px-10">
+        <View className="pt-4">
+          <Header />
+          <SearchInput
+            placeholder="Procure uma ideia"
+            value={search}
+            onChangeText={setSearch}
+            onSubmitEditing={Keyboard.dismiss}
+          />
+          <Button
+            onPress={handlePost}
+            className="bg-blue-primary dark:bg-dark-card mx-auto rounded-full my-3 py-2 px-5"
+          >
+            <Text className="text-white font-semibold text-lg">
+              {!enablePost ? "Publicar ideia" : "Cancelar"}
+            </Text>
+          </Button>
+        </View>
         <FlatList
-          data={ideas}
+          data={filteredIdeas}
           keyExtractor={(item, index) => index.toString()}
-          ListHeaderComponent={()=> (
-          <View className="pt-4">
-            <Header />
-            <SearchInput placeholder="Procure uma ideia" />
-            <Button
-              onPress={handlePost}
-              className="bg-blue-primary dark:bg-dark-card mx-auto rounded-full my-3 py-2 px-5"
-            >
-              <Text className="text-white font-semibold text-lg">
-                {!enablePost ? "Publicar ideia" : "Cancelar"}
-              </Text>
-            </Button>
-          </View>
+          renderItem={({ item }) => (
+            <IdeaCard idea={item} enablePost={enablePost} />
           )}
-          renderItem={({ item }) => <IdeaCard idea={item} enablePost={enablePost} />}
           contentContainerStyle={{
             paddingBottom: 150,
-            gap: 10
+            gap: 10,
           }}
         />
       </View>
-        <IdeaAlertModal  
-          open={openAlertModal}
-          setIsOpen={setOpenAlertModal}
-        />
-        <IdeaCreateModal 
-          open={openCreateModal}
-          setIsOpen={setOpenCreateModal}
-          submit={submit}
-        />
+      <IdeaAlertModal open={openAlertModal} setIsOpen={setOpenAlertModal} />
+      <IdeaCreateModal
+        open={openCreateModal}
+        setIsOpen={setOpenCreateModal}
+        submit={submit}
+      />
     </TabsContainer>
   );
 };

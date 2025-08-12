@@ -14,7 +14,7 @@ const Input = forwardRef<ElementRef<typeof TextInput>, InputProps>(
 
     const classes = cn(
       variant === "line" && "border-b border-gray-400",
-      variant === "default" && "web:flex h-10 native:h-12 w-full rounded-md border-input bg-zinc-200 px-4 web:py-2 text-base lg:text-sm native:text-lg native:leading-[1.25] text-foreground web:ring-offset-background file:border-0 file:bg-transparent file:font-medium web:focus-visible:outline-none web:focus-visible:ring-1 web:focus-visible:ring-ring web:focus-visible:ring-offset-0",
+      variant === "default" && "web:flex h-10 native:h-12 w-full dark:bg-zinc-800 rounded-md border-input bg-zinc-200 px-4 web:py-2 text-base lg:text-sm native:text-lg native:leading-[1.25] text-foreground web:ring-offset-background file:border-0 file:bg-transparent file:font-medium web:focus-visible:outline-none web:focus-visible:ring-1 web:focus-visible:ring-ring web:focus-visible:ring-offset-0",
       variant === "outline" && "border rounded-lg bg-transparent dark:border-zinc-500 border-gray-300"
     )
 
