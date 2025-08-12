@@ -187,7 +187,6 @@ declare global {
   }
 
   type PostCreate = {
-    title: string
     content: string
     area_id: number
     images: ExpoImageType[]

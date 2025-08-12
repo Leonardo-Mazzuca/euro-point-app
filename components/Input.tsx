@@ -29,7 +29,7 @@ const Input = forwardRef<ElementRef<typeof TextInput>, InputProps>(
         <TextInput
           ref={ref}
           className={cn(
-            "dark:text-gray-300 dark:placeholder:text-gray-300 ps-3",
+            "dark:text-gray-300  dark:placeholder:text-gray-300 ps-3",
             classes,
             prefixIcon && "pr-12",
             suffixIcon && "ps-12",

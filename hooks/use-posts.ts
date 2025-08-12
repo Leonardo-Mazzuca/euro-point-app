@@ -38,7 +38,6 @@ export const usePosts = () => {
     const formData = new FormData();
 
     formData.append('area_id', String(data.area_id));
-    formData.append('title', data.title);
     formData.append('content', data.content);
 
     if(data.images){
@@ -70,8 +69,6 @@ export const usePosts = () => {
         success: true
       }
     } catch (error: any) {
-      console.log('Error:', error);
-      
       Toast.show({
         type: "error",
         text1: error.response.data.message || "Erro ao criar post!",

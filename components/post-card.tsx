@@ -114,27 +114,29 @@ const PostCard = ({ post, refetch, footerActions = {enableLike: true,enableSave:
 
   return (
     <TouchableOpacity onPress={onDoublePress} className="mt-4 rounded-2xl border dark:bg-dark-card border-gray-200 dark:border-zinc-800">
-      <CardHeader className="flex-row p-4 items-center gap-3">
-        <Avatar className="w-10 h-10" alt="User image">
-          <AvatarImage
-            source={{
-              uri: (user.avatar && convertToAvatar(user?.avatar)) || "",
-            }}
-          />
-          <AvatarFallback>
-            <Text>{getNameInitials(user?.username || "")}</Text>
-          </AvatarFallback>
-        </Avatar>
-        {currentUser.id === post.user_id ? <Text className="font-semibold text-xl">Você</Text> : (
-          <Text className="font-semibold text-xl">{user?.username}</Text>
-        )}
-        {post.user_id !== currentUser?.id &&
-          <FollowButton 
-          isFollowing={isFollowing} 
-          handleFollow={handleFollow} 
-          handleUnFollow={handleUnFollow} 
-          />
-         }
+      <CardHeader>
+        <View className="flex-row items-center gap-3">
+          <Avatar className="w-10 h-10" alt="User image">
+            <AvatarImage
+              source={{
+                uri: (user.avatar && convertToAvatar(user?.avatar)) || "",
+              }}
+            />
+            <AvatarFallback>
+              <Text>{getNameInitials(user?.username || "")}</Text>
+            </AvatarFallback>
+          </Avatar>
+          {currentUser.id === post.user_id ? <Text className="font-semibold text-xl">Você</Text> : (
+            <Text className="font-semibold text-xl">{user?.username}</Text>
+          )}
+          {post.user_id !== currentUser?.id &&
+            <FollowButton 
+            isFollowing={isFollowing} 
+            handleFollow={handleFollow} 
+            handleUnFollow={handleUnFollow} 
+            />
+          }
+        </View>
       </CardHeader>
       <CardContent>
             
@@ -189,7 +191,7 @@ const PostText = ({
 }) => {
   return (
     <View className="my-2">
-      <Text className="text-gray-600 dark:text-gray-200">{text}</Text>
+      <Text className="text-gray-600 font-medium dark:text-gray-200">{text}</Text>
       <Text className="text-gray-500 dark:text-gray-200 my-2">
         Duvidas:{" "}
         <Text className="font-bold text-gray-600 dark:text-gray-200">

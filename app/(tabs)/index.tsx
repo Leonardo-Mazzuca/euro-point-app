@@ -41,7 +41,7 @@ const Home = () => {
 
     if (search.trim() !== "") {
       filtered = filtered?.filter((post) =>
-        post.title.toLowerCase().includes(search.toLowerCase())
+        post.content.toLowerCase().includes(search.toLowerCase())
       );
     }
 

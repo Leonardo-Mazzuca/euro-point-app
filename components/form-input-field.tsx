@@ -10,6 +10,8 @@ type FormInputFieldProps = {
   name?: string;
   error: string | undefined;
   children?: React.ReactNode;
+  multiline?: boolean
+  inputClass?:string
 };
 
 const FormInputField = ({
@@ -17,7 +19,8 @@ const FormInputField = ({
   name,
   error,
   label,
-
+  multiline,
+  inputClass
 }: FormInputFieldProps) => {
   return (
     <View className="mt-3">
@@ -27,11 +30,15 @@ const FormInputField = ({
             control={control}
             name={name!}
             render={({ field }) => (
-            <Input
-                variant="default"
-                onChangeText={(e) => field.onChange(e)}
-                value={field.value}
-            />
+              <Input
+                  variant="default"
+                  onChangeText={(e) => field.onChange(e)}
+                  value={field.value}
+                  multiline={multiline}
+                  className={inputClass}
+                  numberOfLines={multiline ? 4 : 1}
+                  style={{height: multiline ? 100 : 40,textAlignVertical: 'top'}}
+              />
             )}
         />
 
