@@ -20,6 +20,21 @@ const Projects = () => {
   const [search, setSearch] = useState("");
   const [filteredProjects, setfilteredProjects] = useState<Project[]>([]);
 
+  console.log(selectedCategory);
+  
+
+  useEffect(()=> {
+    let filtered = projects;
+
+    if(selectedCategory === categories[0]){
+      filtered = filtered?.filter((project) => project.status === "RUNNING" as ProjectStatus);
+    }else if(selectedCategory === categories[1]){
+      filtered = filtered?.filter((project) => project.status === "FINISHED" as ProjectStatus);
+    }
+
+    setfilteredProjects(filtered);
+  },[selectedCategory]);
+
   useEffect(()=> {
     if(projects){
       setfilteredProjects(projects);

@@ -19,7 +19,7 @@ export const useAreas = () => {
 
     useEffect(() => {
         if (data) setAreas(data);
-    }, [data])
+    }, [data]);
 
 
     return {

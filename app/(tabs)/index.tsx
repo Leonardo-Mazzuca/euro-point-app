@@ -25,7 +25,6 @@ const Home = () => {
   const { posts, isLoading, refetch } = usePosts();
 
 
-
   useEffect(() => {
     let filtered = posts;
 

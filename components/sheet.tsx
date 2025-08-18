@@ -7,6 +7,7 @@ import Animated, {
   withSpring,
   runOnJS,
   useAnimatedStyle,
+  withDelay,
 } from "react-native-reanimated";
 import { twMerge } from "tailwind-merge";
 
@@ -20,6 +21,8 @@ type Props = {
   styles?: ViewStyle;
   className?: string;
   position?: "bottom" | "top";
+  isPanning: boolean,
+  setIsPanning: (value: boolean) => void
 };
 const Sheet = ({
   onClose,
@@ -28,17 +31,21 @@ const Sheet = ({
   styles,
   className,
   position = "bottom",
+  isPanning,
+  setIsPanning
 }: Props) => {
   const offset = useSharedValue(0);
 
   const close = () => {
-    offset.value = 0;
     onClose();
   };
 
   const width = Dimensions.get("window").width;
 
   const pan = Gesture.Pan()
+    .onStart(() => {
+      runOnJS(setIsPanning)(true);
+    })
     .onChange((e) => {
       const offsetDelta = e.changeY + offset.value;
       const clamp = Math.max(-SHEET_OVER_DRAG, offsetDelta);
@@ -53,6 +60,11 @@ const Sheet = ({
           runOnJS(close)();
         });
       }
+    })
+    .onEnd(() => {
+      offset.value = withDelay(1000, withSpring(offset.value, {}, () => {
+        runOnJS(setIsPanning)(false);
+      }));
     });
 
   const translateY = useAnimatedStyle(() => ({

@@ -52,27 +52,42 @@ const SingleProject = () => {
         <Header leftChild={<BackButton handleBack={handleBack} />} hideProfile hideLine />
   
         <View className="p-5">
-          <Card className="p-3 border border-gray-200">
-            <ItemImage 
-              url={image}
-              fallback={projectFallBack}
-              type="item"
-            />
-  
-            <View className="flex-row items-center my-3">
-              <Text className="font-semibold dark:text-white text-xl">
-                {currentProject?.title}
-              </Text>
-              <Entypo name="dot-single" size={20} color="grey" />
-              <Text className="text-gray-500 dark:text-gray-300">
-                {getHoursSinceCreatedAt(currentProject?.created_at as string)}
-              </Text>
-            </View>
-            <Text className='dark:text-white text-gray-600'>
-              {currentProject?.content}
-            </Text>
-  
-          </Card>
+          <View className='px-3 py-2'>
+            <Card className="p-3 border border-gray-200">
+              <ItemImage 
+                url={image}
+                fallback={projectFallBack}
+                type="item"
+              />
+    
+              <View className="my-3">
+                <Text className="font-semibold dark:text-white text-xl">
+                  {currentProject?.title}
+                </Text>
+                <View className='mt-3'>
+                  <Text className="font-light dark:text-gray-200 text-xl">
+                    {currentProject?.team?.name}
+                  </Text>
+                  <View className='flex-row'>
+                    <Text className='text-blue-primary dark:text-yeallow-primary font-semibold'>
+                      {currentProject?.area?.name || "Sem área"}
+                    </Text>
+                    <Entypo name="dot-single" size={20} color="grey" />
+                    <Text className="text-gray-500 dark:text-gray-300">
+                      {getHoursSinceCreatedAt(currentProject?.created_at as string)}
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            </Card>
+          </View>
+
+          <Text className='my-4 dark:text-white text-xl font-semibold'>
+            Sobre o que é o projeto?
+          </Text>
+          <Text className='dark:text-gray-300 leading-5 font-medium'>
+            {currentProject?.content}
+          </Text>
         </View>
       </SafeAreaView>
     );

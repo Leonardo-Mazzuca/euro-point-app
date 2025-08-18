@@ -8,6 +8,7 @@ import { get, post } from "@/service/helpers";
 import Toast from "react-native-toast-message";
 import { convertToAvatar } from "@/util";
 import { useAuth } from "@/hooks/useAuth";
+;
 
 type Theme = 'dark' | 'light' | undefined
 type LayoutState = {
@@ -40,6 +41,7 @@ const LayoutProvider = ({children}:PropsWithChildren) => {
     const {colorScheme,setColorScheme} = useColorScheme();
     const [isLogged, setIsLogged] = useState(false);
     const [currentUser, setCurrentUser] = useState({} as User);
+
 
     const toggleTheme = async () => {
 
@@ -166,7 +168,6 @@ const LayoutProvider = ({children}:PropsWithChildren) => {
         }
 
     }
-
 
 
     const value = {

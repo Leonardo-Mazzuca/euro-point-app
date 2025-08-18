@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
 import { router, useLocalSearchParams } from "expo-router";
 import Header from "@/components/header";
@@ -19,99 +19,135 @@ import { useLayoutContext } from "@/context/layout-context";
 import { FooterItem } from "@/components/footer-item";
 import { LikeButton } from "@/components/like-button";
 import SaveButton from "@/components/save-button";
-
+import { useDoubleTap } from "@/hooks/use-double-tap";
 
 const SingleNewsletter = () => {
   const { id } = useLocalSearchParams();
   const handleBack = () => router.back();
 
-  const [currentNewsletter, setCurrentNewsletter] = useState<Newsletter | null>(null);
+  const [currentNewsletter, setCurrentNewsletter] = useState<Newsletter | null>(
+    null
+  );
   const [image, setImage] = useState("");
-  const {getSingleNewsletter, isLoading,handleSave,handleUnSave} = useNewsletter();
+  const { getSingleNewsletter, isLoading, handleSave, handleUnSave, likeNewsletter } =
+    useNewsletter();
   const [isSaved, setIsSaved] = useState(false);
-  const {currentUser} = useLayoutContext();
+  const { currentUser } = useLayoutContext();
   const [isLiked, setIsLiked] = useState(false);
+  
 
   const getNewsletter = async () => {
     const current = await getSingleNewsletter(Number(id));
-    if(current){
+    if (current) {
       setCurrentNewsletter(current);
     }
-  }
-
-    useEffect(()=> {
-      if(currentNewsletter){
-        const liked = currentUser.liked_newsletters.some((item) => item.newsletter_id === currentNewsletter.id);
-        setIsLiked(!!liked);
-      }
-  },[currentUser, currentNewsletter])
+  };
 
   useEffect(() => {
-    if(currentNewsletter){
-      const itemIsSaved = currentUser?.saved_newsletter_ids?.includes(currentNewsletter.id);
+    if (currentNewsletter) {
+      const liked = currentUser.liked_newsletters.some(
+        (item) => item.newsletter_id === currentNewsletter.id
+      );
+      setIsLiked(!!liked);
+    }
+  }, [currentUser, currentNewsletter]);
+
+  useEffect(() => {
+    if (currentNewsletter) {
+      const itemIsSaved = currentUser?.saved_newsletter_ids?.includes(
+        currentNewsletter.id
+      );
       setIsSaved(!!itemIsSaved);
       getNewsletter();
     }
   }, [currentUser, currentNewsletter]);
 
-
-  useEffect(()=> {
+  useEffect(() => {
     getNewsletter();
-  },[]);
-  
-  useEffect(()=> {
-      if(currentNewsletter){
-        setImage(getNewsletterImage(currentNewsletter));
-      }
-  },[currentNewsletter])
+  }, []);
 
-  if(isLoading){
-    return <Loading />
+  useEffect(() => {
+    if (currentNewsletter) {
+      setImage(getNewsletterImage(currentNewsletter));
+    }
+  }, [currentNewsletter]);
+
+  const {onDoublePress} = useDoubleTap({
+    fn: () => likeNewsletter(currentNewsletter ? currentNewsletter.id : 0)
+  });
+
+  useEffect(()=> {
+    if(currentNewsletter) {
+      const liked = currentUser.liked_newsletters.some((item) => item.newsletter_id === currentNewsletter?.id);
+      setIsLiked(!!liked);
+    }
+},[currentUser, currentNewsletter])
+
+  if (isLoading) {
+    return <Loading />;
   }
 
   return (
     <SafeAreaView className="flex-1 dark:bg-dark-primary">
-      <Header leftChild={<BackButton handleBack={handleBack} />} hideProfile hideLine />
+      <Header
+        leftChild={<BackButton handleBack={handleBack} />}
+        hideProfile
+        hideLine
+      />
 
-      <View className="p-5">
-        <Card className="p-3 border border-gray-200">
-          <ItemImage
-            type="item"
-            url={image}
-            fallback={newsletterFallback}
-          />
+    <View className="p-3">
+      <View className="px-5">
+        <TouchableOpacity onPress={onDoublePress}>
+          <Card className="p-3 border border-gray-200">
+            <ItemImage type="item" url={image} fallback={newsletterFallback} />
 
-          <View className="flex-row items-center mt-3">
-            <Text className="font-semibold dark:text-white text-xl">
-              {currentNewsletter?.title}
-            </Text>
-            <Entypo name="dot-single" size={20} color="grey" />
-            <Text className="text-gray-500 dark:text-gray-400">
-              {getHoursSinceCreatedAt(currentNewsletter?.created_at as string)}
-            </Text>
-          </View>
-          <Text className="my-3 dark:text-white text-md font-normal text-gray-500">
-            {currentNewsletter?.content}
-          </Text>
+            <View className="flex-row items-center mt-3">
+              <Text className="font-semibold dark:text-white text-xl">
+                {currentNewsletter?.title}
+              </Text>
+              <Entypo name="dot-single" size={20} color="grey" />
+              <Text className="text-gray-500 dark:text-gray-400">
+                {getHoursSinceCreatedAt(currentNewsletter?.created_at as string)}
+              </Text>
+            </View>
 
-          <View className="gap-6 flex-row">
-            <LikeButton
-              onPress={()=>{}}
-              totalLikes={currentNewsletter?.total_likes as number}
-              isLiked={isLiked}
-            />
-            <FooterItem
-              icon={<Feather name="eye" size={22} color="grey" />}
-              text={currentNewsletter?.total_views.toString() as string}
-            />
-            <SaveButton
-              isSaved={isSaved}
-              onPress={isSaved ? () => handleUnSave(currentNewsletter?.id!) : () => handleSave(currentNewsletter?.id!)}
-              totalSaved={currentNewsletter?.total_saved as number}
-            />
-          </View>
-        </Card>
+    
+              <Text className="dark:text-gray-300 font-normal text-xl my-3">
+                Por {currentNewsletter?.user?.username}
+              </Text>
+
+
+            <View className="gap-6 flex-row">
+              {currentNewsletter && (
+                <>
+                  <LikeButton
+                    onPress={()=>likeNewsletter(currentNewsletter?.id)}
+                    totalLikes={currentNewsletter?.total_likes as number}
+                    isLiked={isLiked}
+                  />
+                  <FooterItem
+                    icon={<Feather name="eye" size={22} color="grey" />}
+                    text={currentNewsletter?.total_views.toString() as string}
+                  />
+                  <SaveButton
+                    isSaved={isSaved}
+                    onPress={
+                      isSaved
+                        ? () => handleUnSave(currentNewsletter?.id!)
+                        : () => handleSave(currentNewsletter?.id!)
+                    }
+                    totalSaved={currentNewsletter?.total_saved as number}
+                  />
+                </>
+              )}
+            </View>
+          </Card>
+        </TouchableOpacity>
       </View>
+      <Text className="my-3 dark:text-white text-md font-normal text-gray-500">
+        {currentNewsletter?.content}
+      </Text>
+    </View>
     </SafeAreaView>
   );
 };

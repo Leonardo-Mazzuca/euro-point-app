@@ -41,6 +41,8 @@ declare global {
     total_points: number
     liked_posts: LikedPost[]
     liked_newsletters: LikedNewsletter[]
+    login_count: number
+    area_id: number
   };
 
   type Area = {
@@ -112,6 +114,8 @@ declare global {
     members_ids: number[];
   };
 
+  type ProjectStatus = "RUNNING" | "FINISHED"
+
   type Project = {
     id: number;
     title: string;
@@ -130,7 +134,12 @@ declare global {
       name: string;
       id: number;
     }
+    team: {
+      name: string,
+      id: number
+    }
     total_saved: number
+    status: ProjectStatus
   };
 
   type Program = {
@@ -176,6 +185,7 @@ declare global {
     title: string;
     progress: number;
     description: string;
+    key: AchievimentKey
   };
 
   type IdeaStatus = "in-progress" | "recused" | "approved";
@@ -189,14 +199,14 @@ declare global {
   type PostCreate = {
     content: string
     area_id: number
-    images: ExpoImageType[]
+    images?: ExpoImageType[]
   }
 
   type NewsletterCreate = { 
     title: string,
     content: string
     area_id: number
-    images: ExpoImageType[]
+    images?: ExpoImageType[]
   }
 
   type ProjectCreate = {
@@ -205,7 +215,7 @@ declare global {
     title: string
     team_id: number
     members_ids: number[]
-    image: ExpoImageType
+    image?: ExpoImageType
   }
 
   type ItemType = 'post' | 'project' | 'newsletter'
@@ -230,6 +240,9 @@ declare global {
     title: string,
     description: string
   }
+
+
+
 }
 
 export {};

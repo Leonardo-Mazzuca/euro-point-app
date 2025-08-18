@@ -57,6 +57,7 @@ const getProjectImage = (project:Project) => {
   return image;
 }
 
+
 export {
     getNameInitials,
     convertToAvatar,
