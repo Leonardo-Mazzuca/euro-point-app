@@ -7,6 +7,8 @@ type ProgramCardProps = {
 };
 
 const ProgramCard = ({program}: ProgramCardProps) => {
+
+
   return (
     <Card
     >
@@ -17,10 +19,16 @@ const ProgramCard = ({program}: ProgramCardProps) => {
             uri: program.image,
           }}
         />
-        <View>
+        <View className="flex-1"> 
           <View className="gap-2">
-            <Text className="font-bold dark:text-gray-400 text-2xl">{program.title.toUpperCase()}</Text>
-            <Text className="font-normal dark:text-gray-300 text-gray-500">
+            <Text className="font-bold dark:text-gray-400 text-2xl">
+              {program.title.toUpperCase()}
+            </Text>
+            <Text
+              numberOfLines={3}
+              ellipsizeMode="tail"
+              className="font-normal dark:text-gray-300 text-gray-500"
+            >
               {program.description}
             </Text>
           </View>

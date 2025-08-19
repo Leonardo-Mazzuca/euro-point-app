@@ -22,9 +22,9 @@ const convertToNewsletterImage = (fileName:string) => {
 }
 
 const convertToProgramImage = (fileName:string) => {
-  const avatar_default_url = process.env.EXPO_PUBLIC_EUROPOINT_IMAGE_STORAGE_URL;
-  if(!avatar_default_url) throw new Error("avatar_default_url is not defined");
-  return `${avatar_default_url}/program/${fileName}`
+  const program_image_url = process.env.EXPO_PUBLIC_PROGRAM_IMG_URL;
+  if(!program_image_url) throw new Error("program_url is not defined");
+  return `${program_image_url}${fileName}`
 }
 
 const convertToQuizImage = (fileName:string) => {

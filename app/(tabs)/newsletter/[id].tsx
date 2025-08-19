@@ -5,9 +5,6 @@ import Header from "@/components/header";
 import Feather from "@expo/vector-icons/Feather";
 import { Card } from "@/components/Card";
 import Entypo from "@expo/vector-icons/Entypo";
-import AntDesign from "@expo/vector-icons/AntDesign";
-import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { Colors } from "react-native/Libraries/NewAppScreen";
 import { SafeAreaView } from "react-native-safe-area-context";
 import BackButton from "@/components/back-button";
 import { useNewsletter } from "@/hooks/use-newsletter";
@@ -111,7 +108,6 @@ const SingleNewsletter = () => {
               </Text>
             </View>
 
-    
               <Text className="dark:text-gray-300 font-normal text-xl my-3">
                 Por {currentNewsletter?.user?.username}
               </Text>
