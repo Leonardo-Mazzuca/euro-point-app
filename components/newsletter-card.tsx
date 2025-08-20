@@ -39,8 +39,10 @@ const NewsLetterCard = ({ newsletter }: Props) => {
   });
 
   useEffect(()=> {
-    const liked = currentUser.liked_newsletters.some((item) => item.newsletter_id === newsletter.id);
-    setIsLiked(!!liked);
+    if(currentUser){
+      const liked = currentUser.liked_newsletters.some((item) => item.newsletter_id === newsletter.id);
+      setIsLiked(!!liked);
+    }
 },[currentUser])
 
   const firstImage = getNewsletterImage(newsletter);

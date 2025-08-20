@@ -11,6 +11,8 @@ import ScrollableList from "@/components/scrollable-list";
 import { usePosts } from "@/hooks/use-posts";
 import Loading from "@/components/loading";
 import { useLayoutContext } from "@/context/layout-context";
+import Empty from "@/components/empty";
+import { RelativePathString } from "expo-router";
 
 const Home = () => {
   const [currentScreen, setCurrentScreen] = useState<HomeScreen>("for-you");
@@ -110,9 +112,13 @@ const Home = () => {
               <PostCard refetch={refetch} post={item} />
             )}
             ListEmptyComponent={()=> (
-              <Text>
-                Sem posts
-              </Text>
+              <Empty 
+                title={"Ops! Nenhum post foi encontrado"}
+                subtitle={"Porque você não registra o primeiro post!"}
+                redirect={"/post-screen"}
+                redirectText={"Registrar post!"}
+                animationSource={require("../../assets/lottie/post-empty.json")}
+              />
             )}
             viewabilityConfig={{ viewAreaCoveragePercentThreshold: 50 }}
             onViewableItemsChanged={()=>{}}

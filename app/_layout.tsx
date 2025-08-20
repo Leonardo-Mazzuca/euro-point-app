@@ -12,19 +12,31 @@ import Toast from 'react-native-toast-message';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { IdeaProvider } from "@/context/idea-context";
 import { SocketProvider } from "@/context/socket-context";
+import { useAuth } from "@/hooks/useAuth";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 const DefaultLayout = () => {
 
-  const {isLogged} = useLayoutContext();
+  const {isLogged, currentUser} = useLayoutContext();
+  const {logout} = useAuth();
 
   useEffect(()=> {
+
+    // const handleUser = async () => {
+    //   if(!currentUser.id) {
+    //     await logout();
+    //   }
+    // }
+
+    // handleUser();
+
     if(isLogged) {
       router.push("/(tabs)");
     } 
-  },[isLogged])
+
+  },[isLogged, currentUser])
 
   return (
 
