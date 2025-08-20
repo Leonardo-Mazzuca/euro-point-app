@@ -7,9 +7,9 @@ import LottieView from "lottie-react-native";
 type Props = {
   title: string;
   subtitle: string;
-  redirect: string;
+  redirect?: string;
   animationSource: any;
-  redirectText: string;
+  redirectText?: string;
 };
 
 const Empty = ({ animationSource, redirect, subtitle, title, redirectText }: Props) => {
@@ -35,16 +35,20 @@ const Empty = ({ animationSource, redirect, subtitle, title, redirectText }: Pro
         source={animationSource}
       />
 
-      <Text className="dark:text-white text-2xl font-semibold">{title}</Text>
-      <Text className="dark:text-gray-300 font-normal text-md">{subtitle}</Text>
-      <Button
-        onPress={() => router.push(redirect as RelativePathString)}
-        className="w-[200px]"
-      >
-        <Text className="dark:text-yeallow-primary text-white font-semibold">
-          {redirectText}
-        </Text>
-      </Button>
+      <View className="justify-center items-center gap-3">
+        <Text className="dark:text-white text-2xl text-center font-semibold">{title}</Text>
+        <Text className="dark:text-gray-300 font-normal text-md">{subtitle}</Text>
+        {redirect && (
+          <Button
+            onPress={() => router.push(redirect as RelativePathString)}
+            className="w-[200px]"
+          >
+            <Text className="dark:text-yeallow-primary text-white font-semibold">
+              {redirectText}
+            </Text>
+          </Button>
+        )}
+      </View>
     </View>
   );
 };

@@ -26,7 +26,6 @@ const Home = () => {
 
   const { posts, isLoading, refetch } = usePosts();
 
-
   useEffect(() => {
     let filtered = posts;
 
@@ -49,12 +48,14 @@ const Home = () => {
     setDisplayedPosts(filtered);
   }, [posts, search, currentScreen]);
 
-  useEffect(()=> {
+  console.log(displayedPosts);
+
+  useEffect(() => {
     if (search.trim() === "") {
-      Keyboard.dismiss(); 
+      Keyboard.dismiss();
       return;
     }
-  },[search])
+  }, [search]);
 
   if (isLoading) {
     return <Loading />;
@@ -62,9 +63,7 @@ const Home = () => {
 
   return (
     <TabsContainer>
-      <View
-       className="px-3"
-      >
+      <View className="px-3">
         <Tabs
           value={currentScreen}
           onValueChange={(e) => setCurrentScreen(e as HomeScreen)}
@@ -98,10 +97,7 @@ const Home = () => {
           </TabsList>
         </Tabs>
 
-        <SearchInput 
-          value={search}
-          onChangeText={(e)=>setSearch(e)}
-        />
+        <SearchInput value={search} onChangeText={(e) => setSearch(e)} />
       </View>
 
       <View className="mt-4 flex-1 px-6">
@@ -111,8 +107,8 @@ const Home = () => {
             renderItem={({ item }) => (
               <PostCard refetch={refetch} post={item} />
             )}
-            ListEmptyComponent={()=> (
-              <Empty 
+            ListEmptyComponent={() => (
+              <Empty
                 title={"Ops! Nenhum post foi encontrado"}
                 subtitle={"Porque você não registra o primeiro post!"}
                 redirect={"/post-screen"}
@@ -121,9 +117,11 @@ const Home = () => {
               />
             )}
             viewabilityConfig={{ viewAreaCoveragePercentThreshold: 50 }}
-            onViewableItemsChanged={()=>{}}
+            onViewableItemsChanged={() => {}}
             handleScroll={handleScroll}
-            refreshControl={<RefreshControl onRefresh={refetch} refreshing={isLoading} />}
+            refreshControl={
+              <RefreshControl onRefresh={refetch} refreshing={isLoading} />
+            }
           />
         )}
 
@@ -133,8 +131,19 @@ const Home = () => {
             renderItem={({ item }) => (
               <PostCard refetch={refetch} post={item} />
             )}
+            ListEmptyComponent={() => (
+              <Empty
+                title={"Ops! Nenhum post foi encontrado"}
+                subtitle={"Porque você não registra o primeiro post!"}
+                redirect={"/post-screen"}
+                redirectText={"Registrar post!"}
+                animationSource={require("../../assets/lottie/post-empty.json")}
+              />
+            )}
             handleScroll={handleScroll}
-            refreshControl={<RefreshControl onRefresh={refetch} refreshing={isLoading} />}
+            refreshControl={
+              <RefreshControl onRefresh={refetch} refreshing={isLoading} />
+            }
           />
         )}
       </View>

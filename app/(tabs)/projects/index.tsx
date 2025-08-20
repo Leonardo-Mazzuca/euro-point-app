@@ -10,6 +10,7 @@ import ProjectCard from "@/components/project-card";
 import ScrollableList from "@/components/scrollable-list";
 import { useProjects } from "@/hooks/use-projects";
 import Loading from "@/components/loading";
+import Empty from "@/components/empty";
 
 const Projects = () => {
   const uiTranslateY = useRef(new Animated.Value(0)).current;
@@ -81,6 +82,14 @@ const Projects = () => {
                 project={item}
               />
             }
+            ListEmptyComponent={() => (
+              <Empty
+                title="Hmmmm nenhum projeto foi encontrado :("
+                subtitle="Acho que a aquipe de times anda meio preguiçosa..."
+                animationSource={require("../../../assets/lottie/project-empty.json")}
+
+              />
+            )}
             handleScroll={handleScroll}
             refreshControl={<RefreshControl refreshing={isRefetching} onRefresh={refetch} />}
           />
