@@ -1,6 +1,6 @@
 
 import React from 'react'
-import { AntDesign,  } from '@expo/vector-icons'
+import Entypo from '@expo/vector-icons/Entypo';
 import { Colors } from '@/constants/Colors'
 import { AntDesignProps } from '.'
 import { useLayoutContext } from '@/context/layout-context'
@@ -13,7 +13,7 @@ const PlusIcon = ({color,...rest}:AntDesignProps) => {
   const iconColor = color ? color : isDark ? Colors.dark.primaryYeallow : Colors.light.primaryBlue
 
   return (
-    <AntDesign {...rest} size={24} color={iconColor} name="plus" />
+    <Entypo {...rest} size={32} color={iconColor} name="plus" />
   )
 }
 

@@ -13,6 +13,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { IdeaProvider } from "@/context/idea-context";
 import { SocketProvider } from "@/context/socket-context";
 import { useAuth } from "@/hooks/useAuth";
+import { AuthProvider } from "@/context/auth-context";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -36,12 +37,13 @@ const DefaultLayout = () => {
       router.push("/(tabs)");
     } 
 
-  },[isLogged, currentUser])
+  },[isLogged, currentUser]);
 
   return (
 
 
       <Stack>
+        <Stack.Screen name="(splash)" options={{ headerShown: false }} />
         <Stack.Screen name="(auth)" options={{ headerShown: false }} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="(profile)" options={{ headerShown: false }} />
@@ -106,6 +108,7 @@ export default function RootLayout() {
   return (
     <GestureHandlerRootView className="flex-1">
        <QueryClientProvider client={client}>
+        <AuthProvider>
           <LayoutProvider>
             <SocketProvider>
               <IdeaProvider>
@@ -115,6 +118,7 @@ export default function RootLayout() {
               </IdeaProvider>
             </SocketProvider>
           </LayoutProvider>
+        </AuthProvider>
        </QueryClientProvider>
 
     </GestureHandlerRootView>

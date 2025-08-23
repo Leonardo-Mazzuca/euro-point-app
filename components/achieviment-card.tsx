@@ -25,15 +25,20 @@ const AchievimentCard = ({achieviment}: AchievimentCardProps) => {
             <Text numberOfLines={2} className='w-[250px] font-semibold text-2xl dark:text-white'>
                 {achieviment.title}
             </Text>
-            <Progress.Bar 
-                progress={achieviment.progress/100} 
-                width={200} 
-                height={12}
-                color={progressColor}
-                style={{
-                    backgroundColor: !hasProgress ? Colors.light.softGray : Colors.light.tertiaryYeallow,
-                }}
-            />
+            <View className='flex-row gap-2 items-center'>
+                <Progress.Bar 
+                    progress={achieviment.progress/100} 
+                    width={200} 
+                    height={12}
+                    color={progressColor}
+                    style={{
+                        backgroundColor: !hasProgress ? Colors.light.softGray : Colors.light.tertiaryYeallow,
+                    }}
+                />
+                <Text className='dark:text-white text-gray-700 font-semibold'>
+                    {achieviment.progress}%
+                </Text>
+            </View>
             <Text numberOfLines={2} className='font-medium w-[250px] text-lg dark:text-gray-400 text-gray-500'>
                 {achieviment.description}   
             </Text>

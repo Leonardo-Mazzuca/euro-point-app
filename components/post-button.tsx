@@ -22,7 +22,7 @@ const PostButton = ({children,className,...rest}:PostButtonProps) => {
       size={"icon"}
       style={{ zIndex: 999 }}
       className={cn(
-        "dark:bg-blue-primary bg-yeallow-primary rounded-full w-[60px] h-[60px]",
+        "bg-blue-primary dark:bg-yeallow-primary rounded-full w-[60px] h-[60px]",
         className
       )}
       {...rest}
@@ -30,7 +30,7 @@ const PostButton = ({children,className,...rest}:PostButtonProps) => {
       {children ? (
         children
       ) : (
-        <PlusIcon color={isDark ? Colors.dark.primaryYeallow : Colors.light.primaryBlue} />
+        <PlusIcon color={isDark ? Colors.light.primaryBlue : Colors.light.primaryYeallow} />
       )}
     </Button>
   );

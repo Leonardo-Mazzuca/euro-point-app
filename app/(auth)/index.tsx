@@ -56,6 +56,7 @@ const SignIn = () => {
                 variant="outline"
                 value={field.value}
                 onChangeText={(e) => field.onChange(e)}
+                secureTextEntry={true}
               />
               {errors.password && (
                 <Text className="text-red-500 mt-2">
