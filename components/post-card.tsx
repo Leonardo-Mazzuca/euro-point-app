@@ -158,7 +158,10 @@ const PostCard = ({ post, refetch, footerActions = {enableLike: true,enableSave:
 
         <LikeButton
           disabled={!footerActions?.enableLike}
-          onPress={() => likePost(post.id)}
+          onPress={() => {
+            likePost(post.id)
+            setIsLiked(!isLiked);
+          }}
           totalLikes={total_likes}
           isLiked={isLiked}
         />
