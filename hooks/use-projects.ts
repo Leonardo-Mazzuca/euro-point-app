@@ -29,7 +29,7 @@ export const useProjects = () => {
 
     const newProject = async (data:ProjectCreate) => {
         try {
-
+            
             const formData = new FormData();
             formData.append('area_id', String(data.area_id));
             formData.append('title', data.title);
@@ -77,8 +77,6 @@ export const useProjects = () => {
         try {
 
             const req = await get(`/projects/${id}`)
-            console.log('Projeto sozinho: ', req);
-            
             return req as Project
             
         } catch (error) {

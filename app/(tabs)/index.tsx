@@ -48,8 +48,6 @@ const Home = () => {
     setDisplayedPosts(filtered);
   }, [posts, search, currentScreen]);
 
-  console.log(displayedPosts);
-
   useEffect(() => {
     if (search.trim() === "") {
       Keyboard.dismiss();

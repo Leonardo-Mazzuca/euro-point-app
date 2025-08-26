@@ -1,7 +1,6 @@
 import { get, put } from "@/service/helpers";
 import { convertToQuizImage } from "@/util";
 import { useQuery } from "@tanstack/react-query";
-import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import Toast from "react-native-toast-message";
 
@@ -30,13 +29,17 @@ export const useQuizzes = () => {
         })));
     },[data])
 
-    const onQuizFinish = async (points: number, quiz_id: number) => {
+    const onQuizFinish = async (total_points: number,total_right_answers: number, quiz_id: number) => {
 
         try {
 
+            const body = {
+                total_points,
+                total_right_answers
+            }
             
-            await put('/users',{total_points: points});
-            await put (`/quiz/end/${quiz_id}`,{});
+            await put('/users',{total_points: total_points});
+            await put (`/quiz/end/${quiz_id}`,body);
             refetch();
             
         } catch (error:any) {
@@ -81,9 +84,15 @@ export const useQuizzes = () => {
         }
     }
 
-    const onNextQuestion = async (quiz_id: number) => {
+    const onNextQuestion = async (points: number, total_rights: number, quiz_id: number) => {
         try {
-            await put(`/quiz/next/${quiz_id}`,{});
+
+            const body = {
+                points,
+                total_rights
+            }
+
+            await put(`/quiz/next/${quiz_id}`,body);
             refetch()
         } catch (error: any) {
             console.log('Erro passando para a próxima questão');
@@ -95,6 +104,21 @@ export const useQuizzes = () => {
         }
     }
 
+    const getRunningQuizzes = async ():Promise<Quiz[] | null> => {
+        try {
+
+            const runnings: RunningQuiz[] = await get("/quiz/runnings") as RunningQuiz[];
+            return runnings.map(r => {
+                r.quiz.image = convertToQuizImage(r.quiz.image);
+                return r.quiz
+            }) as Quiz[]
+            
+        } catch (error) {
+            console.log("Erro pegando quizzes que estão rodando: ", error);
+            return null
+        }
+    }
+
     return {
         quizzes,
         refetch,
@@ -103,6 +127,7 @@ export const useQuizzes = () => {
         onQuizFinish,
         onQuizStart,
         onQuizRunningDiscard,
-        onNextQuestion
+        onNextQuestion,
+        getRunningQuizzes
     }
 }

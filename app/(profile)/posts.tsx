@@ -9,6 +9,7 @@ import { View } from 'react-native';
 import { useAllPublications } from '@/hooks/use-all-publications';
 import ProjectCard from '@/components/project-card';
 import NewsLetterCard from '@/components/newsletter-card';
+import Empty from '@/components/empty';
 
 const MyPosts = () => {
 
@@ -62,6 +63,16 @@ const MyPosts = () => {
             keyExtractor={(_, index) => index.toString()}
             handleScroll={()=>{}}
             contentContainerStyle={{paddingTop: 0, paddingBottom: 100}}
+            ListEmptyComponent={() => (
+              <Empty
+                title={"Você ainda não registrou nada!"}
+                subtitle={"É uma boa hora para começar não acha?"}
+                animationSource={require("../../assets/lottie/empty-created.json")}
+                redirectText='Criar!'
+                redirect='/post-screen'
+    
+              />
+            )}
           />
         
         </View>

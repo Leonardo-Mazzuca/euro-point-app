@@ -6,7 +6,7 @@ import Entypo from "@expo/vector-icons/Entypo";
 import { router } from "expo-router";
 import dayjs from "dayjs";
 import "dayjs/locale/pt-br";
-import { getNewsletterImage } from "@/util";
+import { getNewsletterImage, getStorageImageUrl } from "@/util";
 import ItemImage from "./item-image";
 import { newsletterFallback } from "@/util/images";
 import SaveButton from "./save-button";
@@ -47,13 +47,19 @@ const NewsLetterCard = ({ newsletter }: Props) => {
 
   const firstImage = getNewsletterImage(newsletter);
 
+  const imageUrl = newsletter?.images?.[0]
+  ? newsletter.is_demo
+    ? getStorageImageUrl(newsletter.images[0].path)
+    : firstImage
+  : ""; 
+
   return (
     <Card className="mt-4">
       <TouchableOpacity onPress={onDoublePress}  className="p-2">
         <View className="items-center flex-row gap-5">
           <ItemImage
             type="card"
-            url={firstImage}
+            url={imageUrl}
             fallback={newsletterFallback}
           />
           <View>

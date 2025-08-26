@@ -2,8 +2,6 @@ import axios from 'axios'
 
 const API_URL = process.env.EXPO_PUBLIC_EUROPOINT_API_URL;
 
-console.log("ENV URL inside api.ts:", API_URL);
-
 if(!API_URL) throw new Error("API_URL is not defined");
 
 const api = axios.create({

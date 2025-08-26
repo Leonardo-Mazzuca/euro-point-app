@@ -9,41 +9,44 @@ import SearchInput from "@/components/search-input";
 import ScrollableList from "@/components/scrollable-list";
 import { useNewsletter } from "@/hooks/use-newsletter";
 import Loading from "@/components/loading";
+import Empty from "@/components/empty";
 
 const Newsletter = () => {
   const categories = ["Para você", "TI", "RH", "Corporativo", "Interno"];
   const [selected, setSelected] = useState(categories[0]);
   const uiTranslateY = useRef(new Animated.Value(0)).current;
-  const {handleScroll} = useScrollAnimation({translateValue: uiTranslateY});
-  const {isLoading,isRefetching,newsletters,refetch} = useNewsletter();
-  const [filteredNewsletters, setFilteredNewsletters] = useState<Newsletter[]>([]);
+  const { handleScroll } = useScrollAnimation({ translateValue: uiTranslateY });
+  const { isLoading, isRefetching, newsletters, refetch } = useNewsletter();
+  const [filteredNewsletters, setFilteredNewsletters] = useState<Newsletter[]>(
+    []
+  );
   const [search, setSearch] = useState("");
 
-  useEffect(()=> {
-    if(newsletters){
-      setFilteredNewsletters(newsletters)
+  useEffect(() => {
+    if (newsletters) {
+      setFilteredNewsletters(newsletters);
     }
-  },[newsletters]);
+  }, [newsletters]);
 
-  useEffect(()=> {
+  useEffect(() => {
     if (search.trim() === "") {
-      Keyboard.dismiss(); 
-      setFilteredNewsletters(newsletters); 
+      Keyboard.dismiss();
+      setFilteredNewsletters(newsletters);
       return;
     }
-    const filtered = newsletters?.filter((newsletter) => newsletter.title.toLowerCase().includes(search.toLowerCase()));
+    const filtered = newsletters?.filter((newsletter) =>
+      newsletter.title.toLowerCase().includes(search.toLowerCase())
+    );
     setFilteredNewsletters(filtered);
-  },[search])
+  }, [search]);
 
-  if(isLoading){
-    return <Loading />
+  if (isLoading) {
+    return <Loading />;
   }
 
   return (
     <TabsContainer>
-      <View 
-       className="px-3"
-      >
+      <View className="px-3">
         <Header />
         <CategoriesScroll
           categories={categories}
@@ -54,11 +57,22 @@ const Newsletter = () => {
       </View>
       <View className="mt-4 flex-1 px-6">
         <ScrollableList
-            data={filteredNewsletters}
-            renderItem={({item}) => <NewsLetterCard newsletter={item} />}
-            handleScroll={handleScroll}
-            refreshControl={<RefreshControl refreshing={isRefetching} onRefresh={refetch} />}
-          />
+          data={filteredNewsletters}
+          renderItem={({ item }) => <NewsLetterCard newsletter={item} />}
+          handleScroll={handleScroll}
+          refreshControl={
+            <RefreshControl refreshing={isRefetching} onRefresh={refetch} />
+          }
+          ListEmptyComponent={() => (
+            <Empty
+              title={"Nenhum newsletter ainda..."}
+              subtitle={"Que tal criar um?!"}
+              redirect={"/post-screen"}
+              redirectText={"Criar newsletter!"}
+              animationSource={require("../../../assets/lottie/newsletters-empty.json")}
+            />
+          )}
+        />
       </View>
     </TabsContainer>
   );

@@ -73,7 +73,7 @@ declare global {
       contact_email: string;
     };
     created_at: string;
-
+    is_demo: boolean
   };
 
   type LikedPost = {
@@ -106,6 +106,7 @@ declare global {
       id: number
     }
     total_saved: number
+    is_demo: boolean
   };
 
   type Team = {
@@ -140,6 +141,7 @@ declare global {
     }
     total_saved: number
     status: ProjectStatus
+    is_demo: boolean
   };
 
   type Program = {
@@ -239,6 +241,15 @@ declare global {
     id: number,
     title: string,
     description: string
+  }
+
+  type RunningQuiz = {
+    id: number,
+    quiz_id: number,
+    current_answer: number,
+    total_right_answers: number
+    current_points
+    quiz: Quiz
   }
 
 

@@ -32,7 +32,7 @@ const DefaultLayout = () => {
     // }
 
     // handleUser();
-
+    
     if(isLogged) {
       router.push("/(tabs)");
     } 

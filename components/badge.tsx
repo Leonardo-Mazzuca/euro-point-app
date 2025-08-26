@@ -25,7 +25,7 @@ const Badge = ({colors,className,children,textClasses,...rest}:BadgeProps) => {
         {...rest}
         style={{borderRadius:100,width:40,height: 40,alignItems:"center",justifyContent:"center",marginStart: 2}}
     >
-        <Text className={cn('text-white font-semibold text-xl',textClasses)}>
+        <Text className={cn('dark:text-white text-gray-600 font-semibold text-xl',textClasses)}>
             {children}
         </Text>
     </LinearGradient>

@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useQuizzes } from "./use-quizzes";
 import { useQuizContext } from "@/context/quiz-context";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const useRunningQuiz = ({ quizId }: { quizId: string }) => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -40,7 +39,7 @@ export const useRunningQuiz = ({ quizId }: { quizId: string }) => {
     }
   }, [currentQuizMemo]);
 
-  const handleQuestionStatus = async () => {
+  const handleQuestionStatus = () => {
     if (selectedAnswer) {
       const currentCorrectAnswer = currentQuestion?.correct_answer;
       const isRight =
@@ -54,15 +53,12 @@ export const useRunningQuiz = ({ quizId }: { quizId: string }) => {
 
       if (currentQuestion) {
         if (isRight) {
-          await AsyncStorage.setItem("totalRights", String(quizData.totalRights + 1));
-          await AsyncStorage.setItem("totalPoints", String(quizData.totalPoints + currentQuestion?.total_points));
           setQuizData((prev) => ({
             ...prev,
             totalRights: prev.totalRights + 1,
             totalPoints: prev.totalPoints + currentQuestion?.total_points,
           }));
         } else {
-          await AsyncStorage.setItem("totalErrors", String(quizData.totalErrors + 1));
           setQuizData((prev) => ({
             ...prev,
             totalErrors: prev.totalErrors + 1,
@@ -83,19 +79,19 @@ export const useRunningQuiz = ({ quizId }: { quizId: string }) => {
     } 
 
     if(currentQuizMemo) {
+
       if (currentStep >= (currentQuizMemo?.questions.length)) {
         setIsFinished(true);
-        if(!currentQuiz) return;
-        await onQuizFinish(quizData.totalPoints,currentQuiz?.id);
+        await onQuizFinish(quizData.totalPoints,quizData.totalRights,Number(quizId));
         return;
       }
-  
+      
+
       setTimeout(async () => {
-        if(!currentQuiz) return;
-        await onNextQuestion(currentQuiz?.id);
+        handleQuestionStatus();
+        await onNextQuestion(quizData.totalPoints, quizData.totalRights, Number(quizId));
         setCurrentStep((prev) => prev + 1);
         setIsSubmitted(false);
-        await handleQuestionStatus();
         setSelectedAnswer("");
       }, 1000);
     }
@@ -124,23 +120,6 @@ export const useRunningQuiz = ({ quizId }: { quizId: string }) => {
   useEffect(()=> {
     setCurrentQuestion(quizQuestions[currentStep - 1]);
   },[quizQuestions,currentStep]);
-
-  useEffect(()=> {
-    const updateQuizData = async () => {
-      const storagedPoints = await AsyncStorage.getItem("totalPoints");
-      const storagedRights = await AsyncStorage.getItem("totalRights");
-      const storagedErrors = await AsyncStorage.getItem("totalErrors");
-
-        setQuizData({
-          totalPoints: Number(storagedPoints) || 0,
-          totalRights: Number(storagedRights) || 0,
-          totalErrors: Number(storagedErrors) || 0
-        })
- 
-    }
-
-    updateQuizData()
-  },[])
 
   return {
     currentStep,

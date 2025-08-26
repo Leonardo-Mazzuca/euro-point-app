@@ -40,8 +40,6 @@ const SingleProject = () => {
       }
     },[currentProject])
 
-    console.log('Image: ', image);
-    
 
     if(isLoading){
       return <Loading />

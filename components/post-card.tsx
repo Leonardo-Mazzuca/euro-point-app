@@ -6,7 +6,7 @@ import Feather from "@expo/vector-icons/Feather";
 import { TouchableOpacity, View } from "react-native";
 import { useLayoutContext } from "@/context/layout-context";
 import { useEffect, useState } from "react";
-import { convertToAvatar, getNameInitials } from "@/util";
+import { convertToAvatar, getNameInitials, getStorageImageUrl } from "@/util";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/pt-br";
@@ -112,6 +112,12 @@ const PostCard = ({ post, refetch, footerActions = {enableLike: true,enableSave:
   };
 
 
+  const imageUrl = post?.images?.[0]
+  ? post.is_demo
+    ? getStorageImageUrl(post.images[0].path)
+    : `${process.env.EXPO_PUBLIC_EUROPOINT_API_URL}/images/post/${post.images[0].path}`
+  : ""; 
+  
   return (
     <TouchableOpacity onPress={onDoublePress} className="mt-4 rounded-2xl border dark:bg-dark-card border-gray-200 dark:border-zinc-800">
       <CardHeader>
@@ -141,7 +147,7 @@ const PostCard = ({ post, refetch, footerActions = {enableLike: true,enableSave:
       <CardContent>
             
         {post.images[0] ? (
-          <ItemImage fallback="" type="item" url={`${process.env.EXPO_PUBLIC_EUROPOINT_API_URL}/images/post/${post?.images[0].path}`} />
+          <ItemImage fallback="" type="item" url={imageUrl} />
         ) : (
           <></>
         )}

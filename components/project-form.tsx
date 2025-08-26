@@ -56,8 +56,6 @@ const ProjectForm = () => {
   },[image]);
 
   useEffect(() => {
-    console.log(image);
-    
     if (!image) {
       setError('project', { message: 'Imagem obrigatória' });
     } else {

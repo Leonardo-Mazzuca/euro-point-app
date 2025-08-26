@@ -21,8 +21,6 @@ const Projects = () => {
   const [search, setSearch] = useState("");
   const [filteredProjects, setfilteredProjects] = useState<Project[]>([]);
 
-  console.log(selectedCategory);
-  
 
   useEffect(()=> {
     let filtered = projects;

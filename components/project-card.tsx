@@ -7,7 +7,7 @@ import { Text, TouchableOpacity, View } from 'react-native'
 import Entypo from '@expo/vector-icons/Entypo'
 import { router } from 'expo-router'
 import "dayjs/locale/pt-br";
-import { getHoursSinceCreatedAt, getProjectImage } from '@/util'
+import { getHoursSinceCreatedAt, getProjectImage, getStorageImageUrl } from '@/util'
 import ItemImage from './item-image'
 import { projectFallBack } from '@/util/images'
 
@@ -21,6 +21,11 @@ const ProjectCard = ({project}: Props) => {
 
   const firstImage = getProjectImage(project);
 
+  const imageUrl = project?.image?.[0]
+    ? project.is_demo
+      ? getStorageImageUrl(project.image[0].path)
+      : firstImage
+    : ""; 
 
   return (
     <Card className="mt-4">
@@ -31,7 +36,7 @@ const ProjectCard = ({project}: Props) => {
       <View className="items-center flex-1 flex-row gap-5">
 
           <ItemImage 
-            url={firstImage}
+            url={imageUrl}
             type="card"
             fallback={projectFallBack}
           />

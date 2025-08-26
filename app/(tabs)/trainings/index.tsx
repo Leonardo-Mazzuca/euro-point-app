@@ -1,5 +1,5 @@
 import { FlatList, RefreshControl, Text, View } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TabsContainer from "@/components/tabs-container";
 import Header from "@/components/header";
 import CategoriesScroll from "@/components/categories-scroll";
@@ -19,6 +19,7 @@ const Trainings = () => {
   const categories = ["Programas", "Quizzes"];
   const [category, setCategory] = useState(categories[0]);
   const [selectedQuiz, setSelectedQuiz] = useState<Quiz | null>(null);
+  const [runningQuizzes, setRunningQuizzes] = useState<Quiz[]>([]);
 
   const {
     programs,
@@ -32,6 +33,7 @@ const Trainings = () => {
     refetch: refetchQuizzes,
     isRefetching: isRefetchingQuizzes,
     onQuizStart,
+    getRunningQuizzes
   } = useQuizzes();
 
 
@@ -45,7 +47,15 @@ const Trainings = () => {
     router.push(`/trainings/${selectedQuiz.id}`);
   };
 
-  const hasRunningQuiz = quizzes.filter((quiz) => quiz.is_running);
+
+  useEffect(()=> {
+    const fetchRunningQuizzes = async () => {
+      const runnings = await getRunningQuizzes()
+      if(runnings) setRunningQuizzes(runnings)
+    }
+    fetchRunningQuizzes();
+  },[]);
+
   const noRunningQuiz = quizzes.filter((quiz) => !quiz.is_running);
 
   if (isLoadingProgram || isLoadingQuizzes) {
@@ -106,13 +116,13 @@ const Trainings = () => {
               }
             />
 
-            {hasRunningQuiz.length > 0 && (
+            {runningQuizzes.length > 0 && (
               <>
                 <Text className="font-semibold dark:text-white my-3 text-xl">
                   Continue
                 </Text>
                 <FlatList
-                  data={quizzes}
+                  data={runningQuizzes}
                   keyExtractor={(item, index) => index.toString()}
                   renderItem={({ item }) => <RunningQuiz runningQuiz={item} />}
                   className="h-[200px]"

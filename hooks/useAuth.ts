@@ -55,7 +55,7 @@ export const useAuth = () => {
 
   const logout = async () => {
     await AsyncStorage.removeItem("token");
-    router.push("/(auth)");
+    router.push("/(splash)");
     Toast.show({
       type: "success",
       text1: "Logout realizado com sucesso",

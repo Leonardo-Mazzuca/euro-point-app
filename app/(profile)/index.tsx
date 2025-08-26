@@ -1,9 +1,8 @@
 import React from "react";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { ScrollView, View } from "react-native";
 import Feather from "@expo/vector-icons/Feather";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ProfileCard from "@/components/profile-card";
-import { Button } from "@/components/Button";
 import { Colors } from "@/constants/Colors";
 import { AntDesign, Entypo, FontAwesome6, Foundation, Ionicons } from "@expo/vector-icons";
 import { useLayoutContext } from "@/context/layout-context";
@@ -18,19 +17,25 @@ const Profile = () => {
 
   const {theme,toggleTheme} = useLayoutContext();
 
+  const isDark = theme === "dark";
+
+  const getItemColor = () => {
+    return isDark ? Colors.light.primaryYeallow : Colors.light.primaryBlue
+  }
+
   const accountProfileItems:ProfileItem[] = [
     {
-      icon: <Feather name="user" size={28} color={Colors.light.primaryBlue} />,
+      icon: <Feather name="user" size={28} color={getItemColor()} />,
       title: "Dados do perfil",
       link: "/(profile)/edit"
     },
     {
-      icon: <Ionicons name="notifications-outline" size={28} color={Colors.light.primaryBlue} />,
+      icon: <Ionicons name="notifications-outline" size={28} color={getItemColor()} />,
       title: "Notificações",
       isToggler: true
     },
     {
-      icon:<Foundation name="key" size={28} color={Colors.light.primaryBlue} />,
+      icon:<Foundation name="key" size={28} color={getItemColor()} />,
       title: "Alterar senha",
       link: "/(profile)/change-password"
     },
@@ -38,34 +43,34 @@ const Profile = () => {
   
   const preferenceProfileItems:ProfileItem[] = [
     {
-      icon: <Feather name="moon" size={28} color={Colors.light.primaryBlue} />,
+      icon: <Feather name="moon" size={28} color={getItemColor()} />,
       title: "Tema escuro",
       isToggler: true,
       isTogglerActive: theme === "dark",
       setToggleActive: toggleTheme
     },
     {
-      icon: <Entypo name="language" size={28} color={Colors.light.primaryBlue} />,
+      icon: <Entypo name="language" size={28} color={getItemColor()} />,
       title: "Linguagem",
       link: "/"
     },
     {
-      icon: <AntDesign name="barschart" size={24} color={Colors.light.primaryBlue} />,
+      icon: <AntDesign name="barschart" size={24} color={getItemColor()} />,
       title: "Pontuação dos quizzes",
       link: "/(profile)/pontuations"
     },
     {
-      icon: <Feather name="bookmark" size={24} color={Colors.light.primaryBlue} />,
+      icon: <Feather name="bookmark" size={24} color={getItemColor()} />,
       title: "Itens salvos",
       link: "/(profile)/saved"
     },
     {
-      icon: <FontAwesome6 name="book-open-reader" size={24} color={Colors.light.primaryBlue} />,
+      icon: <FontAwesome6 name="book-open-reader" size={24} color={getItemColor()} />,
       title: "Minhas conquistas",
       link: "/(profile)/achieviments"
     },
     {
-      icon: <FontAwesome name="list-alt" size={24} color={Colors.light.primaryBlue} />,
+      icon: <FontAwesome name="list-alt" size={24} color={getItemColor()} />,
       title: "Minhas publicações",
       link: "/(profile)/posts"
     },
@@ -73,7 +78,7 @@ const Profile = () => {
 
   const helpProfileItems:ProfileItem[] = [
     {
-      icon: <AntDesign name="questioncircleo" size={24} color={Colors.light.primaryBlue} />,
+      icon: <AntDesign name="questioncircleo" size={24} color={getItemColor()} />,
       title: "Reportar erro",
       link: "/"
     },

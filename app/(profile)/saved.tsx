@@ -11,6 +11,7 @@ import { useProjects } from '@/hooks/use-projects'
 import { useNewsletter } from '@/hooks/use-newsletter'
 import ProjectCard from '@/components/project-card'
 import NewsLetterCard from '@/components/newsletter-card'
+import Empty from '@/components/empty'
 
 const Saved = () => {
 
@@ -47,6 +48,32 @@ const Saved = () => {
     }
   }
 
+  const getRedirect = () => {
+    switch(selectedCategory){
+      case "Avisos":
+        return { 
+          redirect: '/(tabs)',
+          redirectText: 'Ir para os avisos',
+        }
+      case "Projetos":
+        return { 
+          redirect: '/(tabs)/projects',
+          redirectText: 'Ir para os projetos',
+        }
+      case "Newsletter":
+        return { 
+          redirect: '/(tabs)/newsletter',
+          redirectText: 'Ir para os newsletters',
+        }
+      default:
+        return { 
+          redirect: '/(tabs)',
+          redirectText: 'Ir para os avisos',
+        }
+      
+    }
+  }
+
   return (
     <ProfileContainer>
       <ProfileHeader 
@@ -67,6 +94,15 @@ const Saved = () => {
           keyExtractor={(_, index) => index.toString()}
           handleScroll={()=>{}}
           contentContainerStyle={{paddingTop: 0, paddingBottom: 100}}
+          ListEmptyComponent={() => (
+            <Empty
+              title={"Parece que você não tem nenhum item salvo..."}
+              subtitle={"Porque você não salva alguma coisa para ler depois?"}
+              animationSource={require("../../assets/lottie/empty-saved.json")}
+              redirect={getRedirect()?.redirect}
+              redirectText={getRedirect()?.redirectText}
+            />
+          )}
         />
       
       </View>

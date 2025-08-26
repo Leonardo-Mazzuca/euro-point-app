@@ -10,7 +10,6 @@ import { useIsFocused } from "@react-navigation/native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Colors } from "@/constants/Colors";
 import { AntDesign } from "@expo/vector-icons";
-import ConfettiCannon from "react-native-confetti-cannon";
 import Loading from "@/components/loading";
 import QuizFinishModal from "@/components/quiz-finish-modal";
 import { Button } from "@/components/Button";
@@ -60,7 +59,7 @@ const SingleQuiz = () => {
         <Ionicons
           name="sparkles"
           size={24}
-          color={isDark ? Colors.dark.primaryYeallow : Colors.light.primaryBlue}
+          color={isDark ? Colors.light.primaryBlue : Colors.dark.primaryYeallow}
         />
       </PostButton>
     )
@@ -96,7 +95,7 @@ const SingleQuiz = () => {
             {currentQuiz.title}
           </Text>
           <Button onPress={handleQuizExit} variant={"link"}>
-            <AntDesign name="back" size={24} color="white" />
+            <AntDesign name="back" size={24} color={isDark ? "white" : "black"} />
           </Button>
         </View>
         <Stepper
@@ -120,7 +119,7 @@ const SingleQuiz = () => {
       <View className="my-3 px-5 flex-row justify-center gap-4">
         <FinishButton />
       </View>
-      {isFinished && <ConfettiCannon count={200} origin={{ x: -10, y: 0 }} />}
+
       <QuizFinishModal
         quizData={quizData}
         visible={isFinished}

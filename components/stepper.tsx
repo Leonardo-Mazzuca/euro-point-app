@@ -72,6 +72,7 @@ const Stepper = ({
                   colors={
                     currentStep === index + 1 ? undefined : statusColor
                   }
+                  textClasses={currentStep === index + 1 ? "text-white" : ""}
                 >
                   {index + 1}
                 </Badge>

@@ -25,7 +25,12 @@ export const usePosts = () => {
   });
 
   useEffect(()=> {
-    if(data) setPosts(data as Post[]);
+    if(data) {
+      const ordered = (data as Post[]).sort(
+        (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+      );
+      setPosts(ordered);
+    }
   },[data])
 
   useEffect(()=> {

@@ -46,7 +46,7 @@ const QuestionCard = ({
           data={options}
           contentContainerStyle={{ gap: 25 }}
           keyExtractor={(item, index) => index.toString()}
-          renderItem={({ item,index }) => (
+          renderItem={({ item, index }) => (
             <TouchableOpacity
               className={cn(
                 "flex-row p-2 rounded-3xl items-center gap-2",
@@ -58,17 +58,18 @@ const QuestionCard = ({
               onPress={() => setSelectedAnswer(item.answer)}
             >
               <Badge
-                textClasses={cn(
-                  "text-zinc-800",
-                  selectedAnswer === item.answer && "text-white"
-                )}
+                textClasses={
+                  selectedAnswer === item.answer
+                    ? "text-white"
+                    : "dark:text-zinc-800"
+                }
                 colors={
                   selectedAnswer === item.answer
                     ? selectedColors
                     : notSelectedColors
                 }
               >
-                {index+1}
+                {index + 1}
               </Badge>
               <Text className={"text-xl dark:text-gray-300 font-normal"}>
                 {item.title}

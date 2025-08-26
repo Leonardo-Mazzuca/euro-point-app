@@ -37,7 +37,7 @@ const Empty = ({ animationSource, redirect, subtitle, title, redirectText }: Pro
 
       <View className="justify-center items-center gap-3">
         <Text className="dark:text-white text-2xl text-center font-semibold">{title}</Text>
-        <Text className="dark:text-gray-300 font-normal text-md">{subtitle}</Text>
+        <Text className="dark:text-gray-300 font-normal text-center text-md">{subtitle}</Text>
         {redirect && (
           <Button
             onPress={() => router.push(redirect as RelativePathString)}
