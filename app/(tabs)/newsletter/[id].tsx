@@ -8,7 +8,7 @@ import Entypo from "@expo/vector-icons/Entypo";
 import { SafeAreaView } from "react-native-safe-area-context";
 import BackButton from "@/components/back-button";
 import { useNewsletter } from "@/hooks/use-newsletter";
-import { getHoursSinceCreatedAt, getNewsletterImage } from "@/util";
+import { getHoursSinceCreatedAt, getNewsletterImage, getStorageImageUrl } from "@/util";
 import Loading from "@/components/loading";
 import ItemImage from "@/components/item-image";
 import { newsletterFallback } from "@/util/images";
@@ -65,7 +65,11 @@ const SingleNewsletter = () => {
 
   useEffect(() => {
     if (currentNewsletter) {
-      setImage(getNewsletterImage(currentNewsletter));
+      if(currentNewsletter.is_demo) {
+        setImage(getStorageImageUrl(currentNewsletter.images[0].path));
+      } else {
+        setImage(getNewsletterImage(currentNewsletter));
+      }
     }
   }, [currentNewsletter]);
 
@@ -98,11 +102,10 @@ const SingleNewsletter = () => {
           <Card className="p-3 border border-gray-200">
             <ItemImage type="item" url={image} fallback={newsletterFallback} />
 
-            <View className="flex-row items-center mt-3">
+            <View className=" mt-3">
               <Text className="font-semibold dark:text-white text-xl">
                 {currentNewsletter?.title}
               </Text>
-              <Entypo name="dot-single" size={20} color="grey" />
               <Text className="text-gray-500 dark:text-gray-400">
                 {getHoursSinceCreatedAt(currentNewsletter?.created_at as string)}
               </Text>
@@ -140,7 +143,7 @@ const SingleNewsletter = () => {
           </Card>
         </TouchableOpacity>
       </View>
-      <Text className="my-3 dark:text-white text-md font-normal text-gray-500">
+      <Text className="m-5 dark:text-white text-md font-normal text-gray-500">
         {currentNewsletter?.content}
       </Text>
     </View>

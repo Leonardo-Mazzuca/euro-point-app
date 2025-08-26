@@ -26,6 +26,9 @@ const Ideas = () => {
   const { ideas, setIdeas } = useIdeasContext();
   const [filteredIdeas, setFilteredIdeas] = useState<Idea[]>([]);
   const [search, setSearch] = useState("");
+  const {theme} = useLayoutContext();
+
+  const isDark = theme === "dark";
 
   useEffect(() => {
     if (ideas) {
@@ -83,9 +86,9 @@ const Ideas = () => {
         onPress={enablePost ? handlePost : openIdeaModal}
       >
         {enablePost ? (
-          <CheckIcon color={Colors.light.primaryBlue} />
+          <CheckIcon color={isDark ? Colors.light.primaryBlue : Colors.light.primaryYeallow} />
         ) : (
-          <PlusIcon color={Colors.light.primaryBlue} />
+          <PlusIcon color={isDark ? Colors.light.primaryBlue : Colors.light.primaryYeallow} />
         )}
       </PostButton>
     );

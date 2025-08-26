@@ -77,7 +77,7 @@ const ViewIdeaModal = ({
         <DeleteButton className="me-auto w-[50px]" handleDelete={handleDelete} />
         {changed && (
             <Button className='w-[200px]'>
-                <Text className='dark:text-yeallow-primary'>
+                <Text className='text-yeallow-primary'>
                     Salvar
                 </Text>
             </Button>

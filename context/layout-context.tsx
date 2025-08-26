@@ -8,6 +8,7 @@ import { get, post } from "@/service/helpers";
 import Toast from "react-native-toast-message";
 import { convertToAvatar } from "@/util";
 import { useAuth } from "@/hooks/useAuth";
+import { router } from "expo-router";
 ;
 
 type Theme = 'dark' | 'light' | undefined
@@ -65,6 +66,7 @@ const LayoutProvider = ({children}:PropsWithChildren) => {
                 type: 'error',
                 text1: 'Não foi possível carregar o usuário'
             })
+            router.push("/(auth)")
         }
     }
 

@@ -113,7 +113,6 @@ export const useNewsletter = () => {
     const likeNewsletter = async (id:number) => {
         try {
             await put(`/newsletter/like/${id}`,{});
-            await getCurrentUser();
             refetch();
         } catch (error) {
             console.log('erro ao curtir newsletter', error);

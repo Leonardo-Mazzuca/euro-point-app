@@ -1,4 +1,4 @@
-  import {  TouchableOpacity, View } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
 import { Card } from "@/components/Card";
 import { Text } from "./Text";
@@ -20,51 +20,46 @@ type Props = {
   newsletter: Newsletter;
 };
 const NewsLetterCard = ({ newsletter }: Props) => {
-
-  const {isSaved} = useSave({
+  const { isSaved } = useSave({
     item: newsletter,
-    item_id_array: "saved_newsletter_ids"
+    item_id_array: "saved_newsletter_ids",
   });
+  const lastPress = useRef<number | null>(null)
 
-  const {handleSave,handleUnSave, likeNewsletter} = useNewsletter();
-  const {currentUser} = useLayoutContext();
+
+  const { handleSave, handleUnSave, likeNewsletter } = useNewsletter();
+  const { currentUser, getCurrentUser } = useLayoutContext();
   const [isLiked, setIsLiked] = useState(false);
 
   const handleNavigate = () => {
     router.push(`/newsletter/${newsletter.id}`);
   };
 
-  const {onDoublePress} = useDoubleTap({
-    fn: () => likeNewsletter(newsletter.id)
-  });
-
-  useEffect(()=> {
-    if(currentUser){
-      const liked = currentUser.liked_newsletters.some((item) => item.newsletter_id === newsletter.id);
+  useEffect(() => {
+    if (currentUser) {
+      const liked = currentUser.liked_newsletters.some(
+        (item) => item.newsletter_id === newsletter.id
+      );
       setIsLiked(!!liked);
     }
-},[currentUser])
+  }, [currentUser]);
 
   const firstImage = getNewsletterImage(newsletter);
 
   const imageUrl = newsletter?.images?.[0]
-  ? newsletter.is_demo
-    ? getStorageImageUrl(newsletter.images[0].path)
-    : firstImage
-  : ""; 
+    ? newsletter.is_demo
+      ? getStorageImageUrl(newsletter.images[0].path)
+      : firstImage
+    : "";
 
   return (
     <Card className="mt-4">
-      <TouchableOpacity onPress={onDoublePress}  className="p-2">
+      <TouchableOpacity onPress={handleNavigate} className="p-2">
         <View className="items-center flex-row gap-5">
-          <ItemImage
-            type="card"
-            url={imageUrl}
-            fallback={newsletterFallback}
-          />
+          <ItemImage type="card" url={imageUrl} fallback={newsletterFallback} />
           <View>
             <View className="gap-2">
-              <Text numberOfLines={2} className="font-bold w-[150px] text-2xl">
+              <Text className="font-bold w-[200px] text-md">
                 {newsletter.title}
               </Text>
               <Text className="font-normal dark:text-gray-300 text-gray-500">
@@ -82,21 +77,33 @@ const NewsLetterCard = ({ newsletter }: Props) => {
                   {dayjs(newsletter.created_at).fromNow()}
                 </Text>
               </View>
-              <TouchableOpacity>
-                <Entypo onPress={handleNavigate} name="dots-three-horizontal" size={20} color="grey" />
-              </TouchableOpacity>
             </View>
             <View className="flex-row gap-3 my-2">
-              <LikeButton 
+              <LikeButton
                 totalLikes={newsletter.total_likes}
-                onPress={()=>likeNewsletter(newsletter.id)}
+                onPress={() => {
+                  likeNewsletter(newsletter.id)
+                  setIsLiked(!isLiked);
+                }}
                 isLiked={isLiked}
               />
-              <SaveButton 
+              <SaveButton
                 isSaved={isSaved}
-                onPress={isSaved ? () => handleUnSave(newsletter.id) : () => handleSave(newsletter.id)}
+                onPress={
+                  isSaved
+                    ? () => handleUnSave(newsletter.id)
+                    : () => handleSave(newsletter.id)
+                }
                 totalSaved={newsletter.total_saved}
               />
+              <TouchableOpacity>
+                <Entypo
+                  onPress={handleNavigate}
+                  name="dots-three-horizontal"
+                  size={20}
+                  color="grey"
+                />
+              </TouchableOpacity>
             </View>
           </View>
         </View>

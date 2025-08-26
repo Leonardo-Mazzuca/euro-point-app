@@ -1,6 +1,6 @@
 
 
-import { View, Text, Image } from 'react-native'
+import { View, Text } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { router, useLocalSearchParams } from 'expo-router';
 import Header from '@/components/header';
@@ -10,7 +10,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import BackButton from '@/components/back-button';
 import { useProjects } from '@/hooks/use-projects';
 import Loading from '@/components/loading';
-import { getHoursSinceCreatedAt, getProjectImage } from '@/util';
+import { getHoursSinceCreatedAt, getProjectImage, getStorageImageUrl } from '@/util';
 import ItemImage from '@/components/item-image';
 import { projectFallBack } from '@/util/images';
 
@@ -36,11 +36,16 @@ const SingleProject = () => {
 
     useEffect(()=> {
       if(currentProject){
-        setImage(getProjectImage(currentProject as Project));
+        if(currentProject.is_demo){
+          const image = getStorageImageUrl(currentProject.image[0].path);
+          setImage(image);
+        } else {
+          const image = getProjectImage(currentProject as Project);
+          setImage(image);
+        }
       }
     },[currentProject])
-
-
+    
     if(isLoading){
       return <Loading />
     }
