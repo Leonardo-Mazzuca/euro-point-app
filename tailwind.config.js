@@ -48,7 +48,8 @@ module.exports = {
         blue: {
           primary: "#044B8B",
           secondary: "#D9E8FC",
-          tertiary: Colors.light.tertiaryBlue
+          tertiary: Colors.light.tertiaryBlue,
+          dark: "#303F9F"
         },
         yeallow: {
           primary: "#FBF304"

@@ -2,14 +2,13 @@ import React, { useEffect } from "react";
 import Header from "@/components/header";
 import BackButton from "@/components/back-button";
 import { router } from "expo-router";
-import { SafeAreaView, ScrollView, SectionList, Text, View } from "react-native";
-import UserButton from "@/components/user-button";
-import ChatInput from "@/components/chat-input";
+import { SafeAreaView, SectionList, Text, View } from "react-native";
+import ChatInput from "@/components/chat/chat-input";
 import { useQuizContext } from "@/context/quiz-context";
 import { useHideUi } from "@/hooks/use-hide-ui";
 import { useAI } from "@/hooks/use-ai";
-import ChatBox from "@/components/chat-box";
-import { EuroHelp, EuroHelpLogo } from "@/components/euro-help";
+import ChatBox from "@/components/chat/chat-box";
+import { EuroHelp } from "@/components/euro-help";
 
 const QuizHelp = () => {
 

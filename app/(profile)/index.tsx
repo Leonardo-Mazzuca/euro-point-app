@@ -4,86 +4,113 @@ import Feather from "@expo/vector-icons/Feather";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ProfileCard from "@/components/profile-card";
 import { Colors } from "@/constants/Colors";
-import { AntDesign, Entypo, FontAwesome6, Foundation, Ionicons } from "@expo/vector-icons";
+import {
+  AntDesign,
+  Entypo,
+  FontAwesome6,
+  Foundation,
+  Ionicons,
+} from "@expo/vector-icons";
 import { useLayoutContext } from "@/context/layout-context";
-import FontAwesome from '@expo/vector-icons/FontAwesome';
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 import ProfileHeader from "@/components/profile-header";
 import ProfileAvatar from "@/components/profile-avatar";
 import ExitButton from "@/components/exit-button";
 
-
-
 const Profile = () => {
-
-  const {theme,toggleTheme} = useLayoutContext();
+  const { theme, toggleTheme } = useLayoutContext();
 
   const isDark = theme === "dark";
 
   const getItemColor = () => {
-    return isDark ? Colors.light.primaryYeallow : Colors.light.primaryBlue
-  }
+    return isDark ? Colors.light.primaryYeallow : Colors.light.primaryBlue;
+  };
 
-  const accountProfileItems:ProfileItem[] = [
+  const accountProfileItems: ProfileItem[] = [
     {
       icon: <Feather name="user" size={28} color={getItemColor()} />,
       title: "Dados do perfil",
-      link: "/(profile)/edit"
+      link: "/(profile)/edit",
     },
     {
-      icon: <Ionicons name="notifications-outline" size={28} color={getItemColor()} />,
+      icon: (
+        <Ionicons
+          name="notifications-outline"
+          size={28}
+          color={getItemColor()}
+        />
+      ),
       title: "Notificações",
-      isToggler: true
+      isToggler: true,
     },
     {
-      icon:<Foundation name="key" size={28} color={getItemColor()} />,
+      icon: <Foundation name="key" size={28} color={getItemColor()} />,
       title: "Alterar senha",
-      link: "/(profile)/change-password"
+      link: "/(profile)/change-password",
     },
-];
-  
-  const preferenceProfileItems:ProfileItem[] = [
+  ];
+
+  const preferenceProfileItems: ProfileItem[] = [
     {
       icon: <Feather name="moon" size={28} color={getItemColor()} />,
       title: "Tema escuro",
       isToggler: true,
       isTogglerActive: theme === "dark",
-      setToggleActive: toggleTheme
+      setToggleActive: toggleTheme,
     },
     {
       icon: <Entypo name="language" size={28} color={getItemColor()} />,
       title: "Linguagem",
-      link: "/"
+      link: "/",
     },
     {
       icon: <AntDesign name="barschart" size={24} color={getItemColor()} />,
       title: "Pontuação dos quizzes",
-      link: "/(profile)/pontuations"
+      link: "/(profile)/pontuations",
     },
     {
       icon: <Feather name="bookmark" size={24} color={getItemColor()} />,
       title: "Itens salvos",
-      link: "/(profile)/saved"
+      link: "/(profile)/saved",
     },
     {
-      icon: <FontAwesome6 name="book-open-reader" size={24} color={getItemColor()} />,
+      icon: (
+        <FontAwesome6
+          name="book-open-reader"
+          size={24}
+          color={getItemColor()}
+        />
+      ),
       title: "Minhas conquistas",
-      link: "/(profile)/achieviments"
+      link: "/(profile)/achieviments",
+    },
+    {
+      icon: (
+        <Entypo
+          name="shopping-bag"
+          size={24}
+          color={getItemColor()}
+        />
+      ),
+      title: "Reservar premios",
+      link: "../(shop)",
     },
     {
       icon: <FontAwesome name="list-alt" size={24} color={getItemColor()} />,
       title: "Minhas publicações",
-      link: "/(profile)/posts"
+      link: "/(profile)/posts",
     },
   ];
 
-  const helpProfileItems:ProfileItem[] = [
+  const helpProfileItems: ProfileItem[] = [
     {
-      icon: <AntDesign name="questioncircleo" size={24} color={getItemColor()} />,
+      icon: (
+        <AntDesign name="questioncircleo" size={24} color={getItemColor()} />
+      ),
       title: "Reportar erro",
-      link: "/"
+      link: "/",
     },
-  ]
-  
+  ];
 
   return (
     <SafeAreaView className="flex-1 dark:bg-dark-primary bg-white py-4 px-8">
@@ -91,19 +118,10 @@ const Profile = () => {
         <ProfileHeader text="Perfil" />
         <ProfileAvatar />
         <View className="gap-5 mb-5">
-          <ProfileCard
-            title="conta"
-            items={accountProfileItems}
-          />
-          <ProfileCard
-            title="preferências"
-            items={preferenceProfileItems}
-          />
-          <ProfileCard
-            title="preferências"
-            items={helpProfileItems}
-          />
-            <ExitButton />
+          <ProfileCard title="conta" items={accountProfileItems} />
+          <ProfileCard title="preferências" items={preferenceProfileItems} />
+          <ProfileCard title="ajuda" items={helpProfileItems} />
+          <ExitButton />
         </View>
       </ScrollView>
     </SafeAreaView>

@@ -38,11 +38,11 @@ declare global {
       name: string;
       id: number;
     }[];
-    total_points: number
-    liked_posts: LikedPost[]
-    liked_newsletters: LikedNewsletter[]
-    login_count: number
-    area_id: number
+    total_points: number;
+    liked_posts: LikedPost[];
+    liked_newsletters: LikedNewsletter[];
+    login_count: number;
+    area_id: number;
   };
 
   type Area = {
@@ -61,7 +61,7 @@ declare global {
     total_likes: number;
     total_views: number;
     total_saved: number;
-    images: {post_id: number, path: string}[];
+    images: { post_id: number; path: string }[];
     user: {
       id: number;
       username: string;
@@ -73,40 +73,40 @@ declare global {
       contact_email: string;
     };
     created_at: string;
-    is_demo: boolean
+    is_demo: boolean;
   };
 
   type LikedPost = {
     id: number;
     post_id: number;
     user_id: number;
-  }
+  };
 
   type LikedNewsletter = {
     id: number;
     newsletter_id: number;
     user_id: number;
-  }
+  };
 
   type Newsletter = {
     id: number;
     title: string;
     content: string;
     area_id: number;
-    created_at: string; 
-    images: {path: string}[];
+    created_at: string;
+    images: { path: string }[];
     total_likes: number;
     total_views: number;
     user: {
-      username: string,
-      id: number
-    }
+      username: string;
+      id: number;
+    };
     area: {
-      name: string,
-      id: number
-    }
-    total_saved: number
-    is_demo: boolean
+      name: string;
+      id: number;
+    };
+    total_saved: number;
+    is_demo: boolean;
   };
 
   type Team = {
@@ -115,33 +115,33 @@ declare global {
     members_ids: number[];
   };
 
-  type ProjectStatus = "RUNNING" | "FINISHED"
+  type ProjectStatus = "RUNNING" | "FINISHED";
 
   type Project = {
     id: number;
     title: string;
     content: string;
-    image: {path: string}[];
+    image: { path: string }[];
     area_id: number;
     team_id: number;
     owner_id: number;
     members_ids: number[];
     created_at: string;
     user: {
-        username: string,
-        id: number
-    }
+      username: string;
+      id: number;
+    };
     area: {
       name: string;
       id: number;
-    }
+    };
     team: {
-      name: string,
-      id: number
-    }
-    total_saved: number
-    status: ProjectStatus
-    is_demo: boolean
+      name: string;
+      id: number;
+    };
+    total_saved: number;
+    status: ProjectStatus;
+    is_demo: boolean;
   };
 
   type Program = {
@@ -156,25 +156,25 @@ declare global {
     title: string;
     description: string;
     image: string;
-    duration: string; 
+    duration: string;
     questions: Question[];
     is_running: boolean;
     updated_at: string;
     created_at: string;
     total_answered: number;
-    current_question_index: number
+    current_question_index: number;
   };
-  
+
   type Question = {
     id: number;
     title: string;
     correct_answer: string;
     quiz_id: number;
     options: QuestionOption[];
-    total_points: number
-    is_answered: boolean
+    total_points: number;
+    is_answered: boolean;
   };
-  
+
   type QuestionOption = {
     id: number;
     title: string;
@@ -187,7 +187,7 @@ declare global {
     title: string;
     progress: number;
     description: string;
-    key: AchievimentKey
+    key: AchievimentKey;
   };
 
   type IdeaStatus = "in-progress" | "recused" | "approved";
@@ -196,64 +196,78 @@ declare global {
     uri: string;
     mimeType: string;
     fileName: string;
-  }
+  };
 
   type PostCreate = {
-    content: string
-    area_id: number
-    images?: ExpoImageType[]
-  }
+    content: string;
+    area_id: number;
+    images?: ExpoImageType[];
+  };
 
-  type NewsletterCreate = { 
-    title: string,
-    content: string
-    area_id: number
-    images?: ExpoImageType[]
-  }
+  type NewsletterCreate = {
+    title: string;
+    content: string;
+    area_id: number;
+    images?: ExpoImageType[];
+  };
 
   type ProjectCreate = {
-    area_id: number,
-    content: string,
-    title: string
-    team_id: number
-    members_ids: number[]
-    image?: ExpoImageType
-  }
+    area_id: number;
+    content: string;
+    title: string;
+    team_id: number;
+    members_ids: number[];
+    image?: ExpoImageType;
+  };
 
-  type ItemType = 'post' | 'project' | 'newsletter'
+  type ItemType = "post" | "project" | "newsletter";
 
   type Message = {
-    prompt:string
-    time: string,
-    subject: string
-    avatar: string,
-    userId:number
-    createdAt: string
-  }
+    prompt: string;
+    time: string;
+    subject: string;
+    avatar: string;
+    userId: number;
+    createdAt: string;
+  };
 
   type GroupedMessages = {
-    title: string,
-    data:Message[]
-  }
+    title: string;
+    data: Message[];
+  };
 
   type Idea = {
-    user_id: number,
-    id: number,
-    title: string,
-    description: string
-  }
+    user_id: number;
+    id: number;
+    title: string;
+    description: string;
+  };
 
   type RunningQuiz = {
-    id: number,
-    quiz_id: number,
-    current_answer: number,
-    total_right_answers: number
-    current_points
-    quiz: Quiz
-  }
+    id: number;
+    quiz_id: number;
+    current_answer: number;
+    total_right_answers: number;
+    current_points;
+    quiz: Quiz;
+  };
 
+  type ProductCategory =
+    | "Todas"
+    | "Tech"
+    | "Garrafas"
+    | "Fitness"
+    | "Acessórios"
+    | "Viagens";
 
-
+  type Product = {
+    id: number;
+    title: string;
+    description: string;
+    points: number;
+    image: string;
+    category: ProductCategory;
+  };
 }
 
 export {};

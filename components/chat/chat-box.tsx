@@ -1,8 +1,8 @@
 import { View, Text } from "react-native";
 import React from "react";
 import { cn } from "@/lib/utils";
-import { EuroHelpLogo } from "./euro-help";
-import UserButton from "./user-button";
+import UserButton from "../user-button";
+import { EuroHelpLogo } from "../euro-help";
 
 type ChatType = "user" | "bot";
 
@@ -47,19 +47,18 @@ const BoxItem = ({
 const ChatBox = ({ prompt, subject }: ChatBoxProps) => {
   return (
     <View className="px-5 mt-5 gap-10">
-              <View className="ms-auto flex-row items-start gap-3">
+      <View className="ms-auto flex-row items-start gap-3">
         <UserButton />
         <BoxItem type="user">
-            <BoxText text={prompt} type="user"/>
+          <BoxText text={prompt} type="user" />
         </BoxItem>
       </View>
       <View className="me-auto flex-row items-start gap-3">
         <EuroHelpLogo />
         <BoxItem type="bot">
-            <BoxText text={subject} type="bot"/>
+          <BoxText text={subject} type="bot" />
         </BoxItem>
       </View>
-
     </View>
   );
 };

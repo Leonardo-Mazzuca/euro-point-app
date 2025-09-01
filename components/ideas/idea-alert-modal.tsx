@@ -1,6 +1,6 @@
 import { Text } from "react-native";
 import React from "react";
-import ModalScreen from "./modal-screen";
+import ModalScreen from "../modal-screen";
 
 type Props = {
   open: boolean;

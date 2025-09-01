@@ -5,7 +5,7 @@ import { View, Text, ScrollView, TextInput } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import ModalScreen from './modal-screen'
 import BackButton from './back-button'
-import IdeaTag from './idea-tag'
+import IdeaTag from './ideas/idea-tag'
 import DeleteButton from './delete-button'
 import { Button } from './Button'
 

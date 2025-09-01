@@ -3,14 +3,14 @@
 
 import { Text, View } from 'react-native'
 import React from 'react'
-import ModalScreen from './modal-screen'
+import ModalScreen from '../modal-screen'
 import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ideaSchema } from '@/schemas/idea'
-import { Input } from './Input'
-import { Label } from './Label'
-import { Button } from './Button'
-import { ErrorField } from './form-input-field'
+import { Input } from '../Input'
+import { Label } from '../Label'
+import { Button } from '../Button'
+import { ErrorField } from '../form-input-field'
 
 type Props = {
     open: boolean,

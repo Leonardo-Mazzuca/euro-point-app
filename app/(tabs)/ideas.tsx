@@ -4,7 +4,7 @@ import Header from "@/components/header";
 import SearchInput from "@/components/search-input";
 import { Button } from "@/components/Button";
 import { BackHandler, FlatList, Keyboard, Text, View } from "react-native";
-import IdeaCard from "@/components/idea-card";
+import IdeaCard from "@/components/ideas/idea-card";
 import { useLayoutContext } from "@/context/layout-context";
 import { Colors } from "@/constants/Colors";
 import { useFocusEffect } from "expo-router";
@@ -13,10 +13,11 @@ import PlusIcon from "@/components/icons/plus";
 import CheckIcon from "@/components/icons/check";
 import PostButton from "@/components/post-button";
 import { cn } from "@/lib/utils";
-import IdeaAlertModal from "@/components/idea-alert-modal";
-import IdeaCreateModal from "@/components/idea-create-modal";
+import IdeaAlertModal from "@/components/ideas/idea-alert-modal";
+import IdeaCreateModal from "@/components/ideas/idea-create-modal";
 import { useIdeasContext } from "@/context/idea-context";
 import Toast from "react-native-toast-message";
+import PostIdea from "@/components/ideas/post-idea";
 
 const Ideas = () => {
   const [enablePost, setEnablePost] = useState(false);
@@ -26,7 +27,9 @@ const Ideas = () => {
   const { ideas, setIdeas } = useIdeasContext();
   const [filteredIdeas, setFilteredIdeas] = useState<Idea[]>([]);
   const [search, setSearch] = useState("");
-  const {theme} = useLayoutContext();
+  const [openPostModal, setOpenPostModal] = useState(false);
+  const [selectedIdeas, setSelectedIdeas] = useState<Idea[]>([]);
+  const { theme } = useLayoutContext();
 
   const isDark = theme === "dark";
 
@@ -38,7 +41,7 @@ const Ideas = () => {
 
   useEffect(() => {
     if (search.trim() === "") {
-      setFilteredIdeas(ideas); 
+      setFilteredIdeas(ideas);
       Keyboard.dismiss();
       return;
     }
@@ -52,6 +55,10 @@ const Ideas = () => {
 
   const handlePost = () => {
     setEnablePost(!enablePost);
+  };
+
+  const handleOpenPostModal = () => {
+    setOpenPostModal(true);
   };
 
   const openIdeaModal = () => {
@@ -83,12 +90,21 @@ const Ideas = () => {
     return (
       <PostButton
         className={cn("dark:bg-yeallow-primary")}
-        onPress={enablePost ? handlePost : openIdeaModal}
+        onPress={enablePost ? handleOpenPostModal : openIdeaModal}
+        disabled={enablePost && selectedIdeas.length === 0}
       >
         {enablePost ? (
-          <CheckIcon color={isDark ? Colors.light.primaryBlue : Colors.light.primaryYeallow} />
+          <CheckIcon
+            color={
+              isDark ? Colors.light.primaryBlue : Colors.light.primaryYeallow
+            }
+          />
         ) : (
-          <PlusIcon color={isDark ? Colors.light.primaryBlue : Colors.light.primaryYeallow} />
+          <PlusIcon
+            color={
+              isDark ? Colors.light.primaryBlue : Colors.light.primaryYeallow
+            }
+          />
         )}
       </PostButton>
     );
@@ -102,12 +118,27 @@ const Ideas = () => {
     }
   }, [enablePost]);
 
+  const onSelect = (idea: Idea, checked: boolean) => {
+    setSelectedIdeas((prev) => {
+      if (checked) {
+        return [...prev, idea];
+      } else {
+        return prev.filter((i) => i.id !== idea.id);
+      }
+    });
+  };
+
   const submit = (idea: Idea) => {
     setIdeas((prev) => [...prev, idea]);
     Toast.show({
       type: "success",
       text1: "Ideia criada com sucesso",
     });
+  };
+
+  const onFinalize = () => {
+    setSelectedIdeas([]);
+    setEnablePost(false);
   };
 
   return (
@@ -122,7 +153,7 @@ const Ideas = () => {
             onSubmitEditing={Keyboard.dismiss}
           />
           <Button
-            onPress={handlePost}
+            onPress={!enablePost ? handlePost : onFinalize}
             className="bg-blue-primary dark:bg-dark-card mx-auto rounded-full my-3 py-2 px-5"
           >
             <Text className="text-white font-semibold text-lg">
@@ -134,7 +165,12 @@ const Ideas = () => {
           data={filteredIdeas}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => (
-            <IdeaCard idea={item} enablePost={enablePost} />
+            <IdeaCard
+              checked={selectedIdeas.some((i) => i.id === item.id)}
+              onSelect={onSelect}
+              idea={item}
+              enablePost={enablePost}
+            />
           )}
           contentContainerStyle={{
             paddingBottom: 150,
@@ -147,6 +183,11 @@ const Ideas = () => {
         open={openCreateModal}
         setIsOpen={setOpenCreateModal}
         submit={submit}
+      />
+      <PostIdea
+        open={openPostModal}
+        setOpen={setOpenPostModal}
+        onFinalize={onFinalize}
       />
     </TabsContainer>
   );

@@ -1,19 +1,16 @@
-import { Text, View, TouchableOpacity, ScrollView, TextInput } from "react-native";
+import { Text, View, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Checkbox } from "@/components/Checkbox";
-import ModalScreen from "@/components/modal-screen";
-import BackButton from "@/components/back-button";
-import DeleteButton from "@/components/delete-button";
-import IdeaTag from "./idea-tag";
-import ViewIdeaModal from "./view-idea-modal";
+import ViewIdeaModal from "../view-idea-modal";
 
 type IdeaCardProps = {
   idea: Idea;
   enablePost: boolean;
+  onSelect: (idea: Idea, checked: boolean) => void;
+  checked: boolean
 };
 
-const IdeaCard = ({ enablePost, idea }: IdeaCardProps) => {
-  const [markCard, setMarkCard] = useState(false);
+const IdeaCard = ({ enablePost, idea, onSelect, checked}: IdeaCardProps) => {
   const [openModal, setOpenModal] = useState(false);
   const [text, setText] = useState<string>("");
 
@@ -23,6 +20,7 @@ const IdeaCard = ({ enablePost, idea }: IdeaCardProps) => {
 
   const handleOpen = () => setOpenModal(true);
   const handleDelete = () => {}
+
 
   return (
     <>
@@ -35,8 +33,10 @@ const IdeaCard = ({ enablePost, idea }: IdeaCardProps) => {
           <Text numberOfLines={2} className="text-xl w-[300px] dark:text-white font-semibold">{idea.title}</Text>
           {enablePost && (
             <Checkbox
-              checked={markCard}
-              onCheckedChange={(markCard) => setMarkCard(markCard)}
+              checked={checked}
+              onCheckedChange={(checked) => {
+                onSelect(idea, checked)
+              }}
             />
           )}
         </View>
