@@ -19,11 +19,11 @@ const Achieviments = () => {
   }
 
   return (
-    <ProfileContainer>
+    <ProfileContainer className='px-4'>
       <ProfileHeader
         text="Minhas conquistas"
       />
-      <View className='px-2 flex-1'>
+      <View className='flex-1'>
 
       <View className='flex-row gap-1 my-3 items-center'>
         <Text className='dark:text-white text-xl font-semibold'>

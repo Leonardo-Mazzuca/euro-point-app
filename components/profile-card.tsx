@@ -7,6 +7,7 @@ import { Text, View } from 'react-native'
 import { Button } from '@/components/Button'
 import { Switch } from '@/components/Switch'
 import { RelativePathString, router } from 'expo-router'
+import { useLayoutContext } from '@/context/layout-context'
 
 
 type ProfileCardProps = {
@@ -49,6 +50,10 @@ const ProfileCardItem = ({item: {
 
     const handleNavigate = () => router.push(link! as RelativePathString);
 
+    const {theme} = useLayoutContext();
+
+    const isDark = theme === "dark";
+
     return (
         <View className='flex-row my-2 items-center justify-between gap-2'>
             <View className='flex-row items-center gap-2'>
@@ -62,7 +67,7 @@ const ProfileCardItem = ({item: {
                 {link && (
                     <Button onPress={handleNavigate} variant={"ghost"} size={"icon"}>
                         <Feather
-                            color={Colors.light.primaryBlue}
+                            color={isDark ? Colors.light.primaryYeallow : Colors.light.primaryBlue}
                             size={24}
                             name='chevron-right'
                         />
