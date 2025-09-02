@@ -19,8 +19,8 @@ const CategoriesScroll = ({categories,selected, setSelected, className}: Categor
       className={className}
       data={categories}
       renderItem={({item}) => (
-        <TouchableOpacity className={cn(selected === item ? 'bg-blue-primary' : 'bg-gray-300 dark:bg-zinc-800' ,'px-4 py-2 text-center rounded-3xl mr-2')} onPress={() => setSelected(item)}>
-            <Text className={cn(selected === item ? 'text-white' : 'text-zinc-500' , 'font-semibold')}>
+        <TouchableOpacity className={cn(selected === item ? 'bg-blue-primary dark:bg-yeallow-primary' : 'bg-gray-300 dark:bg-zinc-800' ,'px-4 py-2 text-center rounded-3xl mr-2')} onPress={() => setSelected(item)}>
+            <Text className={cn(selected === item ? 'text-white dark:text-blue-primary' : 'text-zinc-500' , 'font-semibold')}>
                 {item}
             </Text>
         </TouchableOpacity>

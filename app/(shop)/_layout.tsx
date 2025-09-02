@@ -17,6 +17,12 @@ const ShopLayout = () => {
           headerShown: false,
         }}
       />
+      <Stack.Screen
+        name="order-resume"
+        options={{
+          headerShown: false,
+        }}
+      />
     </Stack>
   );
 };

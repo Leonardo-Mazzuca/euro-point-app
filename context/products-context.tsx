@@ -6,12 +6,14 @@ type ProductState = {
   productsOnBag: Product[];
   setProductsOnBag: React.Dispatch<React.SetStateAction<Product[]>>;
   onAddToBag : (product: Product) => void
+  totalPoints: number
 };
 
 const ProductContext = createContext<ProductState | undefined>(undefined);
 
 const ProductProvider = ({ children }: { children: React.ReactNode }) => {
   const [productsOnBag, setProductsOnBag] = useState<Product[]>([]);
+  const [totalPoints, setTotalPoints] = useState(0);
 
   const onAddToBag = async (product: Product) => {
 
@@ -35,6 +37,11 @@ const ProductProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }
 
+  
+  useEffect(() => {
+    setTotalPoints(productsOnBag.reduce((acc, item) => acc + item.points, 0));
+  }, [productsOnBag]);
+
   useEffect(()=> {
     getProductsOnBag();
   },[])
@@ -43,6 +50,8 @@ const ProductProvider = ({ children }: { children: React.ReactNode }) => {
     productsOnBag,
     setProductsOnBag,
     onAddToBag,
+    totalPoints,
+    setTotalPoints
   };
 
   return (

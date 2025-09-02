@@ -38,7 +38,7 @@ const TabsTrigger = forwardRef<
           "inline-flex items-center dark:text-white font-semibold justify-center border-b border-gray-400 dark:border-zinc-600 shadow-none web:whitespace-nowrap rounded-sm px-3 py-1.5 text-sm web:ring-offset-background web:transition-all web:focus-visible:outline-none web:focus-visible:ring-2 web:focus-visible:ring-ring web:focus-visible:ring-offset-2",
           props.disabled && "web:pointer-events-none opacity-50",
           props.value === value &&
-            "border-b-2 border-blue-500 dark:border-blue-500",
+            "border-b-2 border-blue-500 dark:border-yeallow-primary",
           className
         )}
         {...props}

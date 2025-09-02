@@ -9,11 +9,12 @@ import { FlatList, Text, View } from "react-native";
 import SearchInput from "@/components/search-input";
 import { useProductsContext } from "@/context/products-context";
 import BagCard from "@/components/shop/bag-card";
+import { router } from "expo-router";
 
 const Bag = () => {
   const { theme } = useLayoutContext();
 
-  const [totalPoints, setTotalPoints] = useState(0);
+
 
   const isDark = theme === "dark";
   const [showSearch, setShowSearch] = useState(false);
@@ -21,11 +22,8 @@ const Bag = () => {
     ? Colors.light.primaryYeallow
     : Colors.light.primaryBlue;
 
-  const {productsOnBag} = useProductsContext();
+  const { productsOnBag, totalPoints } = useProductsContext();
 
-  useEffect(()=> {
-    setTotalPoints(productsOnBag.reduce((acc, item) => acc + item.points, 0));
-  },[])
 
   return (
     <SafeAreaView className="flex-1 dark:bg-dark-primary bg-white py-4 px-8">
@@ -48,7 +46,10 @@ const Bag = () => {
       />
       {showSearch && (
         <View className="flex-row my-4 items-center gap-2">
-          <SearchInput wrapperClasses="mt-0" placeholder="Procurar na sacola..." />
+          <SearchInput
+            wrapperClasses="mt-0"
+            placeholder="Procurar na sacola..."
+          />
         </View>
       )}
 
@@ -56,26 +57,26 @@ const Bag = () => {
         <FlatList
           data={productsOnBag}
           keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => (
-            <BagCard product={item} />
-          )}
+          renderItem={({ item }) => <BagCard product={item} />}
+          ListEmptyComponent={() => <></>}
+          contentContainerStyle={{ gap: 10 }}
         />
 
-        <View>
-          <View className="flex-row items-center justify-between my-5">
-            <Text className="text-zinc-500 dark:text-zinc-300">
-              Total
-            </Text>
-            <Text className="text-xl font-semibold dark:text-white">
-              {totalPoints} Pontos
-            </Text>
+        {productsOnBag.length > 0 && (
+          <View>
+            <View className="flex-row items-center justify-between my-5">
+              <Text className="text-zinc-500 dark:text-zinc-300">Total</Text>
+              <Text className="text-xl font-semibold dark:text-white">
+                {totalPoints} Pontos
+              </Text>
+            </View>
+            <Button onPress={()=>router.push('/order-resume')} className="rounded-xl">
+              <Text className="text-white text-lg font-medium">
+                Resumo do pedido
+              </Text>
+            </Button>
           </View>
-          <Button className="rounded-xl">
-            <Text className="text-white text-lg font-medium">
-              Resumo do pedido
-            </Text>
-          </Button>
-        </View>
+        )}
       </View>
     </SafeAreaView>
   );

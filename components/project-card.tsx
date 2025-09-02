@@ -51,7 +51,7 @@ const ProjectCard = ({project}: Props) => {
 
           <View className="mt-3 gap-2 items-center justify-between flex-row">
               <View className="flex-row">
-                  <Text className="font-semibold text-blue-primary dark:text-blue-600">{project?.area?.name}</Text>
+                  <Text className="font-semibold text-blue-primary dark:text-yeallow-primary">{project?.area?.name}</Text>
                   <Entypo name="dot-single" size={18} color="grey" />
                   <Text className="text-gray-500 dark:text-gray-400">
                     {getHoursSinceCreatedAt(project.created_at)}

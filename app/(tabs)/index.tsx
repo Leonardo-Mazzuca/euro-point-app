@@ -73,7 +73,7 @@ const Home = () => {
                 className={cn(
                   "text-xl font-semibold",
                   currentScreen === "for-you"
-                    ? "text-blue-500"
+                    ? "text-blue-500 dark:text-yeallow-primary"
                     : "dark:text-white"
                 )}
               >
@@ -85,7 +85,7 @@ const Home = () => {
                 className={cn(
                   "text-xl font-semibold",
                   currentScreen === "following"
-                    ? "text-blue-500"
+                    ? "text-blue-500 dark:text-yeallow-primary"
                     : "dark:text-white"
                 )}
               >

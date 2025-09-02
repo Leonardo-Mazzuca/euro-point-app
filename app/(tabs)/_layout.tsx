@@ -11,6 +11,8 @@ const TabsLayout = () => {
 
   const {theme, hideTabs, hideUI} = useLayoutContext();
 
+  const isDark = theme === "dark";
+
   return (
   <Tabs
     screenOptions={{
@@ -21,14 +23,14 @@ const TabsLayout = () => {
         borderTopWidth: 0,
         elevation: 0,
         shadowOpacity: 0,
-        backgroundColor: theme === 'dark' ? Colors.dark.background : Colors.light.background,
+        backgroundColor: isDark ? Colors.dark.background : Colors.light.background,
         borderTopLeftRadius: 25,
         borderTopEndRadius: 25,
         display: (hideUI || hideTabs) ? 'none' : 'flex',
         position: 'absolute',
  
       },
-      tabBarActiveTintColor: Colors.light.primaryBlue,
+      tabBarActiveTintColor: isDark ? Colors.dark.primaryYeallow : Colors.light.primaryBlue,
       tabBarItemStyle: {
         marginTop: 5
       },
