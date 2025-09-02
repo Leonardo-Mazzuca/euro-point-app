@@ -69,7 +69,7 @@ const NewsLetterCard = ({ newsletter }: Props) => {
 
             <View className="mt-3 gap-2 justify-between flex-row">
               <View className="flex-row">
-                <Text className="font-semibold text-blue-primary">
+                <Text className="font-semibold text-blue-primary dark:text-yeallow-primary">
                   {newsletter?.area?.name}
                 </Text>
                 <Entypo name="dot-single" size={18} color="grey" />
