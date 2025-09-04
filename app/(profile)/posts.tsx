@@ -44,11 +44,11 @@ const MyPosts = () => {
     }
 
     return (
-      <ProfileContainer>
+      <ProfileContainer className='p-4'>
         <ProfileHeader 
           text='Minhas publicações'
         />
-        <View className='px-6 gap-5'>
+        <View className='px-2 gap-5'>
           <CategoriesScroll
             className='my-5'
             categories={categories}

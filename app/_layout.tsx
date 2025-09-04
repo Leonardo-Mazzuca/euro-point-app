@@ -34,6 +34,7 @@ const DefaultLayout = () => {
 
     // router.push('/(shop)/bag')
 
+
     if (isLogged) {
       router.push("/(tabs)");
     }

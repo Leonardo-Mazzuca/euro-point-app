@@ -9,69 +9,55 @@ import { useHideUi } from "@/hooks/use-hide-ui";
 import { useAI } from "@/hooks/use-ai";
 import ChatBox from "@/components/chat/chat-box";
 import { EuroHelp } from "@/components/euro-help";
+import Animated, { FadeIn } from "react-native-reanimated";
+import ThinkingText from "@/components/chat/thinking-text";
 
 const QuizHelp = () => {
+  const { prompt, handlePrompt, output, setPrompt, groupedMessages, isGenerating } = useAI();
 
-  const {
-    prompt,
-    isGenerating,
-    handlePrompt,
-    output,
-    setPrompt,
-    groupedMessages
-  } = useAI();
+  const { quizCurrentQuestion } = useQuizContext();
 
-  const {quizCurrentQuestion} = useQuizContext();
-  
   useHideUi();
 
-  useEffect(()=>{
-    if(prompt && quizCurrentQuestion){
-      handlePrompt(quizCurrentQuestion)
+  useEffect(() => {
+    if (prompt && quizCurrentQuestion) {
+      handlePrompt(quizCurrentQuestion);
     }
-  },[prompt]);
+  }, [prompt]);
+
 
   return (
     <SafeAreaView className="flex-1 pt-10 bg-white dark:bg-dark-primary">
+      <Header
+        leftChild={<BackButton handleBack={() => router.back()} />}
+        hideProfile
+        middleChild={<EuroHelp />}
+        hideLine
+      />
 
-          <Header
-              leftChild={<BackButton handleBack={() => router.back()} />}
-              hideProfile
-              middleChild={<EuroHelp />}
-              hideLine
-          />
+      <View className="flex-1 pb-16 h-full">
+        {isGenerating && (
+          <Animated.View entering={FadeIn.duration(100)} className="ps-8">
+            <ThinkingText />
+          </Animated.View>
+        )}
+        <SectionList
+          sections={groupedMessages}
+          className="mt-5 flex-1"
+          renderItem={({ item }) => <ChatBox {...item} />}
+          contentContainerStyle={{ paddingBottom: 50 }}
+          initialNumToRender={5}
+          keyExtractor={() => String(Math.random())}
+          renderSectionHeader={() => <Text></Text>}
+        />
 
-        <View className="flex-1 pb-16 h-full">
-          <SectionList 
-            sections={groupedMessages} 
-            className="mt-5 flex-1"
-            renderItem={({item})=> (
-              <ChatBox
-                {...item}
-              />
-            )}
-            contentContainerStyle={{paddingBottom: 50}}
-            initialNumToRender={5}
-            keyExtractor={() => String(Math.random())}
-            renderSectionHeader={()=> (
-              <Text>
-
-              </Text>
-            )}
-          
-          />
-
-              <ChatInput 
-                prompt={prompt}
-                setPrompt={setPrompt}
-                disabled={isGenerating}
-              />
-
-        </View>
-
-
+        <ChatInput
+          prompt={prompt}
+          setPrompt={setPrompt}
+          disabled={isGenerating}
+        />
+      </View>
     </SafeAreaView>
-
   );
 };
 
