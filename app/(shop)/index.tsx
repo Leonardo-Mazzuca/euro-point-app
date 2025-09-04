@@ -16,6 +16,7 @@ import { products } from "@/constants/data";
 
 import { useProductsContext } from "@/context/products-context";
 import ProductCard from "@/components/shop/product-card";
+import Points from "@/components/points";
 
 const Shop = () => {
   const { theme } = useLayoutContext();
@@ -131,9 +132,7 @@ const Shop = () => {
           <Text className="dark:text-white text-black font-semibold text-2xl">
             Meus pontos
           </Text>
-          <Text className="text-emerald-400 font-semibold text-2xl">
-            {currentUser.total_points}
-          </Text>
+          <Points />
         </View>
 
         <FlatList

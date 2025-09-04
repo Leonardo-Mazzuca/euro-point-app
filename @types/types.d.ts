@@ -188,6 +188,7 @@ declare global {
     progress: number;
     description: string;
     key: AchievimentKey;
+    points: number
   };
 
   type IdeaStatus = "in-progress" | "recused" | "approved";

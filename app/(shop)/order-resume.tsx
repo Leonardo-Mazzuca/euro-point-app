@@ -9,6 +9,7 @@ import { Button } from "@/components/Button";
 import LottieView from "lottie-react-native";
 import Animated, { FadeInRight, FadeOutLeft } from "react-native-reanimated";
 import { router } from "expo-router";
+import Points from "@/components/points";
 
 const OrderResume = () => {
   const { totalPoints } = useProductsContext();
@@ -68,9 +69,7 @@ const OrderResume = () => {
               <Text className="dark:text-white text-black font-semibold text-xl">
                 Meus pontos
               </Text>
-              <Text className="text-emerald-300 font-semibold text-xl">
-                {currentUser.total_points}
-              </Text>
+              <Points />
             </View>
 
             <View className="mt-10 dark:bg-zinc-800 bg-gray-100 p-3 rounded-lg">

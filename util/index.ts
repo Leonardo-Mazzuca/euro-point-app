@@ -1,5 +1,7 @@
+import { AchievimentKey } from "@/hooks/use-achieviments";
 import dayjs from "dayjs";
 import "dayjs/locale/pt-br";
+import { achievimentPreview, askedBot, editProfile, hello, logged100Times, logged10Times, logged50Times, missOne, noErrors, played15Quiz, played5Quiz, playedQuiz, posted10Posts, posted30posts, read15Program, read5Program, readProgram, saveOnePost } from "./images";
 
 const getNameInitials = (name: string) => {
     const parts = name.trim().split(' ').filter(Boolean);
@@ -63,6 +65,30 @@ const getProjectImage = (project:Project) => {
   return image;
 }
 
+const getAchievimentImages = (key: string) => {
+  const imagesMap: Record<string, any> = {
+    FIRST_LOGIN: hello,
+    NO_ERRORS: noErrors,
+    MISS_ONE: missOne,
+    REGISTERED_POST: saveOnePost,
+    REGISTERED_10_POST: posted10Posts,
+    REGISTERED_30_POST: posted30posts,
+    EDIT_PROFILE: editProfile,
+    PLAYED_QUIZ: playedQuiz,
+    PLAYED_QUIZ_5: played5Quiz,
+    PLAYED_QUIZ_15: played15Quiz,
+    READ_PROGRAM: readProgram,
+    READ_5_PROGRAM: read5Program,
+    READ_15_PROGRAM: read15Program,
+    ASKED_BOT: askedBot,
+    LOGGED_10_TIMES_IN_ROW: logged10Times,
+    LOGGED_50_TIMES_IN_ROW: logged50Times,
+    LOGGED_100_TIMES_IN_ROW: logged100Times,
+  };
+
+  return imagesMap[key] || achievimentPreview;
+};
+
 
 export {
     getNameInitials,
@@ -74,5 +100,6 @@ export {
     isValidUrl,
     getProjectImage,
     getNewsletterImage,
-    getStorageImageUrl
+    getStorageImageUrl,
+    getAchievimentImages
 }

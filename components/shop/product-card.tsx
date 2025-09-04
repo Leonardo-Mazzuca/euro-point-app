@@ -2,7 +2,6 @@ import { View, Text, Image } from "react-native";
 import React from "react";
 
 import AntDesign from "@expo/vector-icons/AntDesign";
-import { useLayoutContext } from "@/context/layout-context";
 import { Colors } from "@/constants/Colors";
 import { useProductsContext } from "@/context/products-context";
 import { Button } from "../Button";
@@ -17,7 +16,7 @@ const ProductCard = ({
 
   const {onAddToBag, productsOnBag} = useProductsContext();
 
-  const disabled = productsOnBag.includes(product);
+  const disabled = productsOnBag.includes(product) || currentPoints < product.points;
 
   return (
     <View
@@ -42,7 +41,6 @@ const ProductCard = ({
             {product.points} Pontos
           </Text>
           <Button
-            // disabled={currentPoints < product.points}
             disabled={disabled}
             className="ms-auto"
             size={"icon"}

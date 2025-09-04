@@ -2,9 +2,9 @@
 
 import { View, Text, Image } from 'react-native'
 import React from 'react'
-import { achievimentPreview } from '@/util/images'
 import * as Progress from 'react-native-progress';
 import { Colors } from '@/constants/Colors';
+import { getAchievimentImages } from '@/util';
 
 type AchievimentCardProps = {
     achieviment:Achieviment
@@ -17,12 +17,13 @@ const AchievimentCard = ({achieviment}: AchievimentCardProps) => {
   const progressColor = hasProgress ? Colors.light.secondaryYeallow : Colors.light.softGray;
 
   return (
-    <View className='flex-row p-3 items-center gap-3 dark:border-b-zinc-800 border-b-gray-300 border-b-2 bg-transparent rounded-none m-0'>
+    <View style={{elevation: 5}} className='flex-row dark:bg-zinc-800 bg-gray-100 p-3 items-center gap-3 rounded-xl my-3'>
         <Image 
-            source={achievimentPreview}
+            className='w-[70px] h-[70px]'
+            source={getAchievimentImages(achieviment.key)}
         />
         <View className='gap-3'>
-            <Text numberOfLines={2} className='w-[250px] font-semibold text-2xl dark:text-white'>
+            <Text numberOfLines={2} className='w-[250px] font-semibold text-xl dark:text-white'>
                 {achieviment.title}
             </Text>
             <View className='flex-row gap-2 items-center'>
@@ -39,8 +40,11 @@ const AchievimentCard = ({achieviment}: AchievimentCardProps) => {
                     {achieviment.progress}%
                 </Text>
             </View>
-            <Text numberOfLines={2} className='font-medium w-[250px] text-lg dark:text-gray-400 text-gray-500'>
+            <Text numberOfLines={2} className='font-medium w-[250px] text-md dark:text-gray-400 text-gray-500'>
                 {achieviment.description}   
+            </Text>
+            <Text className='text-md font-medium text-zinc-500 dark:text-zinc-600'>
+                 <Text className='font-semibold text-xl text-blue-primary dark:text-yeallow-primary'>{achieviment.points}</Text> Pontos
             </Text>
         </View>
     </View>
