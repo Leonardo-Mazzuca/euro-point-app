@@ -16,7 +16,8 @@ const ProductCard = ({
 
   const {onAddToBag, productsOnBag} = useProductsContext();
 
-  const disabled = productsOnBag.includes(product) || currentPoints < product.points;
+  const disabled = productsOnBag.includes(product) 
+  // || currentPoints < product.points;
 
   return (
     <View
