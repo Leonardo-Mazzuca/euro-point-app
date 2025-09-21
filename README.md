@@ -1,3 +1,6 @@
+> © 2025 Tech's Version — Este projeto é de uso exclusivo do grupo Tech's Version.  
+> Nenhuma cópia, modificação ou distribuição é permitida sem autorização prévia dos membros.
+
 ## 🇧🇷 PT-BR
 
 👋 Olá, Eurofarma! Sejam muito bem-vindos ao nosso aplicativo EuroPoint!
