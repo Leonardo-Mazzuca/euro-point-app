@@ -20,7 +20,7 @@
 
 Como rodar o projeto:
 
-1️⃣ Configure as variáveis de ambiente no arquivo .env.example
+1️⃣ Configure as variáveis de ambiente no arquivo .env.example criando um arquivo .env
 2️⃣ Instale as dependências:
 
 ```bash
@@ -56,7 +56,7 @@ npx expo start -c
 
 How to run the project:
 
-1️⃣ Set up the environment variables in the .env.example file
+1️⃣ Set up the environment variables in the .env.example file creating a .env file
 2️⃣ Install dependencies:
 
 ```bash
@@ -93,7 +93,7 @@ npx expo start -c
 
 Cómo ejecutar el proyecto:
 
-1️⃣ Configura las variables de entorno en el archivo .env.example
+1️⃣ Configura las variables de entorno en el archivo .env.example creando un archivo .env
 2️⃣ Instala las dependencias:
 
 ```bash
