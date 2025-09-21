@@ -21,6 +21,7 @@
 Como rodar o projeto:
 
 1️⃣ Configure as variáveis de ambiente no arquivo .env.example criando um arquivo .env
+
 2️⃣ Instale as dependências:
 
 ```bash
