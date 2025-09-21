@@ -58,6 +58,7 @@ npx expo start -c
 How to run the project:
 
 1️⃣ Set up the environment variables in the .env.example file creating a .env file
+
 2️⃣ Install dependencies:
 
 ```bash
@@ -95,6 +96,7 @@ npx expo start -c
 Cómo ejecutar el proyecto:
 
 1️⃣ Configura las variables de entorno en el archivo .env.example creando un archivo .env
+
 2️⃣ Instala las dependencias:
 
 ```bash
