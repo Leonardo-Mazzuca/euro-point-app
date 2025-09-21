@@ -1,4 +1,4 @@
-🇧🇷 PT-BR
+## 🇧🇷 PT-BR
 
 👋 Olá, Eurofarma! Sejam muito bem-vindos ao nosso aplicativo EuroPoint!
 
@@ -34,7 +34,7 @@ npx expo start -c
 ```
 4️⃣ Abra em um emulador ou escaneie o QR Code exibido para rodar no seu dispositivo.
 
-🇺🇸 English
+## 🇺🇸 English
 
 👋 Hello, Eurofarma! Welcome to our EuroPoint app!
 
@@ -71,7 +71,7 @@ npx expo start -c
 
 4️⃣ Open it on an emulator or scan the QR Code to run on your device.
 
-🇪🇸 Español
+## 🇪🇸 Español
 
 👋 ¡Hola, Eurofarma! Bienvenidos a nuestra aplicación EuroPoint.
 
