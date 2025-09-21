@@ -1,5 +1,3 @@
-> © 2025 Tech's Version — Este projeto é de uso exclusivo do grupo Tech's Version.  
-> Nenhuma cópia, modificação ou distribuição é permitida sem autorização prévia dos membros.
 
 ## 🇧🇷 PT-BR
 
@@ -113,3 +111,6 @@ npx expo start -c
 ```
 
 4️⃣ Ábrela en un emulador o escanea el Código QR para correrla en tu dispositivo.
+
+> © 2025 Tech's Version — Este projeto é de uso exclusivo do grupo Tech's Version.  
+> Nenhuma cópia, modificação ou distribuição é permitida sem autorização prévia dos membros.
